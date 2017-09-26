@@ -15,7 +15,7 @@ public class Tab_HomeJoueur_LobbyActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab2, container, false);
+        View rootView = inflater.inflate(R.layout.tab_homejoueur_lobbyactivity, container, false);
         return rootView;
     }
 }
