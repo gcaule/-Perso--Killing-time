@@ -1,5 +1,7 @@
 package fr.indianacroft.wildhunt;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -56,34 +57,38 @@ public class Tab_Activity extends AppCompatActivity {
                 Toast.makeText(Tab_Activity.this, "Créer lien page menu", Toast.LENGTH_LONG).show();
             }
         });
+
+        // Bottom Navigation Bar
+        /*final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    //TODO : faire les liens vers les différentes pages
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.home:
+                                Toast.makeText(Tab_Activity.this, "Créer lien Home", Toast.LENGTH_LONG).show();
+                                break;
+                            case R.id.photo:
+                                Toast.makeText(Tab_Activity.this, "Créer lien Appareil photo", Toast.LENGTH_LONG).show();
+                                break;
+                            case R.id.users:
+                                Toast.makeText(Tab_Activity.this, "Créer lien Home Joueur/MJ", Toast.LENGTH_LONG).show();
+                                break;
+                            case R.id.notifications:
+                                Toast.makeText(Tab_Activity.this, "Créer lien notifs", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                        return false;
+                    }
+                });*/
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tab_, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
             switch (position) {
