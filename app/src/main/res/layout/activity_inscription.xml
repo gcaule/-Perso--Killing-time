@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="fr.indianacroft.wildhunt.InscriptionActivity"
     tools:layout_editor_absoluteY="81dp"
+    android:background="@drawable/wood_background"
     tools:layout_editor_absoluteX="0dp">
 
 
