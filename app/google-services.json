@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "256010788591-79elhc7j0fv3gbaqj38t56hd70rait91.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.indianacroft.wildhunt",
+            "certificate_hash": "80971b8a5e6162d48dc6c265316d779c227160f7"
+          }
+        },
+        {
+          "client_id": "256010788591-l3p971o1f99qhgnnt2ekqouuqjrermg9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.indianacroft.wildhunt",
+            "certificate_hash": "cf3000441af4b4f0e0704b7991af35e273d680ca"
+          }
+        },
+        {
           "client_id": "256010788591-n0q409q9pbmvv63l1jfevnaa6dt99ojc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
