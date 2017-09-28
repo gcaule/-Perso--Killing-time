@@ -1,9 +1,5 @@
 package fr.indianacroft.wildhunt;
 
-/**
- * Created by apprenti on 9/26/17.
- */
-
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
