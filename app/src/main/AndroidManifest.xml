@@ -16,10 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity  android:name=".InscriptionActivity" > </activity>
         <activity
             android:name=".Tab_Activity"
             android:label="@string/title_activity_tab_"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Challenges_Activity"
+            android:label="@string/title_activity_challenges_"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Profile_Activity"
+            android:label="@string/title_activity_profile_"
+            android:theme="@style/AppTheme.NoActionBar" />
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".HomeJoueur"

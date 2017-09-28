@@ -4,6 +4,7 @@ package fr.indianacroft.wildhunt;
  * Created by apprenti on 9/26/17.
  */
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,15 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
 public class Tab1_Activity extends Fragment {
 
     Button butNewChallenge;
     Button butNewChallenge2;
-    ImageView imageViewCancel;
-    ImageView imageViewCancel2;
+    Button butAddNewChallenge;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,24 +32,31 @@ public class Tab1_Activity extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        // Change ImageView on click
+        // Go to Challenge Activity on click
         butNewChallenge = (Button) rootView.findViewById(R.id.butNewChallenge);
-        imageViewCancel = (ImageView) rootView.findViewById(R.id.imageViewCancel);
         butNewChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageViewCancel.setImageResource(R.drawable.checked);
+                Intent intent = new Intent(getActivity(), Challenges_Activity.class);
+                startActivity(intent);
             }
         });
         butNewChallenge2 = (Button) rootView.findViewById(R.id.butNewChallenge2);
-        imageViewCancel2 = (ImageView) rootView.findViewById(R.id.imageViewCancel2);
         butNewChallenge2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageViewCancel2.setImageResource(R.drawable.checked);
+                Intent intent = new Intent(getActivity(), Challenges_Activity.class);
+                startActivity(intent);
             }
         });
-
+        butAddNewChallenge = (Button) rootView.findViewById(R.id.butAddNewChallenge);
+        butAddNewChallenge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Challenges_Activity.class);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 }
