@@ -4,16 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wood_background">
+    android:background="@drawable/wood_background3"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="368dp"
         android:layout_height="30dp"
-        android:text="Welcome to the Wild Hunt"
+        android:fontFamily="casual"
         android:gravity="center"
-        android:fontFamily="serif"
-        android:textColor="@android:color/holo_green_dark"
+        android:text="Welcome to the Wild Hunt"
+        android:textAllCaps="true"
+        android:textColor="#ffff"
+        android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
@@ -33,33 +37,68 @@
         android:id="@+id/button3"
         android:layout_width="142dp"
         android:layout_height="65dp"
+        android:fontFamily="casual"
         android:text="PLAY"
-        android:fontFamily="serif"
+        android:textAllCaps="false"
         android:textColor="@android:color/holo_green_dark"
+        android:textStyle="bold|italic"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="235dp"
+        android:layout_height="39dp"
+        android:gravity="center"
+        android:hint="PSEUDO"
+        android:textColor="@android:color/holo_green_dark"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/editText4"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="235dp"
+        android:layout_height="39dp"
+        android:gravity="center"
+        android:hint="Password"
+        android:textColor="@android:color/holo_green_dark"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="118dp"
         android:layout_height="48dp"
-        android:text="LOG IN"
         android:fontFamily="serif"
+        android:text="LOG IN"
         android:textColor="@android:color/holo_green_dark"
+        android:textStyle="italic"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/button5"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="122dp"
         android:layout_height="48dp"
-        android:text="SIGN IN"
         android:fontFamily="serif"
+        android:text="SIGN IN"
+        android:textAllCaps="false"
         android:textColor="@android:color/holo_green_dark"
+        android:textStyle="bold|italic"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
