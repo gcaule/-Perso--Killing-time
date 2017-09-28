@@ -8,56 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:256010788591:android:26ed70e7a93a9d7b",
-        "android_client_info": {
-          "package_name": "com.example.katarie.myapplication"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "256010788591-g4piacad82i9qjqqvnjc19smu0s9gp82.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.katarie.myapplication",
-            "certificate_hash": "31b2e70e3e87d36e34019611a9d4fa0383143b6a"
-          }
-        },
-        {
-          "client_id": "256010788591-patglmhfo7tbso46jomdpavpfbn3np0c.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCozFlCQivdRP9zojgksgXz9dp5b8vKk5Y"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "256010788591-patglmhfo7tbso46jomdpavpfbn3np0c.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:256010788591:android:c84f4438fa911e02",
         "android_client_info": {
           "package_name": "fr.indianacroft.wildhunt"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "256010788591-n0q409q9pbmvv63l1jfevnaa6dt99ojc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.indianacroft.wildhunt",
+            "certificate_hash": "378c47cdc0a94c66d2471fbe2a4a9580e163fabe"
+          }
+        },
         {
           "client_id": "256010788591-mltucs3vltim8n9a8nleds97cs100kp1.apps.googleusercontent.com",
           "client_type": 1,
