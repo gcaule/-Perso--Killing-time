@@ -22,9 +22,10 @@
             android:label="@string/title_activity_tab_"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Tab_HomeJoueur"
+            android:name=".HomeJoueur"
             android:label="Home Joueur"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

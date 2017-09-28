@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         butPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Tab_HomeJoueur.class);
+                Intent intent = new Intent(MainActivity.this, HomeJoueur.class);
                 startActivity(intent);
             }
         });//Button Play

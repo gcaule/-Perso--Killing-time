@@ -12,10 +12,15 @@ public class BDD {
 
     // Constructor
     public BDD() {
+        // Needed for Firebase
     }
 
 
-
+    public BDD(String nom, String theme, int id_party) {
+        this.nom = nom;
+        this.theme = theme;
+        this.id_party = id_party;
+    }
 
     // GEtter & Setter
     public int getId_party() {

@@ -56,7 +56,6 @@
         android:layout_marginTop="26dp"
         android:text="Ce texte doit expliquer en quoi consiste la partie, le nombre de challenges, les quartiers etc, etc etc, une description quoi"
         android:textSize="18sp"
-        android:visibility="gone"
         app:layout_constraintHorizontal_bias="0.424"
         app:layout_constraintLeft_toLeftOf="@+id/buttonLobbyName"
         app:layout_constraintRight_toRightOf="parent"

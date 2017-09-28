@@ -9,12 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 
-public class Tab_HomeJoueur_PlayerActivity extends Fragment {
+public class HomeJoueur_PlayerActivity extends Fragment {
 
     Button butNewChallenge;
     Button butNewChallenge2;
@@ -24,7 +22,7 @@ public class Tab_HomeJoueur_PlayerActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab_homejoueur_playeractivity, container, false);
+        View rootView = inflater.inflate(R.layout.homejoueur_playeractivity, container, false);
 
         return rootView;
     }
