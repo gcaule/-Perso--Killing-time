@@ -1,5 +1,6 @@
 package fr.indianacroft.wildhunt;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -105,7 +106,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     Toast.makeText(ProfileActivity.this, "Créer lien page camera", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.navigation_switch:
-                    Toast.makeText(ProfileActivity.this, "Créer lien page switch", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ProfileActivity.this, HomeJoueur.class);
+                    startActivity(intent);
                     return true;
                 case R.id.navigation_notifications:
                     Toast.makeText(ProfileActivity.this, "Créer lien page Notifications", Toast.LENGTH_SHORT).show();

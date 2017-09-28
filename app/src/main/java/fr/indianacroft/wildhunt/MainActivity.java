@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });//Button Play
-        but2 = (Button) findViewById(R.id.button2);
+        but2 = (Button) findViewById(R.id.buttonInscriptionSignIn);
         but2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
