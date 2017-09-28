@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/settings"
+            android:title="My account" />
+        <item
+            android:id="@+id/nav_rules"
+            android:icon="@drawable/book"
+            android:title="Rules" />
+        <item
+            android:id="@+id/nav_quests"
+            android:icon="@drawable/map"
+            android:title="My current quests" />
+
+        <item
+            android:id="@+id/nav_switch"
+            android:icon="@drawable/users"
+            android:title="Switch Game Master/Player" />
+        <item
+            android:id="@+id/nav_delete"
+            android:icon="@drawable/delete"
+            android:title="Deconnexion" />
+    </group>
+
+</menu>

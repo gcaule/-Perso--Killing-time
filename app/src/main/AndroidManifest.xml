@@ -19,7 +19,15 @@
         <activity
             android:name=".Tab_Activity"
             android:label="@string/title_activity_tab_"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Challenges_Activity"
+            android:label="@string/title_activity_challenges_"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Profile_Activity"
+            android:label="@string/title_activity_profile_"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
