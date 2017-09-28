@@ -6,7 +6,7 @@ package fr.indianacroft.wildhunt;
 
 public class BDD {
 
-    private String nom;
+    private String Nom;
     private String theme;
     private int id_party;
 
@@ -17,7 +17,7 @@ public class BDD {
 
 
     public BDD(String nom, String theme, int id_party) {
-        this.nom = nom;
+        this.Nom = nom;
         this.theme = theme;
         this.id_party = id_party;
     }
@@ -32,11 +32,11 @@ public class BDD {
     }
 
     public String getNom() {
-        return nom;
+        return Nom;
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.Nom = nom;
     }
 
     public String getTheme() {

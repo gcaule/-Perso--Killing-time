@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -58,8 +59,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeJoueur_LobbyActivity extends Fragment {
     private static final String TAG = HomeJoueur_LobbyActivity.class.getSimpleName();
-    private HomeJoueur_LobbyAdapter mLobbyAdapter;
-    private DatabaseReference mDatabaseRef;
     private DatabaseReference childRef;
     public HomeJoueur_LobbyActivity() {
     }
@@ -68,18 +67,44 @@ public class HomeJoueur_LobbyActivity extends Fragment {
         View view = inflater.inflate(R.layout.homejoueur_lobbyactivity, container, false);
         //TODO titre ?
         // getActivity().setTitle(getString(R.string.recipe_categories));
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        RecyclerView lobbyRecyclerview = (RecyclerView)view.findViewById(R.id.recyclerViewHomeJoueurLobby);
+//        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        RecyclerView lobbyRecyclerview = (RecyclerView)view.findViewById(R.id.recyclerViewHomeJoueurLobby);
+//
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        lobbyRecyclerview.setLayoutManager(linearLayoutManager);
+//
+//        lobbyRecyclerview.setHasFixedSize(true);
+//        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+//        childRef = mDatabaseRef.child("pushld");
+//        mLobbyAdapter = new HomeJoueur_LobbyAdapter(BDD.class, R.layout.homejoueur_lobby, HomeJoueur_LobbyHolder.class, childRef, getContext());
+//
+//        lobbyRecyclerview.setAdapter(mLobbyAdapter);
 
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        lobbyRecyclerview.setLayoutManager(linearLayoutManager);
+        RecyclerView recyclerViewLobby = (RecyclerView) view.findViewById(R.id.recyclerViewHomeJoueurLobby);
+        recyclerViewLobby.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //lobbyRecyclerview.setHasFixedSize(true);
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
-        childRef = mDatabaseRef.child("pushld");
-        mLobbyAdapter = new HomeJoueur_LobbyAdapter(BDD.class, R.layout.homejoueur_lobby, HomeJoueur_LobbyHolder.class, childRef, getContext());
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        lobbyRecyclerview.setAdapter(mLobbyAdapter);
+        FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<BDD, HomeJoueur_LobbyHolder>(
+                BDD.class,
+                R.layout.homejoueur_lobby,
+                HomeJoueur_LobbyHolder.class,
+                ref) {
+            @Override
+            public void populateViewHolder(HomeJoueur_LobbyHolder holder, BDD bdd, int position) {
+                holder.setName(bdd.getNom());
+                holder.setTheme(bdd.getTheme());
+            }
+        };
+
+        recyclerViewLobby.setAdapter(mAdapter);
+
+
+
+
+
         return view;
     }
+
+
 }
