@@ -1,6 +1,9 @@
 package fr.indianacroft.wildhunt;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -55,6 +58,10 @@ public class HomeJoueur extends AppCompatActivity {
                 Toast.makeText(HomeJoueur.this, "Créer lien page menu", Toast.LENGTH_LONG).show();
             }
         });
+
+        // Bottom Navigation Bar
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     @Override
@@ -107,4 +114,28 @@ public class HomeJoueur extends AppCompatActivity {
             return null;
         }
     }
+
+    // Bottom Navigation Bar
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    Toast.makeText(HomeJoueur.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.navigation_camera:
+                    Toast.makeText(HomeJoueur.this, "Créer lien page camera", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.navigation_switch:
+                    Intent intent = new Intent(HomeJoueur.this, HomeGameMaster.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.navigation_notifications:
+                    Toast.makeText(HomeJoueur.this, "Créer lien page Notifications", Toast.LENGTH_SHORT).show();
+                    return true;
+            }
+            return false;
+        }
+    };
 }

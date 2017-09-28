@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         but2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Tab_Activity.class);
+                Intent intent = new Intent(MainActivity.this, HomeGameMaster.class);
                 startActivity(intent);
             }
         });
