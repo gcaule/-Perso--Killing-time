@@ -9,13 +9,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ConnexionActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>>
+
         </activity>
+        <activity android:name=".HomeGameMaster"
+            android:label="@string/title_activity_tab_"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ChallengesActivity"
+            android:label="@string/title_activity_challenges_"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile_"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HomeJoueur"
+            android:label="Home Joueur"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".InscriptionActivity"
+            android:label="Inscription"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">WildHunt</string>
+    <string name="title_activity_tab_">Tab_Activity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_challenges_">Challenges_Activity</string>
+    <string name="title_activity_profile_">Profile</string>
+
+    // Spinners
+    <string-array name="life_duration">
+        <item>Short (1 day)</item>
+        <item>Normal (3 days)</item>
+        <item>Medium (5 days)</item>
+        <item>Long (7 days)</item>
+    </string-array>
+    <string-array name="challenge_difficulty">
+        <item>Easy - 30 pts</item>
+        <item>Normal 50 pts</item>
+        <item>Hard - 100 pts</item>
+    </string-array>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
 </resources>
