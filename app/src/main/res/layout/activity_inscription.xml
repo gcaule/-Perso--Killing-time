@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.indianacroft.wildhunt.InscriptionActivity"
+    tools:layout_editor_absoluteY="81dp"
+    android:background="@drawable/wood_background3"
+    tools:layout_editor_absoluteX="0dp">
+
+
+    <ImageView
+        android:id="@+id/imageViewInscriptionLogo"
+        android:layout_width="116dp"
+        android:layout_height="101dp"
+        app:srcCompat="@drawable/rosedesventslogo"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/editTextInscriptionPseudo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextInscriptionPseudo"
+        android:layout_width="368dp"
+        android:layout_height="40dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:hint="PSEUDO"
+        android:textAllCaps="false"
+        android:textColor="@android:color/holo_green_dark"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/editTextInscriptionMail"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewInscriptionLogo" />
+
+    <EditText
+        android:id="@+id/editTextInscriptionMail"
+        android:layout_width="368dp"
+        android:layout_height="40dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:hint="EMAil or PSEUDO"
+        android:textAllCaps="false"
+        android:textColor="@android:color/holo_green_dark"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/editTextInscriptionPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextInscriptionPseudo" />
+
+    <EditText
+        android:id="@+id/editTextInscriptionPassword"
+        android:layout_width="368dp"
+        android:layout_height="40dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:hint="PASSWORD"
+        android:textColor="@android:color/holo_green_dark"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/editTextInscriptionPasswordConfirmation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextInscriptionMail" />
+
+    <EditText
+        android:id="@+id/editTextInscriptionPasswordConfirmation"
+        android:layout_width="368dp"
+        android:layout_height="40dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:hint="Password Confirmation"
+        android:textAllCaps="false"
+        android:textColor="@android:color/holo_green_dark"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/buttonInscriptionSignIn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextInscriptionPassword" />
+
+    <Button
+        android:id="@+id/buttonInscriptionSignIn"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:text="SIGN IN"
+        android:textAllCaps="false"
+        android:textColor="@android:color/holo_green_dark"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextInscriptionPasswordConfirmation" />
+
+</android.support.constraint.ConstraintLayout>

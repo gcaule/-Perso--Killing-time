@@ -10,12 +10,12 @@ import android.view.ViewGroup;
  * Created by apprenti on 9/26/17.
  */
 
-public class Tab2_Activity extends Fragment {
+public class HomeGameMaster_QuestCreated extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab2, container, false);
+        View rootView = inflater.inflate(R.layout.homegamemaster_questcreated, container, false);
         return rootView;
     }
 }

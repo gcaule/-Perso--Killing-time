@@ -14,7 +14,7 @@
         android:text="PLAY"
         android:textColor="#FFFFFF"
         android:background="@drawable/button_shape"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/buttonInscriptionSignIn"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -22,13 +22,13 @@
         tools:layout_editor_absoluteX="65dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonInscriptionSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LOG IN"
         android:textColor="#FFFFFF"
         android:background="@drawable/button_shape"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/buttonConnexionPlay"
         app:layout_constraintTop_toBottomOf="@+id/butPlay"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -41,7 +41,7 @@
         android:textColor="#FFFFFF"
         android:background="@drawable/button_shape"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/buttonInscriptionSignIn"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.506" />

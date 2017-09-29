@@ -7,10 +7,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="fr.wcs.testfragments.Tab1_Activity">
+    tools:context="fr.indianacroft.wildhunt.HomeGameMaster">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextInscriptionPasswordConfirmation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -18,10 +18,10 @@
         android:hint="Add quest name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView" />
+        android:layout_below="@+id/textViewHomeJoueurPartyName" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewHomeJoueurPartyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Quest Name"
@@ -29,7 +29,7 @@
         />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextInscriptionPseudo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -37,17 +37,17 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Chose a theme"
-        android:layout_alignTop="@+id/editText"
-        android:layout_toRightOf="@+id/editText"
-        android:layout_toEndOf="@+id/editText" />
+        android:layout_alignTop="@+id/editTextInscriptionPasswordConfirmation"
+        android:layout_toRightOf="@+id/editTextInscriptionPasswordConfirmation"
+        android:layout_toEndOf="@+id/editTextInscriptionPasswordConfirmation" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView"
-        android:layout_toEndOf="@+id/editText"
-        android:layout_toRightOf="@+id/editText"
+        android:layout_alignTop="@+id/textViewHomeJoueurPartyName"
+        android:layout_toEndOf="@+id/editTextInscriptionPasswordConfirmation"
+        android:layout_toRightOf="@+id/editTextInscriptionPasswordConfirmation"
         android:text="Theme (optional)"
         android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/editTextInscriptionPasswordConfirmation"
         android:layout_marginTop="22dp"
         android:text="Description (optional)"
         android:textStyle="bold" />

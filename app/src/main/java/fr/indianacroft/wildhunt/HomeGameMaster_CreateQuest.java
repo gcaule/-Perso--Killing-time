@@ -1,9 +1,5 @@
 package fr.indianacroft.wildhunt;
 
-/**
- * Created by apprenti on 9/26/17.
- */
-
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -14,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-public class Tab1_Activity extends Fragment {
+public class HomeGameMaster_CreateQuest extends Fragment {
 
     Button butNewChallenge;
     Button butNewChallenge2;
@@ -23,7 +19,7 @@ public class Tab1_Activity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab1, container, false);
+        View rootView = inflater.inflate(R.layout.homegamemaster_createquest, container, false);
 
         // Spinner
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
@@ -37,7 +33,7 @@ public class Tab1_Activity extends Fragment {
         butNewChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Challenges_Activity.class);
+                Intent intent = new Intent(getActivity(), ChallengesActivity.class);
                 startActivity(intent);
             }
         });
@@ -45,7 +41,7 @@ public class Tab1_Activity extends Fragment {
         butNewChallenge2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Challenges_Activity.class);
+                Intent intent = new Intent(getActivity(), ChallengesActivity.class);
                 startActivity(intent);
             }
         });
@@ -53,7 +49,7 @@ public class Tab1_Activity extends Fragment {
         butAddNewChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Challenges_Activity.class);
+                Intent intent = new Intent(getActivity(), ChallengesActivity.class);
                 startActivity(intent);
             }
         });

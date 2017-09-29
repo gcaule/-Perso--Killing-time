@@ -20,7 +20,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class Tab_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeGameMaster extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -28,7 +28,7 @@ public class Tab_Activity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab);
+        setContentView(R.layout.activity_homegamemaster);
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -48,6 +48,16 @@ public class Tab_Activity extends AppCompatActivity implements NavigationView.On
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        // Avatar
+        ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        imageViewAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeGameMaster.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Fragment Adapter
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
@@ -55,16 +65,6 @@ public class Tab_Activity extends AppCompatActivity implements NavigationView.On
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        // Avatar
-        ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
-        imageViewAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Tab_Activity.this, Profile_Activity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     // Fragments
@@ -76,13 +76,13 @@ public class Tab_Activity extends AppCompatActivity implements NavigationView.On
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    Tab1_Activity tab1 = new Tab1_Activity();
+                    HomeGameMaster_CreateQuest tab1 = new HomeGameMaster_CreateQuest();
                     return tab1;
                 case 1:
-                    Tab2_Activity tab2 = new Tab2_Activity();
+                    HomeGameMaster_QuestCreated tab2 = new HomeGameMaster_QuestCreated();
                     return tab2;
                 case 2:
-                    Tab3_Activity tab3 = new Tab3_Activity();
+                    HomeGameMaster_ValidateQuest tab3 = new HomeGameMaster_ValidateQuest();
                     return tab3;
                 default:
                     return null;
@@ -107,6 +107,16 @@ public class Tab_Activity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        return super.onOptionsItemSelected(item);
+    }
+
     // Drawer Menu
     @Override
     public void onBackPressed() {
@@ -117,14 +127,7 @@ public class Tab_Activity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
-    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -132,18 +135,18 @@ public class Tab_Activity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         // TODO : remplacer les toasts par des liens
         if (id == R.id.nav_home) {
-            Toast.makeText(Tab_Activity.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeGameMaster.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_rules) {
-            Toast.makeText(Tab_Activity.this, "Créer lien page Rules", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeGameMaster.this, "Créer lien page Rules", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_settings) {
-            Intent intent = new Intent(Tab_Activity.this, Profile_Activity.class);
+            Intent intent = new Intent(HomeGameMaster.this, ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_quests) {
-            Toast.makeText(Tab_Activity.this, "Créer lien page Quests", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeGameMaster.this, "Créer lien page Quests", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_switch) {
-            Toast.makeText(Tab_Activity.this, "Créer lien page Switch", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeGameMaster.this, "Créer lien page Switch", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_delete) {
-            Toast.makeText(Tab_Activity.this, "Déco joueur", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeGameMaster.this, "Déco joueur", Toast.LENGTH_SHORT).show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -157,16 +160,17 @@ public class Tab_Activity extends AppCompatActivity implements NavigationView.On
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    Toast.makeText(Tab_Activity.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeGameMaster.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.navigation_camera:
-                    Toast.makeText(Tab_Activity.this, "Créer lien page camera", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeGameMaster.this, "Créer lien page camera", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.navigation_switch:
-                    Toast.makeText(Tab_Activity.this, "Créer lien page switch", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(HomeGameMaster.this, HomeJoueur.class);
+                    startActivity(intent);
                     return true;
                 case R.id.navigation_notifications:
-                    Toast.makeText(Tab_Activity.this, "Créer lien page Notifications", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeGameMaster.this, "Créer lien page Notifications", Toast.LENGTH_SHORT).show();
                     return true;
             }
             return false;
