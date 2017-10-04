@@ -22,7 +22,7 @@ public class HomeGameMaster_CreateQuest extends Fragment {
         View rootView = inflater.inflate(R.layout.homegamemaster_createquest, container, false);
 
         // Spinner
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner_challenge);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.life_duration, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -72,7 +72,7 @@
             android:layout_weight="1"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <android.support.design.widget.BottomNavigationView
+        <!--<android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -80,7 +80,7 @@
             android:background="@drawable/bars_colors"
             app:menu="@menu/navigation"
             app:itemIconTint="#FFFFFF"
-            app:itemTextColor="#FFFFFF"/>
+            app:itemTextColor="#FFFFFF"/>-->
 
     </LinearLayout>
 
