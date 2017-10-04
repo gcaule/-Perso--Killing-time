@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="fr.indianacroft.wildhunt.HomeGameMaster"
+        tools:context="fr.indianacroft.wildhunt.Rules"
         android:background="@drawable/wood_background3"
         android:focusable="true"
         android:focusableInTouchMode="true">
@@ -49,7 +49,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="HOME\nGAME MASTER"
+                    android:text="Règles du jeu"
                     android:gravity="center"
                     android:fontFamily="casual"
                     android:textStyle="bold"
@@ -72,6 +72,16 @@
             android:layout_weight="1"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <!--<android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bars_colors"
+            app:menu="@menu/navigation"
+            app:itemIconTint="#FFFFFF"
+            app:itemTextColor="#FFFFFF"/>-->
+
     </LinearLayout>
 
     <android.support.design.widget.NavigationView
@@ -84,3 +94,4 @@
         app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
+

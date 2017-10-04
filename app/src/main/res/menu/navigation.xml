@@ -3,22 +3,18 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:icon="@drawable/ic_home_black_24dp"/>
 
     <item
         android:id="@+id/navigation_camera"
-        android:icon="@drawable/photo_camera"
-        android:title="Camera" />
+        android:icon="@drawable/photo_camera"/>
 
     <item
         android:id="@+id/navigation_switch"
-        android:icon="@drawable/users"
-        android:title="Switch GM/P" />
+        android:icon="@drawable/users"/>
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/message"
-        android:title="@string/title_notifications" />
+        android:icon="@drawable/message"/>
 
 </menu>

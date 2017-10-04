@@ -1,9 +1,11 @@
 package fr.indianacroft.wildhunt;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,17 +21,18 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+
 public class ChallengesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     EditText editTextChallengeName;
-    EditText editTextChallengeDescription;
     EditText editTextHint;
     String editTextChallengeNameContent;
-    String editTextChallengeDescriptionContent;
     String editTextHintContent;
     Button butCreateChallenge;
-    /*ImageView imageViewCancel;
-    ImageView imageViewCancel2;*/
+    ImageView imageViewInscriptionLogo;
+    Button butLoad;
+    Button butUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +53,6 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Bottom Navigation Bar
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         // Avatar
         ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +64,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         });
 
         // Spinner
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        final Spinner spinner = (Spinner) findViewById(R.id.spinner_challenge);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.challenge_difficulty, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -73,9 +72,8 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 
         // Button Actions / Change ImageView / Text in buttons
         // TODO : changer les challenges en list view
-        editTextChallengeName = (EditText) findViewById(R.id.editTextChallengeName);
-        editTextChallengeDescription = (EditText) findViewById(R.id.editTextChallengeDescription);
-        editTextHint = (EditText) findViewById(R.id.editTextHint);
+        editTextChallengeName = (EditText) findViewById(R.id.name_challenge);
+        editTextHint = (EditText) findViewById(R.id.hint_challenge);
         butCreateChallenge = (Button) findViewById(R.id.butCreateChallenge);
         /*imageViewCancel = (ImageView) findViewById(R.id.imageViewCancel);
         imageViewCancel2 = (ImageView) findViewById(R.id.imageViewCancel2);*/
@@ -83,9 +81,8 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             @Override
             public void onClick(View view) {
                 editTextChallengeNameContent = editTextChallengeName.getText().toString();
-                editTextChallengeDescriptionContent = editTextChallengeDescription.getText().toString();
                 editTextHintContent = editTextHint.getText().toString();
-                if ((!editTextChallengeNameContent.equals("")) && (!editTextChallengeDescriptionContent.equals("")) && (!editTextHintContent.equals(""))) {
+                if ((!editTextChallengeNameContent.equals("")) && (!editTextHintContent.equals(""))) {
                     /*imageViewCancel.setImageResource(R.drawable.checked);
                     imageViewCancel2.setImageResource(R.drawable.checked);
                     butNewChallenge.setText("Challenge 1 created");
@@ -93,10 +90,27 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                     Intent intent = new Intent(ChallengesActivity.this, HomeGameMaster.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(ChallengesActivity.this, "Please enter all quest details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChallengesActivity.this, R.string.toast_challenge, Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        // Upload & Take photo
+        butLoad = (Button) findViewById(R.id.butLoad);
+        butLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dispatchTakePictureIntent();
+            }
+        });
+        butUpload = (Button) findViewById(R.id.butUpload);
+        butUpload.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 0);
+            }});
     }
 
     // Drawer Menu
@@ -124,16 +138,22 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         int id = item.getItemId();
         // TODO : remplacer les toasts par des liens
         if (id == R.id.nav_home) {
-            Toast.makeText(ChallengesActivity.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ChallengesActivity.this, HomeGameMaster.class);
+            startActivity(intent);
         } else if (id == R.id.nav_rules) {
-            Toast.makeText(ChallengesActivity.this, "Créer lien page Rules", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(ChallengesActivity.this, Rules.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_profile) {
             Intent intent = new Intent(ChallengesActivity.this, ProfileActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_camera) {
+            Toast.makeText(ChallengesActivity.this, "Lien page Photo", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_quests) {
-            Toast.makeText(ChallengesActivity.this, "Créer lien page Quests", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ChallengesActivity.this, HomeGameMaster.class);
+            startActivity(intent);
         } else if (id == R.id.nav_switch) {
-            Toast.makeText(ChallengesActivity.this, "Créer lien page Switch", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ChallengesActivity.this, HomeJoueur.class);
+            startActivity(intent);
         } else if (id == R.id.nav_delete) {
             Toast.makeText(ChallengesActivity.this, "Déco joueur", Toast.LENGTH_SHORT).show();
         }
@@ -142,26 +162,33 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         return true;
     }
 
-    // Bottom Navigation Bar
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    Toast.makeText(ChallengesActivity.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_camera:
-                    Toast.makeText(ChallengesActivity.this, "Créer lien page camera", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_switch:
-                    Toast.makeText(ChallengesActivity.this, "Créer lien page switch", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_notifications:
-                    Toast.makeText(ChallengesActivity.this, "Créer lien page Notifications", Toast.LENGTH_SHORT).show();
-                    return true;
-            }
-            return false;
+    // Send photos to ImageView
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
-    };
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        imageViewInscriptionLogo = (ImageView) findViewById(R.id.imageViewInscriptionLogo);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK
+                //&& data != null && data.getData() != null
+            ) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageViewInscriptionLogo.setImageBitmap(imageBitmap);
+        }
+        if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri targetUri = data.getData();
+            Bitmap bitmap;
+            try {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                imageViewInscriptionLogo.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

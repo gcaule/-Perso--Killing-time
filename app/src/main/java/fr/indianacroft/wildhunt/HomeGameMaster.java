@@ -1,8 +1,6 @@
 package fr.indianacroft.wildhunt;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -43,10 +41,6 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        // Bottom Navigation Bar
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // Avatar
         ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
@@ -106,8 +100,6 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
             return null;
         }
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -127,7 +119,6 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
             super.onBackPressed();
         }
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -135,16 +126,21 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
         int id = item.getItemId();
         // TODO : remplacer les toasts par des liens
         if (id == R.id.nav_home) {
-            Toast.makeText(HomeGameMaster.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeGameMaster.this, "Vous êtes déjà sur la page Acceuil", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_rules) {
-            Toast.makeText(HomeGameMaster.this, "Créer lien page Rules", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(HomeGameMaster.this, Rules.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_profile) {
             Intent intent = new Intent(HomeGameMaster.this, ProfileActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_camera) {
+                Toast.makeText(HomeGameMaster.this, "Lien page Photo", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_quests) {
-            Toast.makeText(HomeGameMaster.this, "Créer lien page Quests", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(HomeGameMaster.this, HomeGameMaster.class);
+            startActivity(intent);
         } else if (id == R.id.nav_switch) {
-            Toast.makeText(HomeGameMaster.this, "Créer lien page Switch", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(HomeGameMaster.this, HomeJoueur.class);
+            startActivity(intent);
         } else if (id == R.id.nav_delete) {
             Toast.makeText(HomeGameMaster.this, "Déco joueur", Toast.LENGTH_SHORT).show();
         }
@@ -152,28 +148,4 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    // Bottom Navigation Bar
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    Toast.makeText(HomeGameMaster.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_camera:
-                    Toast.makeText(HomeGameMaster.this, "Créer lien page camera", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_switch:
-                    Intent intent = new Intent(HomeGameMaster.this, HomeJoueur.class);
-                    startActivity(intent);
-                    return true;
-                case R.id.navigation_notifications:
-                    Toast.makeText(HomeGameMaster.this, "Créer lien page Notifications", Toast.LENGTH_SHORT).show();
-                    return true;
-            }
-            return false;
-        }
-    };
 }

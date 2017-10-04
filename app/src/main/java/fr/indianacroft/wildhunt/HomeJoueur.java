@@ -54,10 +54,10 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
             }
         });
 
-        // Bottom Navigation Bar
+        /* Bottom Navigation Bar
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        BottomNavigationViewHelper.disableShiftMode(navigation);*/
 
         // Fragment Adapter
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -68,8 +68,6 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
         tabLayout.setupWithViewPager(mViewPager);
 
     }
-
-
 
     // Fragments
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -93,7 +91,6 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
                     return null;
             }
         }
-
         @Override
         public int getCount() {
             // Show 2 total pages.
@@ -122,8 +119,6 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
         return super.onOptionsItemSelected(item);
     }
 
-
-
     // Drawer Menu
     @Override
     public void onBackPressed() {
@@ -134,7 +129,6 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
             super.onBackPressed();
         }
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -142,16 +136,21 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
         int id = item.getItemId();
         // TODO : remplacer les toasts par des liens
         if (id == R.id.nav_home) {
-            Toast.makeText(HomeJoueur.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeJoueur.this, "Vous êtes déjà sur la page Acceuil", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_rules) {
-            Toast.makeText(HomeJoueur.this, "Créer lien page Rules", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(HomeJoueur.this, Rules.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_profile) {
             Intent intent = new Intent(HomeJoueur.this, ProfileActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_camera) {
+            Toast.makeText(HomeJoueur.this, "Lien page Photo", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_quests) {
-            Toast.makeText(HomeJoueur.this, "Créer lien page Quests", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(HomeJoueur.this, HomeJoueur.class);
+            startActivity(intent);
         } else if (id == R.id.nav_switch) {
-            Toast.makeText(HomeJoueur.this, "Créer lien page Switch", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(HomeJoueur.this, HomeGameMaster.class);
+            startActivity(intent);
         } else if (id == R.id.nav_delete) {
             Toast.makeText(HomeJoueur.this, "Déco joueur", Toast.LENGTH_SHORT).show();
         }
@@ -160,8 +159,7 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
-
-    // Bottom Navigation Bar
+    /* Bottom Navigation Bar
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -183,5 +181,5 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
             }
             return false;
         }
-    };
+    };*/
 }

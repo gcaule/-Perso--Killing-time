@@ -9,8 +9,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fr.indianacroft.wildhunt.HomeGameMaster">
 
+    <TextView
+        android:id="@+id/name_quest_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quest Name"
+        android:textStyle="bold" />
+
     <EditText
-        android:id="@+id/editTextInscriptionPasswordConfirmation"
+        android:id="@+id/name_quest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -18,79 +25,49 @@
         android:hint="Add quest name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textViewHomeJoueurPartyName" />
-
-    <TextView
-        android:id="@+id/textViewHomeJoueurPartyName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quest Name"
-        android:textStyle="bold"
-        />
-
-    <EditText
-        android:id="@+id/editTextInscriptionPseudo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Chose a theme"
-        android:layout_alignTop="@+id/editTextInscriptionPasswordConfirmation"
-        android:layout_toRightOf="@+id/editTextInscriptionPasswordConfirmation"
-        android:layout_toEndOf="@+id/editTextInscriptionPasswordConfirmation" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textViewHomeJoueurPartyName"
-        android:layout_toEndOf="@+id/editTextInscriptionPasswordConfirmation"
-        android:layout_toRightOf="@+id/editTextInscriptionPasswordConfirmation"
-        android:text="Theme (optional)"
-        android:textStyle="bold" />
+        android:layout_below="@+id/name_quest_title" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editTextInscriptionPasswordConfirmation"
+        android:layout_below="@+id/name_quest"
         android:layout_marginTop="22dp"
-        android:text="Description (optional)"
+        android:text="Description"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editText3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Describe your quest"
+        android:maxLength="200"
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/life_duration_quest_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView3"
-        android:layout_toEndOf="@+id/editText3"
-        android:layout_toRightOf="@+id/editText3"
         android:text="Life Duration"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/name_quest"
+        android:layout_toEndOf="@+id/name_quest" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinner_challenge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText3"
         android:layout_toRightOf="@+id/editText3"
         android:layout_toEndOf="@+id/editText3"
-        android:layout_below="@+id/textView4" />
+        android:layout_below="@+id/life_duration_quest_title"
+        android:layout_alignBottom="@+id/name_quest" />
 
     <Button
         android:id="@+id/button"
@@ -163,8 +140,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/butNewChallenge"
-        android:layout_toEndOf="@+id/textView4"
-        android:layout_toRightOf="@+id/textView4"
+        android:layout_toEndOf="@+id/life_duration_quest_title"
+        android:layout_toRightOf="@+id/life_duration_quest_title"
         app:srcCompat="@drawable/cancel" />
 
     <ImageView
