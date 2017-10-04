@@ -25,5 +25,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="lobby_create_party">Créer ta propre Quête !</string>
+    <string name="lobby_list_quest">Liste des Quêtes</string>
 
 </resources>

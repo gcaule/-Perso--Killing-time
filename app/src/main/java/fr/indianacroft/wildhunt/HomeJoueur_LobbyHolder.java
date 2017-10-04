@@ -13,13 +13,22 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
 
 
     public Button mNamePartyLobby;
-    public TextView mThemePartyLobby;
+    public TextView mDescriptionPartyLobby;
+    public Button mDiscoverPartyLobby;
 
-    public HomeJoueur_LobbyHolder(View itemView) {
+    public HomeJoueur_LobbyHolder(final View itemView) {
         super(itemView);
         mNamePartyLobby = (Button) itemView.findViewById(R.id.buttonLobbyName);
-        mThemePartyLobby = (TextView) itemView.findViewById(R.id.textViewLobbyDescription);
-        mThemePartyLobby.setVisibility(View.GONE);
+        mDescriptionPartyLobby = (TextView) itemView.findViewById(R.id.textViewLobbyDescription);
+        mDescriptionPartyLobby.setVisibility(View.GONE);
+
+        mDiscoverPartyLobby = (Button) itemView.findViewById(R.id.buttonLobbyDetails);
+        mDiscoverPartyLobby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemView.callOnClick();
+            }
+        });
 
         //listener set on ENTIRE ROW, you may set on individual components within a row.
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -43,12 +52,15 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
     }
 
 
+///////// POUR RENTRER LES DONNEES DANS LE RECYCLER VIEW \\\\\\\\\\\\\\\
+    //______________________________________________________\\
 
+    // Pour mettre le nom de la party / quête dans le reclycer view
     public void setName(String name) {
         mNamePartyLobby.setText(name);
     }
-
-    public void setTheme(String theme) {
-        mThemePartyLobby.setText(theme);
+    // pour mettre la description de la party / quête dans le recycler view
+    public void setDescription(String description) {
+        mDescriptionPartyLobby.setText(description);
     }
 }

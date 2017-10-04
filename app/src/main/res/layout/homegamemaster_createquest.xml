@@ -36,7 +36,7 @@
         android:layout_alignParentRight="true"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Chose a theme"
+        android:hint="Chose a description"
         android:layout_alignTop="@+id/editTextInscriptionPasswordConfirmation"
         android:layout_toRightOf="@+id/editTextInscriptionPasswordConfirmation"
         android:layout_toEndOf="@+id/editTextInscriptionPasswordConfirmation" />

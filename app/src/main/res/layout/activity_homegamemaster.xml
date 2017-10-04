@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/appbar_padding_top"
-            android:theme="@style/AppTheme.AppBarOverlay"
+            android:description="@style/AppTheme.AppBarOverlay"
             android:background="@android:color/transparent">
 
             <android.support.v7.widget.Toolbar
@@ -37,6 +37,12 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 android:background="@android:color/transparent">
+
+                <FrameLayout
+                    android:id="@+id/fragment_container"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                </FrameLayout>
 
                 <ImageView
                     android:id="@+id/imageViewAvatar"
