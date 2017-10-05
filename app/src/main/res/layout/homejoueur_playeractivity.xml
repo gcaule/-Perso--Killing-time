@@ -68,7 +68,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:text="Ici sera présenter le texte de présentation du challenge et de la photo a trouver. Exemple nom du quartier etc"
+                android:text="Ici sera présenter le texte de présentation du challenge et de la photo a trouver. Exemple quest_name du quartier etc"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -106,48 +106,6 @@
                 app:layout_constraintLeft_toRightOf="@+id/buttonHomeJoueurHint"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/buttonHomeJoueurHint" />
-
-            <Button
-                android:id="@+id/buttonHomeJoueurSolution"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="160dp"
-                android:background="@drawable/customborder"
-                android:text="VOTRE SOLUTION"
-                android:textColor="#FFFFFF"
-                app:layout_constraintLeft_toLeftOf="@+id/buttonHomeJoueurHint"
-                app:layout_constraintRight_toRightOf="@+id/buttonHomeJoueurHint"
-                app:layout_constraintTop_toBottomOf="@+id/buttonHomeJoueurHint" />
-
-            <ImageView
-                android:id="@+id/imageViewHomeJoueurImageSolution"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="-100dp"
-                app:layout_constraintHorizontal_bias="0.568"
-                app:layout_constraintLeft_toLeftOf="@+id/buttonHomeJoueurSolution"
-                app:layout_constraintTop_toBottomOf="@+id/buttonHomeJoueurSolution"
-                app:srcCompat="@android:drawable/ic_delete"
-                app:layout_constraintRight_toRightOf="@+id/buttonHomeJoueurSolution" />
-
-            <Button
-                android:id="@+id/buttonHomeJoueurValidate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:text="ENVOYER"
-                app:layout_constraintHorizontal_bias="0.506"
-                app:layout_constraintLeft_toLeftOf="@+id/imageViewHomeJoueurImageSolution"
-                app:layout_constraintRight_toRightOf="@+id/imageViewHomeJoueurImageSolution"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewHomeJoueurImageSolution" />
 
             <Button
                 android:id="@+id/buttonHomeJoueurSendSolution"

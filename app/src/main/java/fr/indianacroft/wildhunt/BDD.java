@@ -6,8 +6,8 @@ package fr.indianacroft.wildhunt;
 
 public class BDD {
 
-    private String Nom;
-    private String description;
+    private String quest_name;
+    private String quest_description;
     private int id_party;
 
     // Constructor
@@ -16,9 +16,9 @@ public class BDD {
     }
 
 
-    public BDD(String nom, String description, int id_party) {
-        this.Nom = nom;
-        this.description = description;
+    public BDD(String questname, String quest_description, int id_party) {
+        this.quest_name = questname;
+        this.quest_description = quest_description;
         this.id_party = id_party;
     }
 
@@ -31,20 +31,20 @@ public class BDD {
         this.id_party = id_party;
     }
 
-    public String getNom() {
-        return Nom;
+    public String getQuest_name() {
+        return quest_name;
     }
 
-    public void setNom(String nom) {
-        this.Nom = nom;
+    public void setQuest_name(String quest_name) {
+        this.quest_name = quest_name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getQuest_description() {
+        return quest_description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setQuest_description(String quest_description) {
+        this.quest_description = quest_description;
     }
 
 

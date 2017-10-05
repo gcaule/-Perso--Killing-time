@@ -39,7 +39,7 @@
     <string name="challenge_creation">CREATION DE\nCHALLENGE</string>
     <string name="hint_name">Ajoutez un indice pour aider le joueur à résoudre le challenge : </string>
     <string name="challenge_name">Nom de challenge : </string>
-    <string name="hint_challenge_name">Ajoutez ici votre nom de challenge</string>
+    <string name="hint_challenge_name">Ajoutez ici votre quest_name de challenge</string>
     <string name="difficulty">Choisissez votre difficulté : </string>
     <string name="hint">Ecrivez ici votre indice</string>
     <string name="create_challenge">Créer le challenge</string>
@@ -51,5 +51,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="lobby_create_party">Créer ta propre Quête !</string>
     <string name="lobby_list_quest">Liste des Quêtes</string>
+    <string name="lobby_join_party">Lancer la Partie !!</string>
+    <string name="discover_party">Découvrir Partie</string>
 
 </resources>

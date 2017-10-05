@@ -1,5 +1,6 @@
 package fr.indianacroft.wildhunt;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +25,8 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,9 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
 
     }
 
+
+
+
     // Fragments
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -87,6 +94,8 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
                     return null;
             }
         }
+
+
         @Override
         public int getCount() {
             // Show 3 total pages.
@@ -105,6 +114,36 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
             return null;
         }
     }
+
+
+
+    // TODO ca ne fonctionne pas !!
+    // Avec un intent extra on choisit sur quel fragment on va arriver.
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String menuFragment = getIntent().getStringExtra("menuFragment");
+
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        // If menuFragment is defined, then this activity was launched with a fragment selection
+        if (menuFragment != null) {
+
+            // Here we can decide what do to -- perhaps load other parameters from the intent extras such as IDs, etc
+            if (menuFragment.equals("createQuest")) {
+                Fragment favoritesFragment = new HomeGameMaster_ValidateQuest();
+                fragmentTransaction.replace(R.id.fragment_container, favoritesFragment);
+                fragmentTransaction.commit();
+            }
+        } else {
+            // Activity was not launched with a menuFragment selected -- continue as if this activity was opened from a launcher (for example)
+            Fragment standardFragment = new HomeGameMaster_QuestCreated();
+            fragmentTransaction.replace(R.id.fragment_container, standardFragment);
+            fragmentTransaction.commit();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

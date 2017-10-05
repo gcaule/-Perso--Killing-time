@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeJoueur_LobbyActivity extends Fragment {
     private static final String TAG = HomeJoueur_LobbyActivity.class.getSimpleName();
+    private FirebaseDatabase ref;
     private DatabaseReference childRef;
 
 
@@ -63,8 +64,8 @@ public class HomeJoueur_LobbyActivity extends Fragment {
         final RecyclerView recyclerViewLobby = (RecyclerView) view.findViewById(R.id.recyclerViewHomeJoueurLobby);
         recyclerViewLobby.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        childRef = ref.child("pushld");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Quest");
+
 
         final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<BDD, HomeJoueur_LobbyHolder>(
                 BDD.class,
@@ -73,8 +74,8 @@ public class HomeJoueur_LobbyActivity extends Fragment {
                 ref) {
             @Override
             public void populateViewHolder(HomeJoueur_LobbyHolder holder, BDD bdd, int position) {
-                holder.setName(bdd.getNom());
-                holder.setDescription(bdd.getDescription());
+                holder.setQuest_name(bdd.getQuest_name());
+                holder.setQuest_description(bdd.getQuest_description());
             }
         };
 
@@ -103,17 +104,21 @@ public class HomeJoueur_LobbyActivity extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 TextView textViewLobbyDescription = (TextView) view.findViewById(R.id.textViewLobbyDescription);
+                Button buttonLobbyJoin = (Button) view.findViewById(R.id.buttonLobbyJoin);
 
                 if (textViewLobbyDescription.getVisibility() == View.VISIBLE) {
                     textViewLobbyDescription.setVisibility(View.GONE);
+                    buttonLobbyJoin.setVisibility(View.GONE);
                 }else {
                     textViewLobbyDescription.setVisibility(View.VISIBLE);
+                    buttonLobbyJoin.setVisibility(View.VISIBLE);
 
                     // Hide Other Description
                     for (int i = 0; i < mAdapter.getItemCount(); i++) {
                         if (i != position) {
                             HomeJoueur_LobbyHolder other = (HomeJoueur_LobbyHolder) recyclerViewLobby.findViewHolderForAdapterPosition(i);
                             other.mDescriptionPartyLobby.setVisibility(View.GONE);
+                            other.mJoinPartyLobby.setVisibility(View.GONE);
                         }
                     }
                 }

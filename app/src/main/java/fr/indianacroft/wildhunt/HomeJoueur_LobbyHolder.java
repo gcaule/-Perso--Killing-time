@@ -15,12 +15,17 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
     public Button mNamePartyLobby;
     public TextView mDescriptionPartyLobby;
     public Button mDiscoverPartyLobby;
+    public Button mJoinPartyLobby;
 
     public HomeJoueur_LobbyHolder(final View itemView) {
         super(itemView);
         mNamePartyLobby = (Button) itemView.findViewById(R.id.buttonLobbyName);
+
         mDescriptionPartyLobby = (TextView) itemView.findViewById(R.id.textViewLobbyDescription);
         mDescriptionPartyLobby.setVisibility(View.GONE);
+
+        mJoinPartyLobby = (Button) itemView.findViewById(R.id.buttonLobbyJoin);
+        mJoinPartyLobby.setVisibility(View.GONE);
 
         mDiscoverPartyLobby = (Button) itemView.findViewById(R.id.buttonLobbyDetails);
         mDiscoverPartyLobby.setOnClickListener(new View.OnClickListener() {
@@ -56,11 +61,11 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
     //______________________________________________________\\
 
     // Pour mettre le nom de la party / quête dans le reclycer view
-    public void setName(String name) {
-        mNamePartyLobby.setText(name);
+    public void setQuest_name(String quest_name) {
+        mNamePartyLobby.setText(quest_name);
     }
     // pour mettre la description de la party / quête dans le recycler view
-    public void setDescription(String description) {
-        mDescriptionPartyLobby.setText(description);
+    public void setQuest_description(String quest_description) {
+        mDescriptionPartyLobby.setText(quest_description);
     }
 }
