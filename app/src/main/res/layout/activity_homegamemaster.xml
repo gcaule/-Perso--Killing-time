@@ -38,12 +38,6 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 android:background="@android:color/transparent">
 
-                <FrameLayout
-                    android:id="@+id/fragment_container"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent">
-                </FrameLayout>
-
                 <ImageView
                     android:id="@+id/imageViewAvatar"
                     android:layout_width="66dp"

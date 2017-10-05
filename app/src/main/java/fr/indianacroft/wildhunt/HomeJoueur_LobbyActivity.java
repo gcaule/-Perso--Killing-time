@@ -25,8 +25,7 @@ public class HomeJoueur_LobbyActivity extends Fragment {
     private static final String TAG = HomeJoueur_LobbyActivity.class.getSimpleName();
     private DatabaseReference childRef;
 
-
-    //Methode utilisée pour afficher une ligne en dessous de chaque item du recycler view
+    // Methode utilisée pour afficher une ligne en dessous de chaque item du recycler view
     public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
         private Drawable mDivider;
 
@@ -54,8 +53,6 @@ public class HomeJoueur_LobbyActivity extends Fragment {
         }
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.homejoueur_lobbyactivity, container, false);
@@ -82,7 +79,6 @@ public class HomeJoueur_LobbyActivity extends Fragment {
         recyclerViewLobby.addItemDecoration(new SimpleDividerItemDecoration(this));
         recyclerViewLobby.setAdapter(mAdapter);
 
-
         // Bouton pour créer sa party
         // TODO coder l'intent pour envoyver vers HomeGameMaster_CreateQuest uniquement
         Button buttonCreateQuest = (Button) view.findViewById(R.id.buttonLobbyCreateParty);
@@ -94,8 +90,6 @@ public class HomeJoueur_LobbyActivity extends Fragment {
                 startActivity(intentToFragment);
             }
         });
-
-
 
         // On affiche la description de la party / quete au clic sur sa ligne.
         // Au clic sur une autre ligne ferme les descriptions ouvert avant.
@@ -119,11 +113,6 @@ public class HomeJoueur_LobbyActivity extends Fragment {
                 }
             }
         });
-
-
-
         return view;
     }
-
-
 }

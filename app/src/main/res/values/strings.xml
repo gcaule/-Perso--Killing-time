@@ -7,19 +7,9 @@
     <string name="title_activity_challenges_">Challenges_Activity</string>
     <string name="title_activity_profile_">Profile</string>
 
-    // Spinners
-    <string-array name="life_duration">
-        <item>Short (3 days)</item>
-        <item>Medium (5 days)</item>
-        <item>Long (7 days)</item>
-    </string-array>
-    <string-array name="challenge_difficulty">
-        <item>Easy - 30 pts</item>
-        <item>Normal 50 pts</item>
-        <item>Hard - 100 pts</item>
-    </string-array>
-
     // Navigation Drawer
+    <string name="drawermenu_title">THE WILD HUNT</string>
+    <string name="drawermenu_menu">Menu</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_home">Acceuil</string>
@@ -37,6 +27,11 @@
 
     // Page Challenge
     <string name="challenge_creation">CREATION DE\nCHALLENGE</string>
+    <string-array name="challenge_difficulty">
+        <item>Facile</item>
+        <item>Normal</item>
+        <item>Dur</item>
+    </string-array>
     <string name="hint_name">Ajoutez un indice pour aider le joueur à résoudre le challenge : </string>
     <string name="challenge_name">Nom de challenge : </string>
     <string name="hint_challenge_name">Ajoutez ici votre nom de challenge</string>
@@ -51,5 +46,25 @@
     <string name="title_notifications">Notifications</string>
     <string name="lobby_create_party">Créer ta propre Quête !</string>
     <string name="lobby_list_quest">Liste des Quêtes</string>
+
+    // Home Game Master
+    <string-array name="life_duration">
+        <item>Courte (3 jours)</item>
+        <item>Moyenne (5 jours)</item>
+        <item>Longue (7 jours)</item>
+    </string-array>
+    <string name="home_game_master_tab1">Nouvelle quête</string>
+    <string name="home_game_master_tab2">Quêtes créées</string>
+    <string name="home_game_master_tab3">Quêtes validées</string>
+
+    // Page Create Quest
+    <string name="quest_name">Nom de la quête</string>
+    <string name="hint_quest_name">Ajoutez ici le nom\nde votre quête</string>
+    <string name="quest_description">Description (200 caractères max)</string>
+    <string name="hint_quest_description">Décrivez ici votre quête</string>
+    <string name="life_duration_quest_title">Durée de vie</string>
+    <string name="create_quest_button">Créer la quête</string>
+    <string name="add_new_challenge">Ajouter un challenge</string>
+    <string name="create_challenge_button">Créer un challenge</string>
 
 </resources>

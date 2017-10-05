@@ -15,14 +15,13 @@ public class BDD {
         // Needed for Firebase
     }
 
-
     public BDD(String nom, String description, int id_party) {
         this.Nom = nom;
         this.description = description;
         this.id_party = id_party;
     }
 
-    // GEtter & Setter
+    // Getter & Setter
     public int getId_party() {
         return id_party;
     }
@@ -46,11 +45,4 @@ public class BDD {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
-
-
-
-
-
 }

@@ -15,21 +15,22 @@
     <ImageView
         android:id="@+id/imageViewInscriptionLogo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="90sp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@drawable/pirate2" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="THE WILD HUNT"
+        android:text="@string/drawermenu_title"
+        android:textColor="#FFFFFF"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Menu" />
+        android:textColor="#FFFFFF"
+        android:text="@string/drawermenu_menu" />
 
 </LinearLayout>
