@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
 
-
     public Button mNamePartyLobby;
     public TextView mDescriptionPartyLobby;
     public Button mDiscoverPartyLobby;
@@ -40,11 +39,10 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 mClickListener.onItemClick(v, getAdapterPosition());
-
             }
         });
-
     }
+
     private static HomeJoueur_LobbyHolder.ClickListener mClickListener;
 
     //Interface to send callbacks...
@@ -55,7 +53,6 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
     public static void setOnClickListener(HomeJoueur_LobbyHolder.ClickListener clickListener){
         mClickListener = clickListener;
     }
-
 
 ///////// POUR RENTRER LES DONNEES DANS LE RECYCLER VIEW \\\\\\\\\\\\\\\
     //______________________________________________________\\

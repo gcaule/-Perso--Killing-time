@@ -105,11 +105,11 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Create\nnew quest";
+                    return getString(R.string.home_game_master_tab1);
                 case 1:
-                    return "Quests\ncreated";
+                    return getString(R.string.home_game_master_tab2);
                 case 2:
-                    return "Validate\nquest";
+                    return getString(R.string.home_game_master_tab3);
             }
             return null;
         }

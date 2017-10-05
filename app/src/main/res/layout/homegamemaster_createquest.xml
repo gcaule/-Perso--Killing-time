@@ -13,7 +13,7 @@
         android:id="@+id/name_quest_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quest Name"
+        android:text="@string/quest_name"
         android:textStyle="bold" />
 
     <EditText
@@ -22,31 +22,31 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Add quest name"
+        android:hint="@string/hint_quest_name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/name_quest_title" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/description_quest_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/name_quest"
         android:layout_marginTop="22dp"
-        android:text="Description"
+        android:text="@string/quest_description"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/description_quest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Describe your quest"
+        android:hint="@string/hint_quest_description"
         android:maxLength="200"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/description_quest_title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -54,7 +54,7 @@
         android:id="@+id/life_duration_quest_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Life Duration"
+        android:text="@string/life_duration_quest_title"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/name_quest"
@@ -62,19 +62,19 @@
 
     <Spinner
         android:id="@+id/spinner_challenge"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/editText3"
-        android:layout_toEndOf="@+id/editText3"
+        android:layout_toEndOf="@+id/name_quest"
         android:layout_below="@+id/life_duration_quest_title"
-        android:layout_alignBottom="@+id/name_quest" />
+        android:layout_alignBottom="@+id/name_quest"
+        android:layout_toRightOf="@+id/name_quest" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_create_quest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Create Quest"
+        android:text="@string/create_quest_button"
         android:layout_below="@+id/butAddNewChallenge"
         android:layout_centerHorizontal="true"
         android:textColor="#FFFFFF"
@@ -90,7 +90,7 @@
         android:layout_alignRight="@+id/butNewChallenge2"
         android:layout_below="@+id/butNewChallenge2"
         android:layout_marginTop="15dp"
-        android:text="Add new Challenge"
+        android:text="@string/add_new_challenge"
         android:textColor="#FFFFFF"
         android:background="@drawable/button_shape"/>
 
@@ -103,7 +103,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/butNewChallenge"
         android:layout_marginTop="13dp"
-        android:text="Create Challenge 2"
+        android:text="@string/create_challenge_button"
         android:textColor="#FFFFFF"
         android:background="@drawable/button_shape"/>
 
@@ -112,12 +112,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="39dp"
-        android:text="Create Challenge 1"
+        android:text="@string/create_challenge_button"
         android:textColor="#FFFFFF"
         android:background="@drawable/button_shape"
-        android:layout_below="@+id/editText3"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button"
+        android:layout_below="@+id/description_quest"
+        android:layout_alignRight="@+id/button_create_quest"
+        android:layout_alignEnd="@+id/button_create_quest"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -151,7 +151,7 @@
         android:layout_alignLeft="@+id/imageViewCancel2"
         android:layout_alignStart="@+id/imageViewCancel2"
         android:layout_alignTop="@+id/butAddNewChallenge"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/button_create_quest"
         app:srcCompat="@drawable/add" />
 
 </RelativeLayout>

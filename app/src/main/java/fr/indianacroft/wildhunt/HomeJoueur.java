@@ -54,11 +54,6 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
             }
         });
 
-        /* Bottom Navigation Bar
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationViewHelper.disableShiftMode(navigation);*/
-
         // Fragment Adapter
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
@@ -158,28 +153,4 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    /* Bottom Navigation Bar
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    Toast.makeText(HomeJoueur.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_camera:
-                    Toast.makeText(HomeJoueur.this, "Créer lien page camera", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_switch:
-                    Intent intent = new Intent(HomeJoueur.this, HomeGameMaster.class);
-                    startActivity(intent);
-                    return true;
-                case R.id.navigation_notifications:
-                    Toast.makeText(HomeJoueur.this, "Créer lien page Notifications", Toast.LENGTH_SHORT).show();
-                    return true;
-            }
-            return false;
-        }
-    };*/
 }

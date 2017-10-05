@@ -21,18 +21,24 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.FileNotFoundException;
 
 public class ChallengesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    EditText editTextChallengeName;
-    EditText editTextHint;
-    String editTextChallengeNameContent;
-    String editTextHintContent;
-    Button butCreateChallenge;
+    EditText name_challenge;
+    EditText hint_challenge;
+    String name_challenge_content;
+    String hint_challenge_content;
+    Spinner spinner_challenge;
     ImageView imageViewInscriptionLogo;
     Button butLoad;
     Button butUpload;
+    Button butCreateChallenge;
+    FirebaseDatabase ref;
+    DatabaseReference childRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,25 +70,25 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         });
 
         // Spinner
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner_challenge);
+        spinner_challenge = (Spinner) findViewById(R.id.spinner_challenge);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.challenge_difficulty, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        spinner_challenge.setAdapter(adapter);
 
         // Button Actions / Change ImageView / Text in buttons
         // TODO : changer les challenges en list view
-        editTextChallengeName = (EditText) findViewById(R.id.name_challenge);
-        editTextHint = (EditText) findViewById(R.id.hint_challenge);
+        name_challenge = (EditText) findViewById(R.id.name_challenge);
+        hint_challenge = (EditText) findViewById(R.id.hint_challenge);
         butCreateChallenge = (Button) findViewById(R.id.butCreateChallenge);
         /*imageViewCancel = (ImageView) findViewById(R.id.imageViewCancel);
         imageViewCancel2 = (ImageView) findViewById(R.id.imageViewCancel2);*/
         butCreateChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editTextChallengeNameContent = editTextChallengeName.getText().toString();
-                editTextHintContent = editTextHint.getText().toString();
-                if ((!editTextChallengeNameContent.equals("")) && (!editTextHintContent.equals(""))) {
+                name_challenge_content = name_challenge.getText().toString();
+                hint_challenge_content = hint_challenge.getText().toString();
+                if ((!name_challenge_content.equals("")) && (!hint_challenge_content.equals(""))) {
                     /*imageViewCancel.setImageResource(R.drawable.checked);
                     imageViewCancel2.setImageResource(R.drawable.checked);
                     butNewChallenge.setText("Challenge 1 created");
@@ -110,7 +116,40 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 Intent intent = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, 0);
-            }});
+            }
+        });
+
+        // Database
+        name_challenge = (EditText) findViewById(R.id.name_challenge);
+        hint_challenge = (EditText) findViewById(R.id.hint_challenge);
+        butCreateChallenge = (Button) findViewById(R.id.butCreateChallenge);
+
+        ref = FirebaseDatabase.getInstance();
+        childRef = ref.getReference("Challenge");
+
+        butCreateChallenge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nameContent = name_challenge.getText().toString();
+                String hintContent = hint_challenge.getText().toString();
+                String spinnerContent = spinner_challenge.getSelectedItem().toString();
+
+                // childRef.push().getKey() is used to generate the different key
+                String userId = ref.getReference("Challenge").push().getKey();
+                //  DatabaseReference childRef = ref.getReference("form");
+
+                Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent);
+
+                challenge.setName_challenge(nameContent);
+                challenge.setHint_challenge(hintContent);
+                challenge.setDifficulty_challenge(spinnerContent);
+
+                childRef.child(userId).setValue(challenge);
+
+                name_challenge.setText("");
+                hint_challenge.setText("");
+            }
+        });
     }
 
     // Drawer Menu
