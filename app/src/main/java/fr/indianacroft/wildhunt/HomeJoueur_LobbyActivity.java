@@ -1,9 +1,11 @@
 package fr.indianacroft.wildhunt;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +28,8 @@ public class HomeJoueur_LobbyActivity extends Fragment {
     private static final String TAG = HomeJoueur_LobbyActivity.class.getSimpleName();
     private FirebaseDatabase ref;
     private DatabaseReference childRef;
+    private String mUserId;
+
 
     // Methode utilisée pour afficher une ligne en dessous de chaque item du recycler view
     public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
@@ -58,6 +63,12 @@ public class HomeJoueur_LobbyActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.homejoueur_lobbyactivity, container, false);
 
+        // Pour recuperer la key d'un user (pour le lier a une quête)
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        mUserId = preferences.getString("mUserid", "");
+
+
+        // Pour remplir la liste des quêtes avec les quêtes créees!!!
         final RecyclerView recyclerViewLobby = (RecyclerView) view.findViewById(R.id.recyclerViewHomeJoueurLobby);
         recyclerViewLobby.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -92,6 +103,15 @@ public class HomeJoueur_LobbyActivity extends Fragment {
             }
         });
 
+
+
+
+
+
+
+
+
+
         // On affiche la description de la party / quete au clic sur sa ligne.
         // Au clic sur une autre ligne ferme les descriptions ouvert avant.
         HomeJoueur_LobbyHolder.setOnClickListener(new HomeJoueur_LobbyHolder.ClickListener() {
@@ -99,6 +119,9 @@ public class HomeJoueur_LobbyActivity extends Fragment {
             public void onItemClick(View view, int position) {
                 TextView textViewLobbyDescription = (TextView) view.findViewById(R.id.textViewLobbyDescription);
                 Button buttonLobbyJoin = (Button) view.findViewById(R.id.buttonLobbyJoin);
+
+
+
 
                 if (textViewLobbyDescription.getVisibility() == View.VISIBLE) {
                     textViewLobbyDescription.setVisibility(View.GONE);

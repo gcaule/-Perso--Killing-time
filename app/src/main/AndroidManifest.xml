@@ -51,8 +51,8 @@
         <activity
             android:name=".Rules"
             android:label="Rules"
-            android:theme="@style/AppTheme.NoActionBar">
-       </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".testJoinActivity"></activity>
     </application>
 
 </manifest>
