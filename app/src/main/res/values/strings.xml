@@ -24,6 +24,11 @@
     <string name="profil">PROFIL</string>
     <string name="upload_ta_photo">UPLOAD\nPHOTO</string>
     <string name="prendre_nouvelle_photo">NOUVELLE\nPHOTO</string>
+    <string name="envoi_photo">ENVOI\nPHOTO</string>
+    <string name="toast_error_profile">Vous êtes déjà sur la page Profil</string>
+    <string name="toast_error_upload">Echec de l\'upload</string>
+    <string name="toast_upload_success">Upload réussi !</string>
+    <string name="progressdialog_upload">Uploading ...</string>
 
     // Page Challenge
     <string name="challenge_creation">CREATION DE\nCHALLENGE</string>
