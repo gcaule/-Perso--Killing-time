@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +36,7 @@ public class ConnexionActivity extends AppCompatActivity {
 
         user_name = (EditText) findViewById(R.id.user_name);
         user_password = (EditText) findViewById(R.id.user_password);
-        nardin = (Button) findViewById(R.id.nardin);
+        nardin = (Button) findViewById(R.id.nardin  );
         ref = FirebaseDatabase.getInstance();
         childRef = ref.getReference("User");
 
@@ -68,7 +67,7 @@ public class ConnexionActivity extends AppCompatActivity {
 
                 if(user_name.equals(name) && user_password.equals(password)){
                         Toast.makeText(ConnexionActivity.this, "Thanks", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(ConnexionActivity.this, Tab_HomeJoueur.class);
+                        Intent intent = new Intent(ConnexionActivity.this, HomeJoueur.class);
                         startActivity(intent);
                     }else{
                     User user = new User(nameContent, passwordContent);
@@ -78,7 +77,7 @@ public class ConnexionActivity extends AppCompatActivity {
 
                     childRef.child(userId).setValue(user);
 
-                    Intent intent = new Intent(ConnexionActivity.this, Tab_HomeJoueur.class);
+                    Intent intent = new Intent(ConnexionActivity.this, HomeJoueur.class);
                     startActivity(intent);
 
                 }
