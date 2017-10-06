@@ -1,29 +1,28 @@
 package fr.indianacroft.wildhunt;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class ConnexionActivity extends AppCompatActivity {
 
-    Button buttonConnexionPlay;
-    Button buttonConnexionSignIn;
-    Button buttonConnexionLogin;
-    EditText editTextConnexionPseudo;
-    EditText editTextConnexionPassword;
+    FirebaseDatabase ref;
+    DatabaseReference childRef;
+    final String myPreferences = "MyPrefs" ;
+    final String userName = "NameKey";
+    final String userPassword = "PasswordKey";
+
     private String mUserId;
 
     @Override
@@ -32,83 +31,114 @@ public class ConnexionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connexion);
 
         //ON RECUPERE LES INFOS DE L'UTILISATEUR ENREGISTRE DANS LES SHARED PREFERENCES
-        String userName = "default"; // ca c'est des tests
-        String userPassword = "1234"; //
+//        String userName = "default"; // ca c'est des tests
+//        String userPassword = "1234"; //
 
 
 
 
-        // je recupere l'ID de l'user qu'on utilisera partout et qui est enregistré dans les sharedPreferences !!!
-        DatabaseReference refQuestUser = FirebaseDatabase.getInstance().getReference().child("User");
-        refQuestUser.orderByChild("user_name").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    mUserId = child.getKey();
-                    Log.d("Userval", child.getKey());
-
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("mUserid", mUserId);
-                    editor.apply();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
 
 
-        //TOAST bouton sign in si il n'y a aucune partie en cours.
 
-        buttonConnexionPlay = (Button) findViewById(R.id.buttonConnexionPlay);
+        final EditText editTextConnexionUserName = (EditText) findViewById(R.id.connexionUserName);
+        final EditText editTextConnexionUserPassword = (EditText) findViewById(R.id.connexionUserPassword);
+        Button buttonConnexionSend = (Button) findViewById(R.id.buttonConnexionSend);
 
-        buttonConnexionPlay.setOnClickListener(new View.OnClickListener() {
+
+        ref = FirebaseDatabase.getInstance();
+        childRef = ref.getReference("User");
+
+        final SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final String sharedPrefUserName = sharedpreferences.getString(userName, "");
+        final String sharedPrefUserPassword = sharedpreferences.getString(userPassword, "");
+
+        if( !sharedPrefUserName.isEmpty() && !sharedPrefUserPassword.isEmpty()) {
+            editTextConnexionUserName.setText(sharedPrefUserName);
+            editTextConnexionUserPassword.setText(sharedPrefUserPassword);
+        }
+
+
+        buttonConnexionSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ConnexionActivity.this, HomeJoueur.class);
-                startActivity(intent);
+                String nameContent = editTextConnexionUserName.getText().toString();
+                String passwordContent = editTextConnexionUserPassword.getText().toString();
+                String userId = ref.getReference("User").push().getKey();
+                String questContent = "Pas de qûete pour l'instant";
 
-            }
-        });
 
-        // Click du bouton sign in permettant d'acceder à la page inscription.
 
-        buttonConnexionSignIn = (Button) findViewById(R.id.buttonConnexionSignIn);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(userName, nameContent);
+                editor.putString(userPassword, passwordContent);
+                editor.putString("mUserid", userId);
+                editor.apply();
 
-        buttonConnexionSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ConnexionActivity.this,InscriptionActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        // Champs editText deviennent visible quand on click sur le bouton log in.
+                if(editTextConnexionUserName.equals(sharedPrefUserName) && editTextConnexionUserPassword.equals(sharedPrefUserPassword)){
+                        Toast.makeText(ConnexionActivity.this, "Thanks", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ConnexionActivity.this, HomeJoueur.class);
+                        startActivity(intent);
+                    }else{
+                    User user = new User(nameContent, passwordContent, questContent);
 
-        editTextConnexionPseudo = (EditText) findViewById(R.id.editTextConnexionPseudo);
-        editTextConnexionPassword = (EditText) findViewById(R.id.editTextConnexionPassword);
-        buttonConnexionLogin = (Button) findViewById(R.id.buttonConnexionLogIn);
+                    user.setUser_name(nameContent);
+                    user.setUser_password(passwordContent);
 
-        editTextConnexionPseudo.setVisibility(View.GONE);
-        editTextConnexionPassword.setVisibility(View.GONE);
+                    childRef.child(userId).setValue(user);
 
-        buttonConnexionLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (editTextConnexionPassword.getVisibility() == View.VISIBLE){
-                    editTextConnexionPassword.setVisibility(View.GONE);
-                    editTextConnexionPseudo.setVisibility(View.GONE);
-                }else {
-                    editTextConnexionPseudo.setVisibility(View.VISIBLE);
-                    editTextConnexionPassword.setVisibility(View.VISIBLE);
+                    Intent intent = new Intent(ConnexionActivity.this, HomeJoueur.class);
+                    startActivity(intent);
+
                 }
+
+//                // je recupere l'ID de l'user qu'on utilisera partout et qui est enregistré dans les sharedPreferences !!!
+//                DatabaseReference refQuestUser = FirebaseDatabase.getInstance().getReference().child("User");
+//                refQuestUser.orderByChild("user_name").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                            mUserId = child.getKey();
+//                            Log.d("Userval", child.getKey());
+//
+//                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//                            SharedPreferences.Editor editor = preferences.edit();
+//                            editor.putString("mUserid", mUserId);
+//                            editor.apply();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//
+//                });
+
+
+
+
+                /*user_name.setText("");
+                user_password.setText("");*/
+
+
+
+
+
+
             }
         });
     }
-
 }
+
+
+
+
+
+
+
+
+
+
+
 

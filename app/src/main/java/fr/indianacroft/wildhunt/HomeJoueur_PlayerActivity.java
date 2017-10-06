@@ -43,9 +43,10 @@ public class HomeJoueur_PlayerActivity extends Fragment {
         final View rootView = inflater.inflate(R.layout.homejoueur_playeractivity, container, false);
 
         final TextView textViewPlayerActivityHint = (TextView) rootView.findViewById(R.id.textViewPlayerActivityHint);
+
         // Pour recuperer la key d'un user (pour le lier a une quête)
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(rootView.getContext());
-        mUserId = preferences.getString("mUserid", "");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(rootView.getContext());
+        mUserId = sharedPreferences.getString("mUserid", "");
         /////////////////////////////////////////////////////////////////
 
 
@@ -59,28 +60,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                 mUser_name = user.getUser_name();
                 mUser_quest = user.getUser_quest();
                 //
-                //Toast.makeText(getContext(), mUser_name + mUser_quest, Toast.LENGTH_SHORT).show();
-
-                // On recupere toutes les données de la quete de l'user
-                DatabaseReference refUserQuest =
-                        FirebaseDatabase.getInstance().getReference().child("Quest").child(mUser_quest);
-                refUserQuest.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Quest questUser = dataSnapshot.getValue(Quest.class);
-                        mQuest_name = questUser.getQuest_name();
-                        mQuest_description = questUser.getQuest_description();
-                        mLife_duration = questUser.getLife_duration();
-
-                        final TextView playerActivityQuestName = (TextView) rootView.findViewById(R.id.playerActivityNameQuestTitle);
-                        playerActivityQuestName.setText(mQuest_name);
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+                Toast.makeText(getContext(), mUser_name + mUser_quest, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -88,7 +68,35 @@ public class HomeJoueur_PlayerActivity extends Fragment {
             }
         });
 
-        // On recupere les données des challenges
+
+        //On recupere toutes les données de la quete de l'user
+        final DatabaseReference refUserQuest = FirebaseDatabase.getInstance().getReference().child("Quest");
+        refUserQuest.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    Quest quest = dsp.getValue(Quest.class);
+                    // On recupere la qûete liée a un user
+                    if (mUser_quest == dsp.getKey()) {
+
+                        mQuest_name = quest.getQuest_name();
+                        Log.d(mQuest_name, "quest");
+                        mQuest_description = quest.getQuest_description();
+                        mLife_duration = quest.getLife_duration();
+
+                        final TextView playerActivityQuestName = (TextView) rootView.findViewById(R.id.playerActivityNameQuestTitle);
+                        playerActivityQuestName.setText(mQuest_name);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        // On recupere les données des challenges
         DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge");
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -124,24 +132,19 @@ public class HomeJoueur_PlayerActivity extends Fragment {
 
         buttonHint.setOnClickListener(new View.OnClickListener() {
             boolean isClicked = false;
+
             @Override
             public void onClick(View view) {
-                if(!isClicked){
+                if (!isClicked) {
                     isClicked = true;
                     Toast.makeText(getContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
-                }
-                else if(isClicked) {
+                } else if (isClicked) {
                     textViewPlayerActivityHint.setVisibility(View.VISIBLE);
                 }
 
 
-
-
-
-
             }
         });
-
 
 
         Button buttonSendSolution = (Button) rootView.findViewById(R.id.buttonHomeJoueurSendSolution);
