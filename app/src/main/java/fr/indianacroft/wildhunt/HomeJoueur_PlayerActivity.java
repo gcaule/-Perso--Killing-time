@@ -58,7 +58,8 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                 User user = dataSnapshot.getValue(User.class);
                 mUser_name = user.getUser_name();
                 mUser_quest = user.getUser_quest();
-                Toast.makeText(getContext(), mUser_name + mUser_quest, Toast.LENGTH_SHORT).show();
+                //
+                //Toast.makeText(getContext(), mUser_name + mUser_quest, Toast.LENGTH_SHORT).show();
 
                 // On recupere toutes les données de la quete de l'user
                 DatabaseReference refUserQuest =
