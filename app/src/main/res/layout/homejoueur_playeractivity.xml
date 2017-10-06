@@ -34,7 +34,7 @@
                 android:layout_marginRight="8dp" />
 
             <Button
-                android:id="@+id/buttonHomeJoueurNumChallenge"
+                android:id="@+id/playerActivityNumChallenge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -54,25 +54,28 @@
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:scaleType="fitCenter"
-                app:layout_constraintLeft_toLeftOf="@+id/buttonHomeJoueurNumChallenge"
-                app:layout_constraintRight_toRightOf="@+id/buttonHomeJoueurNumChallenge"
-                app:layout_constraintTop_toBottomOf="@+id/buttonHomeJoueurNumChallenge"
+                app:layout_constraintLeft_toLeftOf="@+id/playerActivityNumChallenge"
+                app:layout_constraintRight_toRightOf="@+id/playerActivityNumChallenge"
+                app:layout_constraintTop_toBottomOf="@+id/playerActivityNumChallenge"
                 app:srcCompat="@drawable/photo_camera"
                 android:layout_marginTop="1dp" />
 
             <TextView
-                android:id="@+id/textViewHomeJoueurDescription"
+                android:id="@+id/textViewPlayerActivityHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:text="Ici sera présenter le texte de présentation du challenge et de la photo a trouver. Exemple quest_name du quartier etc"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewHomeJoueurToFind" />
+                app:layout_constraintTop_toBottomOf="@+id/imageViewHomeJoueurToFind"
+                tools:text="Ici sera présenter le texte de présentation du challenge et de la photo a trouver. Exemple quest_name du quartier etc"
+                android:layout_marginTop="8dp" />
 
             <Button
                 android:id="@+id/buttonHomeJoueurHint"
@@ -82,13 +85,14 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="33dp"
                 android:background="@drawable/customborder"
                 android:text="Indice"
                 android:textColor="#FFFFFF"
-                app:layout_constraintLeft_toLeftOf="@+id/textViewHomeJoueurDescription"
-                app:layout_constraintRight_toRightOf="@+id/textViewHomeJoueurDescription"
-                app:layout_constraintTop_toBottomOf="@+id/textViewHomeJoueurDescription" />
+                app:layout_constraintLeft_toLeftOf="@+id/textViewPlayerActivityHint"
+                app:layout_constraintRight_toRightOf="@+id/textViewPlayerActivityHint"
+                app:layout_constraintTop_toTopOf="@+id/textViewPlayerActivityHint"
+                app:layout_constraintHorizontal_bias="0.526" />
 
             <TextView
                 android:id="@+id/textViewHomeJoueurDifficulty"

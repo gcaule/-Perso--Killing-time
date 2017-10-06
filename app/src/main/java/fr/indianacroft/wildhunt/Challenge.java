@@ -6,35 +6,52 @@ package fr.indianacroft.wildhunt;
 
 public class Challenge {
 
-    // Attributs
-    private String name_challenge;
-    private String difficulty_challenge;
+    private String challenge_name;
+    private String challenge_difficulty;
     private String hint_challenge;
+    private String idquest_challenge;
 
-    // Constructors
-    public Challenge(String name_challenge, String difficulty_challenge, String hint_challenge) {
-        this.name_challenge = name_challenge;
-        this.difficulty_challenge = difficulty_challenge;
+    public Challenge(String challenge_name, String challenge_difficulty, String hint_challenge, String idquest_challenge) {
+        this.challenge_name = challenge_name;
+        this.challenge_difficulty = challenge_difficulty;
         this.hint_challenge = hint_challenge;
+        this.idquest_challenge = idquest_challenge;
     }
 
-    // Getters & Setters
-    public String getName_challenge() {
-        return name_challenge;
+    public Challenge() {
+        // Needed for Firebase
     }
-    public void setName_challenge(String name_challenge) {
-        this.name_challenge = name_challenge;
+
+    public String getChallenge_name() {
+        return challenge_name;
     }
-    public String getDifficulty_challenge() {
-        return difficulty_challenge;
+
+    public void setChallenge_name(String challenge_name) {
+        this.challenge_name = challenge_name;
     }
-    public void setDifficulty_challenge(String difficulty_challenge) {
-        this.difficulty_challenge = difficulty_challenge;
+
+    public String getChallenge_difficulty() {
+        return challenge_difficulty;
     }
+
+    public void setChallenge_difficulty(String challenge_difficulty) {
+        this.challenge_difficulty = challenge_difficulty;
+    }
+
     public String getHint_challenge() {
         return hint_challenge;
     }
+
     public void setHint_challenge(String hint_challenge) {
         this.hint_challenge = hint_challenge;
     }
+
+    public String getIdquest_challenge() {
+        return idquest_challenge;
+    }
+
+    public void setIdquest_challenge(String idquest_challenge) {
+        this.idquest_challenge = idquest_challenge;
+    }
+
 }

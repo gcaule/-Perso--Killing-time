@@ -68,5 +68,6 @@
     <string name="create_quest_button">Créer la quête</string>
     <string name="add_new_challenge">Ajouter un challenge</string>
     <string name="create_challenge_button">Créer un challenge</string>
+    <string name="warning_hint">Attention, vous perdrez des points ! /n Reclic pour valider</string>
 
 </resources>

@@ -69,7 +69,7 @@ public class HomeJoueur_LobbyActivity extends Fragment {
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mUserId = preferences.getString("mUserid", "");
-        // On recupere la qûete dans laquel il est
+        // On recupere la qûete dans laquelle il est
         // je recupere la KEY de la quête choisi grâce a son nom
         DatabaseReference refUserQuest =
                 FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_quest");
@@ -93,13 +93,13 @@ public class HomeJoueur_LobbyActivity extends Fragment {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Quest");
 
 
-        final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<BDD, HomeJoueur_LobbyHolder>(
-                BDD.class,
+        final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Quest, HomeJoueur_LobbyHolder>(
+                Quest.class,
                 R.layout.homejoueur_lobby,
                 HomeJoueur_LobbyHolder.class,
                 ref) {
             @Override
-            public void populateViewHolder(HomeJoueur_LobbyHolder holder, BDD bdd, int position) {
+            public void populateViewHolder(HomeJoueur_LobbyHolder holder, Quest bdd, int position) {
                 holder.setQuest_name(bdd.getQuest_name());
                 holder.setQuest_description(bdd.getQuest_description());
             }

@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,8 +32,9 @@ public class HomeJoueur_PlayerActivity extends Fragment {
     private String mQuest_name;
     private String mQuest_description;
     private String mLife_duration;
-
-
+    private String mName_challenge;
+    private String mDiff_challenge;
+    private String mHint_challenge;
 
 
     @Override
@@ -42,8 +42,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.homejoueur_playeractivity, container, false);
 
-
-
+        final TextView textViewPlayerActivityHint = (TextView) rootView.findViewById(R.id.textViewPlayerActivityHint);
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(rootView.getContext());
         mUserId = preferences.getString("mUserid", "");
@@ -72,17 +71,46 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                         mQuest_description = questUser.getQuest_description();
                         mLife_duration = questUser.getLife_duration();
 
-                        // On change la page dynamiquement !!
                         final TextView playerActivityQuestName = (TextView) rootView.findViewById(R.id.playerActivityNameQuestTitle);
-
                         playerActivityQuestName.setText(mQuest_name);
+
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        // On recupere les données des challenges
+        DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge");
+        refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    Challenge challenge = dsp.getValue(Challenge.class);
+                    // On recupere les challenges qui correspondent a la qûete
+                    if (challenge.getIdquest_challenge().equals(mUser_quest)) {
+                        mName_challenge = challenge.getChallenge_name();
+                        Log.d(mName_challenge, "tag");
+                        mHint_challenge = challenge.getHint_challenge();
+                        mDiff_challenge = challenge.getChallenge_difficulty();
+
+
+                        // On change la page dynamiquement !!
+                        final Button playerActivityNumChallenge = (Button) rootView.findViewById(R.id.playerActivityNumChallenge);
+
+
+                        textViewPlayerActivityHint.setText(mHint_challenge);
+                        playerActivityNumChallenge.setText(mName_challenge);
+                        return;
+                    }
+                }
             }
 
             @Override
@@ -91,12 +119,27 @@ public class HomeJoueur_PlayerActivity extends Fragment {
             }
         });
 
+        Button buttonHint = (Button) rootView.findViewById(R.id.buttonHomeJoueurHint);
+
+        buttonHint.setOnClickListener(new View.OnClickListener() {
+            boolean isClicked = false;
+            @Override
+            public void onClick(View view) {
+                if(!isClicked){
+                    isClicked = true;
+                    Toast.makeText(getContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
+                }
+                else if(isClicked) {
+                    textViewPlayerActivityHint.setVisibility(View.VISIBLE);
+                }
 
 
 
 
 
 
+            }
+        });
 
 
 
@@ -105,7 +148,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
         buttonSendSolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (getActivity(), HomeJoueur_PlayerPopUp.class);
+                Intent intent = new Intent(getActivity(), HomeJoueur_PlayerPopUp.class);
                 startActivity(intent);
             }
         });

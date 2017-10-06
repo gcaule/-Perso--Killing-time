@@ -78,7 +78,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 
         // Button Actions / Change ImageView / Text in buttons
         // TODO : changer les challenges en list view
-        name_challenge = (EditText) findViewById(R.id.name_challenge);
+        name_challenge = (EditText) findViewById(R.id.challenge_name);
         hint_challenge = (EditText) findViewById(R.id.hint_challenge);
         butCreateChallenge = (Button) findViewById(R.id.butCreateChallenge);
         /*imageViewCancel = (ImageView) findViewById(R.id.imageViewCancel);
@@ -120,7 +120,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         });
 
         // Database
-        name_challenge = (EditText) findViewById(R.id.name_challenge);
+        name_challenge = (EditText) findViewById(R.id.challenge_name);
         hint_challenge = (EditText) findViewById(R.id.hint_challenge);
         butCreateChallenge = (Button) findViewById(R.id.butCreateChallenge);
 
@@ -133,16 +133,17 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 String nameContent = name_challenge.getText().toString();
                 String hintContent = hint_challenge.getText().toString();
                 String spinnerContent = spinner_challenge.getSelectedItem().toString();
+                String idquest = "test";//TODO a modifier
 
                 // childRef.push().getKey() is used to generate the different key
                 String userId = ref.getReference("Challenge").push().getKey();
                 //  DatabaseReference childRef = ref.getReference("form");
 
-                Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent);
+                Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent, idquest);
 
-                challenge.setName_challenge(nameContent);
+                challenge.setChallenge_name(nameContent);
                 challenge.setHint_challenge(hintContent);
-                challenge.setDifficulty_challenge(spinnerContent);
+                challenge.setChallenge_difficulty(spinnerContent);
 
                 childRef.child(userId).setValue(challenge);
 
