@@ -57,10 +57,12 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot child : dataSnapshot.getChildren()) {
-                            String questKey = child.getKey();
+                            String questKey = child.getKey(); // ID de la quête
+
+                            // On assigne l'ID de la qûete à l'utilisateur
                             DatabaseReference refUserQuest =
-                                    FirebaseDatabase.getInstance().getReference().child(mUserId);
-                            refUserQuest.child("user_quest").setValue(questKey);
+                                    FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_quest");
+                            refUserQuest.setValue(questKey);
                         }
                     }
                     @Override

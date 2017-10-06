@@ -17,8 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by pierre on 9/26/17.
@@ -66,6 +69,21 @@ public class HomeJoueur_LobbyActivity extends Fragment {
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mUserId = preferences.getString("mUserid", "");
+        // On recupere la qûete dans laquel il est
+        // je recupere la KEY de la quête choisi grâce a son nom
+        DatabaseReference refUserQuest =
+                FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_quest");
+        refUserQuest.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String questKey = child.getKey(); // ID de la quête
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
 
         // Pour remplir la liste des quêtes avec les quêtes créees!!!
