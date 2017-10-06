@@ -41,35 +41,7 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homejoueur);
 
-        //ON RECUPERE LES INFOS DE L'UTILISATEUR ENREGISTRE DANS LES SHARED PREFERENCES
-        String userName = "default"; // ca c'est des tests
-        String userPassword = "1234"; //
 
-
-
-
-        // je recupere l'ID de l'user qu'on utilisera partout et qui est enregistré dans les sharedPreferences !!!
-        DatabaseReference refQuestUser = FirebaseDatabase.getInstance().getReference().child("User");
-        refQuestUser.orderByChild("user_name").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    mUserId = child.getKey();
-                    Log.d("Userval", child.getKey());
-
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("mUserid", mUserId);
-                    editor.apply();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
 
 
 
