@@ -11,7 +11,12 @@ public class Quest {
     private String quest_description;
     private String life_duration;
 
-    // Contructos
+
+    //
+    public Quest(){
+        // Needed for firebase
+    }
+    // Contructor
     public Quest(String quest_name, String quest_description, String life_duration) {
         this.quest_name = quest_name;
         this.quest_description = quest_description;
