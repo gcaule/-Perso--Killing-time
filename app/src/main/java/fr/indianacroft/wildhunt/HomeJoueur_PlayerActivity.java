@@ -47,6 +47,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(rootView.getContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
+        Log.d("key", mUserId);
         /////////////////////////////////////////////////////////////////
 
 
@@ -59,8 +60,8 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                 User user = dataSnapshot.getValue(User.class);
                 mUser_name = user.getUser_name();
                 mUser_quest = user.getUser_quest();
-                //
-                Toast.makeText(getContext(), mUser_name + mUser_quest, Toast.LENGTH_SHORT).show();
+
+                //Toast.makeText(getContext(), mUser_name + mUser_quest, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -77,7 +78,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                     Quest quest = dsp.getValue(Quest.class);
                     // On recupere la qûete liée a un user
-                    if (mUser_quest == dsp.getKey()) {
+                    if (mUser_quest.equals(dsp.getKey())) {
 
                         mQuest_name = quest.getQuest_name();
                         Log.d(mQuest_name, "quest");
@@ -86,8 +87,12 @@ public class HomeJoueur_PlayerActivity extends Fragment {
 
                         final TextView playerActivityQuestName = (TextView) rootView.findViewById(R.id.playerActivityNameQuestTitle);
                         playerActivityQuestName.setText(mQuest_name);
+                        return;
+
+
                     }
                 }
+
             }
 
             @Override

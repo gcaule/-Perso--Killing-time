@@ -49,7 +49,6 @@ public class ConnexionActivity extends AppCompatActivity {
         }
 
 
-
         // Au clic du bouton, c'est la que tout se passe
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,10 +66,11 @@ public class ConnexionActivity extends AppCompatActivity {
                     refUser.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            int compteur = 0;
                             for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                                 User userValues = dsp.getValue(User.class);
-                                //On compare le contenu des edit text avec Firebase grâce au user_name
 
+                                //On compare le contenu des edit text avec Firebase grâce au user_name
                                 if (userValues.getUser_name().equals(userNameContent)) {
                                     // On verifie le password
                                     if (userValues.getUser_password().equals(userPasswordContent)) {
@@ -84,38 +84,38 @@ public class ConnexionActivity extends AppCompatActivity {
                                         editor.apply();
 
                                         startActivity(new Intent(getApplicationContext(), HomeJoueur.class));
+                                        break;
 
                                     } else {
                                         Toast.makeText(getApplicationContext(), R.string.error_password, Toast.LENGTH_SHORT).show();
                                     }
+
                                 }
-                                if (userNameContent != refUser.child("userNameContent").toString()) {
-//                                // Le compte n'existe pas, on le créer !
-                                    String questContent = "Pas de qûete pour l'instant";
-                                    User user = new User(userNameContent, userPasswordContent, questContent);
-                                    user.setUser_name(userNameContent);
-                                    user.setUser_password(userPasswordContent);
-                                    user.setUser_quest(questContent);
-                                    String userId = refUser.push().getKey();
-                                    refUser.child(userId).setValue(user);
+                                compteur++;
+                                if (compteur >= dataSnapshot.getChildrenCount()) {
+                                    // Le compte n'existe pas, on le créer !
+                                        String questContent = "Pas de qûete pour l'instant";
+                                        User user = new User(userNameContent, userPasswordContent, questContent);
+                                        user.setUser_name(userNameContent);
+                                        user.setUser_password(userPasswordContent);
+                                        user.setUser_quest(questContent);
+                                        String userId = refUser.push().getKey();
+                                        refUser.child(userId).setValue(user);
 
-                                    // La clé de l'utilisateur qu'on va utiliser partout dans l'application.
-                                    mUserId = userId;
+                                        // La clé de l'utilisateur qu'on va utiliser partout dans l'application.
+                                        mUserId = userId;
 
-                                    //On enregistre dans les shared Preferences
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(userName, userNameContent);
-                                    editor.putString(userPassword, userPasswordContent);
-                                    editor.putString("mUserId", userId);
-                                    editor.apply();
-                                    Toast.makeText(getApplicationContext(), R.string.created_user + userName, Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), HomeJoueur.class));
+                                        //On enregistre dans les shared Preferences
+                                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                                        editor.putString(userName, userNameContent);
+                                        editor.putString(userPassword, userPasswordContent);
+                                        editor.putString("mUserId", userId);
+                                        editor.apply();
+                                        Toast.makeText(getApplicationContext(), R.string.created_user, Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(), HomeJoueur.class));
+                                        break;
                                 }
                             }
-
-                            // TODO trouver le moyen de mettre ca a la FIN du for, pas apres le 1er tour
-//
-
                         }
 
                         @Override
