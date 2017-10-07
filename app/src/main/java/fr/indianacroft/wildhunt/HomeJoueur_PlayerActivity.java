@@ -46,7 +46,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(rootView.getContext());
-        mUserId = sharedPreferences.getString("mUserid", "");
+        mUserId = sharedPreferences.getString("mUserId", mUserId);
         /////////////////////////////////////////////////////////////////
 
 

@@ -32,7 +32,7 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(itemView.getContext());
-        mUserId = preferences.getString("mUserid", "");
+        mUserId = preferences.getString("mUserId", "");
         /////////////////////////////////////////////////////////////////
 
 

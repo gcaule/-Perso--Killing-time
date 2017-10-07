@@ -68,7 +68,7 @@ public class HomeJoueur_LobbyActivity extends Fragment {
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mUserId = preferences.getString("mUserid", "");
+        mUserId = preferences.getString("mUserId", "");
         // On recupere la qûete dans laquelle il est
         // je recupere la KEY de la quête choisi grâce a son nom
         DatabaseReference refUserQuest =

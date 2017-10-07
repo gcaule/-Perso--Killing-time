@@ -73,7 +73,14 @@
     <string name="create_quest_button">Créer la quête</string>
     <string name="add_new_challenge">Ajouter un challenge</string>
     <string name="create_challenge_button">Créer un challenge</string>
-    <string name="warning_hint">Attention, vous perdrez des points ! /n Reclic pour valider</string>
+
+    // Page Défi en cours
+    <string name="warning_hint">Attention, vous perdrez des points ! Re-cliquer pour valider</string>
+
+    // Page Connexion
     <string name="connexion">Connexion</string>
+    <string name="error_password">Password faux ou Pseudo déjà pris.</string>
+    <string name="error_fill">Remplissez tout les champs !</string>
+    <string name="created_user">Bienvenue</string>
 
 </resources>

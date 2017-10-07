@@ -19,22 +19,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
-public class ConnexionActivity extends AppCompatActivity {
+public class testConnexionActivity extends AppCompatActivity {
 
     final String userName = "NameKey";
     final String userPassword = "PasswordKey";
-    private boolean auth = false;
+    EditText editTextUserName = (EditText) findViewById(R.id.connexionUserName);
+    EditText editTextUserPassword = (EditText) findViewById(R.id.connexionUserPassword);
+    Button buttonSend = (Button) findViewById(R.id.buttonConnexionSend);
     private String mUserId = "UserKey";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connexion);
-
-        final EditText editTextUserName = (EditText) findViewById(R.id.connexionUserName);
-        final EditText editTextUserPassword = (EditText) findViewById(R.id.connexionUserPassword);
-        Button buttonSend = (Button) findViewById(R.id.buttonConnexionSend);
+        setContentView(R.layout.activity_testconnexion);
 
         // On recupere les Shared  Preferences
         final SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -48,19 +45,17 @@ public class ConnexionActivity extends AppCompatActivity {
             editTextUserPassword.setText(sharedPrefUserPassword);
         }
 
-
+        //On recupere le contenu des edit text
+        final String userNameContent = editTextUserName.getText().toString();
+        final String userPasswordContent = editTextUserPassword.getText().toString();
 
         // Au clic du bouton, c'est la que tout se passe
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //On recupere le contenu des edit text
-
-                final String userNameContent = editTextUserName.getText().toString();
-                final String userPasswordContent = editTextUserPassword.getText().toString();
                 // Toast si les champs ne sont pas rempli
                 if (TextUtils.isEmpty(userNameContent) || TextUtils.isEmpty(userPasswordContent)) {
-                    Toast.makeText(getApplicationContext(), R.string.error_fill, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(testConnexionActivity.this, R.string.error_fill, Toast.LENGTH_SHORT).show();
                 } else {
                     //On recupere tout les users
                     final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("User");
@@ -70,27 +65,18 @@ public class ConnexionActivity extends AppCompatActivity {
                             for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                                 User userValues = dsp.getValue(User.class);
                                 //On compare le contenu des edit text avec Firebase grâce au user_name
-
                                 if (userValues.getUser_name().equals(userNameContent)) {
                                     // On verifie le password
                                     if (userValues.getUser_password().equals(userPasswordContent)) {
                                         // La clé de l'utilisateur qu'on va utiliser partout dans l'application.
-                                        mUserId = dsp.getKey();
-                                        // On sauvegarde dans les sharedPreferences
-                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                        editor.putString(userName, userNameContent);
-                                        editor.putString(userPassword, userPasswordContent);
-                                        editor.putString("mUserId", mUserId);
-                                        editor.apply();
-
+                                        mUserId = sharedPrefUserKey;
                                         startActivity(new Intent(getApplicationContext(), HomeJoueur.class));
-
                                     } else {
-                                        Toast.makeText(getApplicationContext(), R.string.error_password, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(testConnexionActivity.this, R.string.error_password, Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                                if (userNameContent != refUser.child("userNameContent").toString()) {
-//                                // Le compte n'existe pas, on le créer !
+                                if (!userValues.getUser_name().equals(userNameContent)) {
+                                    // Le compte n'existe pas, on le créer !
                                     String questContent = "Pas de qûete pour l'instant";
                                     User user = new User(userNameContent, userPasswordContent, questContent);
                                     user.setUser_name(userNameContent);
@@ -108,16 +94,11 @@ public class ConnexionActivity extends AppCompatActivity {
                                     editor.putString(userPassword, userPasswordContent);
                                     editor.putString("mUserId", userId);
                                     editor.apply();
-                                    Toast.makeText(getApplicationContext(), R.string.created_user + userName, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(testConnexionActivity.this, R.string.created_user + userName, Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(), HomeJoueur.class));
                                 }
                             }
-
-                            // TODO trouver le moyen de mettre ca a la FIN du for, pas apres le 1er tour
-//
-
                         }
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
