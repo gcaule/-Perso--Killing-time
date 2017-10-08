@@ -10,9 +10,9 @@ public class User {
     private String user_name;
     private String user_password;
     private String user_quest;
+    private String user_createdquestID;
 
-
-    public User () {
+    public User() {
         // Needed for firebase
     }
 
@@ -22,6 +22,18 @@ public class User {
         this.user_quest = user_quest;
     }
 
+
+    public User(String user_createdquestID) {
+        this.user_createdquestID = user_createdquestID;
+    }
+
+    public String getUser_createdquestID() {
+        return user_createdquestID;
+    }
+
+    public void setUser_createdquestID(String user_createdquestID) {
+        this.user_createdquestID = user_createdquestID;
+    }
 
     public String getUser_name() {
         return user_name;

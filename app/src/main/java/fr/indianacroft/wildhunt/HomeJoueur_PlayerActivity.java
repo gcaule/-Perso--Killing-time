@@ -109,7 +109,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                     Challenge challenge = dsp.getValue(Challenge.class);
                     // On recupere les challenges qui correspondent a la qûete
-                    if (challenge.getIdquest_challenge().equals(mUser_quest)) {
+                    if (challenge.getChallenge_questId().equals(mUser_quest)) {
                         mName_challenge = challenge.getChallenge_name();
                         Log.d(mName_challenge, "tag");
                         mHint_challenge = challenge.getHint_challenge();
