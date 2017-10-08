@@ -99,6 +99,7 @@ public class ConnexionActivity extends AppCompatActivity {
                                         user.setUser_name(userNameContent);
                                         user.setUser_password(userPasswordContent);
                                         user.setUser_quest(questContent);
+                                        user.setUser_indice("false");
                                         String userId = refUser.push().getKey();
                                         refUser.child(userId).setValue(user);
 

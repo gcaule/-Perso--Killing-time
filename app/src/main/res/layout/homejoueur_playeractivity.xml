@@ -69,14 +69,13 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:gravity="center_horizontal"
-
+                android:visibility="gone"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewHomeJoueurToFind"
                 tools:text="Ici sera présenter le texte de présentation du challenge et de la photo a trouver. Exemple quest_name du quartier etc"
-                android:layout_marginTop="8dp"/>
-
+                android:layout_marginTop="8dp" />
 
             <Button
                 android:id="@+id/buttonHomeJoueurHint"

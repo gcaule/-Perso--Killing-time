@@ -45,6 +45,10 @@
             android:label="Home Joueur"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".InscriptionActivity"
+            android:label="Inscription"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".RulesActivity"
             android:label="Rules"
             android:theme="@style/AppTheme.NoActionBar"></activity>
