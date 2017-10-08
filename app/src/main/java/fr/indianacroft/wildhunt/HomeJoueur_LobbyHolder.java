@@ -63,6 +63,7 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
                             DatabaseReference refUserQuest =
                                     FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_quest");
                             refUserQuest.setValue(questKey);
+                            FirebaseDatabase.getInstance().getReference("User").child(mUserId).child("user_indice").setValue("false");
                         }
                     }
                     @Override

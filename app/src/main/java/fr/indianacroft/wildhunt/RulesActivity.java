@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class Rules extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class RulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class Rules extends AppCompatActivity implements NavigationView.OnNavigat
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Rules.this, ProfileActivity.class);
+                Intent intent = new Intent(RulesActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -65,25 +65,20 @@ public class Rules extends AppCompatActivity implements NavigationView.OnNavigat
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        // TODO : remplacer les toasts par des liens
-        if (id == R.id.nav_home) {
-            Intent intent = new Intent(Rules.this, HomeGameMaster.class);
+        // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
+        if (id == R.id.nav_rules) {
+            Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_rules) {
-            Toast.makeText(Rules.this, "Vous êtes déjà sur la page Règles du jeu", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(Rules.this, ProfileActivity.class);
+        } else if (id == R.id.nav_play) {
+            Intent intent = new Intent(getApplicationContext(), HomeJoueur.class);
             startActivity(intent);
-        } else if (id == R.id.nav_camera) {
-            Toast.makeText(Rules.this, "Lien page Photo", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_quests) {
-            Intent intent = new Intent(Rules.this, HomeGameMaster.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_switch) {
-            Intent intent = new Intent(Rules.this, HomeJoueur.class);
+        } else if (id == R.id.nav_create) {
+            startActivity(new Intent(getApplicationContext(), HomeGameMaster.class));
+        } else if (id == R.id.nav_manage) {
+            Intent intent = new Intent(getApplicationContext(), HomeGameMaster.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
-            Toast.makeText(Rules.this, "Déco joueur", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Déco joueur", Toast.LENGTH_SHORT).show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

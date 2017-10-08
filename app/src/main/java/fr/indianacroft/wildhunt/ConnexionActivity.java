@@ -112,7 +112,7 @@ public class ConnexionActivity extends AppCompatActivity {
                                         editor.putString("mUserId", userId);
                                         editor.apply();
                                         Toast.makeText(getApplicationContext(), R.string.created_user, Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getApplicationContext(), HomeJoueur.class));
+                                        startActivity(new Intent(getApplicationContext(), RulesActivity.class));
                                         break;
                                 }
                             }

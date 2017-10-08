@@ -21,7 +21,6 @@
                 android:id="@+id/playerActivityNameQuestTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Party Name"
                 android:textAlignment="viewStart"
                 android:textStyle="bold"
                 app:layout_constraintHorizontal_bias="0.996"
@@ -30,6 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_constraintRight_creator="1"
                 tools:layout_constraintTop_creator="1"
+                tools:text="Party Name"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="8dp" />
 
@@ -43,8 +43,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="1dp"
                 android:background="@drawable/customborder"
-                android:text="Challenge N°"
                 android:textColor="#FFFFFF"
+                tools:text="Challenge N°"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/playerActivityNameQuestTitle" />
@@ -69,13 +69,14 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:gravity="center_horizontal"
-                android:visibility="gone"
+
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewHomeJoueurToFind"
                 tools:text="Ici sera présenter le texte de présentation du challenge et de la photo a trouver. Exemple quest_name du quartier etc"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"/>
+
 
             <Button
                 android:id="@+id/buttonHomeJoueurHint"
@@ -85,31 +86,14 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="33dp"
+                android:layout_marginTop="45dp"
                 android:background="@drawable/customborder"
                 android:text="Indice"
                 android:textColor="#FFFFFF"
                 app:layout_constraintLeft_toLeftOf="@+id/textViewPlayerActivityHint"
                 app:layout_constraintRight_toRightOf="@+id/textViewPlayerActivityHint"
                 app:layout_constraintTop_toTopOf="@+id/textViewPlayerActivityHint"
-                app:layout_constraintHorizontal_bias="0.526" />
-
-            <TextView
-                android:id="@+id/textViewHomeJoueurDifficulty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="7dp"
-                android:layout_marginTop="13dp"
-                android:text="- 20 points"
-                app:layout_constraintBottom_toBottomOf="@+id/buttonHomeJoueurHint"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toRightOf="@+id/buttonHomeJoueurHint"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buttonHomeJoueurHint" />
+                app:layout_constraintHorizontal_bias="0.514" />
 
             <Button
                 android:id="@+id/buttonHomeJoueurSendSolution"

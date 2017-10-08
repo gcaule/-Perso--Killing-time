@@ -196,25 +196,20 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        // TODO : remplacer les toasts par des liens
-        if (id == R.id.nav_home) {
-            Intent intent = new Intent(ProfileActivity.this, HomeGameMaster.class);
+        // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
+        if (id == R.id.nav_rules) {
+            Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_rules) {
-            Intent intent = new Intent(ProfileActivity.this, Rules.class);
+        } else if (id == R.id.nav_play) {
+            Intent intent = new Intent(getApplicationContext(), HomeJoueur.class);
             startActivity(intent);
-        } else if (id == R.id.nav_profile) {
-            Toast.makeText(ProfileActivity.this, getString(R.string.toast_error_profile), Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_camera) {
-            Toast.makeText(ProfileActivity.this, "Lien page Photo", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_quests) {
-            Intent intent = new Intent(ProfileActivity.this, HomeGameMaster.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_switch) {
-            Intent intent = new Intent(ProfileActivity.this, HomeJoueur.class);
+        } else if (id == R.id.nav_create) {
+            startActivity(new Intent(getApplicationContext(), HomeGameMaster.class));
+        } else if (id == R.id.nav_manage) {
+            Intent intent = new Intent(getApplicationContext(), HomeGameMaster.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
-            Toast.makeText(ProfileActivity.this, "Déco joueur", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Déco joueur", Toast.LENGTH_SHORT).show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

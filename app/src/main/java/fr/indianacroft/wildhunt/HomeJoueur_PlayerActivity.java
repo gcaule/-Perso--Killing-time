@@ -2,6 +2,7 @@ package fr.indianacroft.wildhunt;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
     private String mUser_name;
     private String mUser_quest;
     private String mQuest_name;
+    private String mUser_indice;
     private String mQuest_description;
     private String mLife_duration;
     private String mName_challenge;
@@ -42,6 +44,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.homejoueur_playeractivity, container, false);
 
+        final Button buttonHint = (Button) rootView.findViewById(R.id.buttonHomeJoueurHint);
         final TextView textViewPlayerActivityHint = (TextView) rootView.findViewById(R.id.textViewPlayerActivityHint);
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
@@ -52,7 +55,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
 
 
         // On recupere toutes les données de l'user actuel
-        DatabaseReference refUser =
+        final DatabaseReference refUser =
                 FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
         refUser.addValueEventListener(new ValueEventListener() {
             @Override
@@ -60,8 +63,16 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                 User user = dataSnapshot.getValue(User.class);
                 mUser_name = user.getUser_name();
                 mUser_quest = user.getUser_quest();
+                mUser_indice = user.getUser_indice();
+                Log.d("indice", mUser_indice);
 
-                //Toast.makeText(getContext(), mUser_name + mUser_quest, Toast.LENGTH_SHORT).show();
+                // Indice a montrer si indice déja utilisé c'est a dire True dans la bdd
+                if (mUser_indice.equalsIgnoreCase("true")) {
+                    textViewPlayerActivityHint.setVisibility(View.VISIBLE);
+                    buttonHint.setBackgroundColor(Color.RED);
+                } else {
+                    textViewPlayerActivityHint.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -133,23 +144,28 @@ public class HomeJoueur_PlayerActivity extends Fragment {
             }
         });
 
-        Button buttonHint = (Button) rootView.findViewById(R.id.buttonHomeJoueurHint);
 
+        // Indice au clic
+        // TODO enlever les points au clic de l'indice
         buttonHint.setOnClickListener(new View.OnClickListener() {
             boolean isClicked = false;
 
             @Override
             public void onClick(View view) {
-                if (!isClicked) {
-                    isClicked = true;
-                    Toast.makeText(getContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
-                } else if (isClicked) {
-                    textViewPlayerActivityHint.setVisibility(View.VISIBLE);
+                //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
+                if (mUser_indice.equalsIgnoreCase("false")) {
+                    if (!isClicked) {
+                        isClicked = true;
+                        Toast.makeText(getContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
+                    } else if (isClicked) {
+                        textViewPlayerActivityHint.setVisibility(View.VISIBLE);
+                        buttonHint.setBackgroundColor(Color.RED);
+                        refUser.child("user_indice").setValue("true");
+                    }
                 }
-
-
             }
         });
+
 
 
         Button buttonSendSolution = (Button) rootView.findViewById(R.id.buttonHomeJoueurSendSolution);

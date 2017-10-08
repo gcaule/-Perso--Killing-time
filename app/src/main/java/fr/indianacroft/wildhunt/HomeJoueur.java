@@ -1,12 +1,7 @@
 package fr.indianacroft.wildhunt;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,17 +13,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -115,7 +103,7 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
                     return "Partie en cours";
                 case 1:
                     // nom onglet 2
-                    return "Lobby";
+                    return "Rejoindre Partie";
             }
             return null;
         }
@@ -144,25 +132,20 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        // TODO : remplacer les toasts par des liens
-        if (id == R.id.nav_home) {
-            Toast.makeText(HomeJoueur.this, "Vous êtes déjà sur la page Acceuil", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_rules) {
-            Intent intent = new Intent(HomeJoueur.this, Rules.class);
+        // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
+        if (id == R.id.nav_rules) {
+            Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(HomeJoueur.this, ProfileActivity.class);
+        } else if (id == R.id.nav_play) {
+            Intent intent = new Intent(getApplicationContext(), HomeJoueur.class);
             startActivity(intent);
-        } else if (id == R.id.nav_camera) {
-            Toast.makeText(HomeJoueur.this, "Lien page Photo", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_quests) {
-            Intent intent = new Intent(HomeJoueur.this, HomeJoueur.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_switch) {
-            Intent intent = new Intent(HomeJoueur.this, HomeGameMaster.class);
+        } else if (id == R.id.nav_create) {
+            startActivity(new Intent(getApplicationContext(), HomeGameMaster.class));
+        } else if (id == R.id.nav_manage) {
+            Intent intent = new Intent(getApplicationContext(), HomeGameMaster.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
-            Toast.makeText(HomeJoueur.this, "Déco joueur", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Déco joueur", Toast.LENGTH_SHORT).show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
