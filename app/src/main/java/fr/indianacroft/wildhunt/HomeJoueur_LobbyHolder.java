@@ -32,7 +32,7 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(itemView.getContext());
-        mUserId = preferences.getString("mUserid", "");
+        mUserId = preferences.getString("mUserId", "");
         /////////////////////////////////////////////////////////////////
 
 
@@ -63,6 +63,7 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
                             DatabaseReference refUserQuest =
                                     FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_quest");
                             refUserQuest.setValue(questKey);
+                            FirebaseDatabase.getInstance().getReference("User").child(mUserId).child("user_indice").setValue("false");
                         }
                     }
                     @Override

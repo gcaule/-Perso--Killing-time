@@ -9,13 +9,15 @@ public class Challenge {
     private String challenge_name;
     private String challenge_difficulty;
     private String hint_challenge;
-    private String idquest_challenge;
+    private String challenge_creatorID;
+    private String challenge_questId;
 
-    public Challenge(String challenge_name, String challenge_difficulty, String hint_challenge, String idquest_challenge) {
+    public Challenge(String challenge_name, String challenge_difficulty, String hint_challenge, String challenge_creatorID, String challenge_questId) {
         this.challenge_name = challenge_name;
         this.challenge_difficulty = challenge_difficulty;
         this.hint_challenge = hint_challenge;
-        this.idquest_challenge = idquest_challenge;
+        this.challenge_creatorID = challenge_creatorID;
+        this.challenge_questId = challenge_questId;
     }
 
     public Challenge() {
@@ -46,12 +48,21 @@ public class Challenge {
         this.hint_challenge = hint_challenge;
     }
 
-    public String getIdquest_challenge() {
-        return idquest_challenge;
+    public String getChallenge_creatorID() {
+        return challenge_creatorID;
     }
 
-    public void setIdquest_challenge(String idquest_challenge) {
-        this.idquest_challenge = idquest_challenge;
+    public void setChallenge_creatorID(String challenge_creatorID) {
+        this.challenge_creatorID = challenge_creatorID;
     }
+
+    public String getChallenge_questId() {
+        return challenge_questId;
+    }
+
+    public void setChallenge_questId(String challenge_questId) {
+        this.challenge_questId = challenge_questId;
+    }
+
 
 }

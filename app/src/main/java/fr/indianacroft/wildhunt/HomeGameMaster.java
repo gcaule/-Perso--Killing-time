@@ -1,6 +1,5 @@
 package fr.indianacroft.wildhunt;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -15,7 +14,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -168,25 +166,20 @@ public class HomeGameMaster extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        // TODO : remplacer les toasts par des liens
-        if (id == R.id.nav_home) {
-            Toast.makeText(HomeGameMaster.this, "Vous êtes déjà sur la page Acceuil", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_rules) {
-            Intent intent = new Intent(HomeGameMaster.this, Rules.class);
+        // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
+        if (id == R.id.nav_rules) {
+            Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(HomeGameMaster.this, ProfileActivity.class);
+        } else if (id == R.id.nav_play) {
+            Intent intent = new Intent(getApplicationContext(), HomeJoueur.class);
             startActivity(intent);
-        } else if (id == R.id.nav_camera) {
-                Toast.makeText(HomeGameMaster.this, "Lien page Photo", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_quests) {
-            Intent intent = new Intent(HomeGameMaster.this, HomeGameMaster.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_switch) {
-            Intent intent = new Intent(HomeGameMaster.this, HomeJoueur.class);
+        } else if (id == R.id.nav_create) {
+            startActivity(new Intent(getApplicationContext(), HomeGameMaster.class));
+        } else if (id == R.id.nav_manage) {
+            Intent intent = new Intent(getApplicationContext(), HomeGameMaster.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
-            Toast.makeText(HomeGameMaster.this, "Déco joueur", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Déco joueur", Toast.LENGTH_SHORT).show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

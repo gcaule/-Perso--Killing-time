@@ -1,10 +1,12 @@
 package fr.indianacroft.wildhunt;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,8 +24,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileNotFoundException;
 
@@ -39,11 +45,19 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
     Button butCreateChallenge;
     FirebaseDatabase ref;
     DatabaseReference childRef;
+    private String mUserId;
+    private String mUserQuest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenges);
+
+        // Pour recuperer la key d'un user (pour le lier a une quête)
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mUserId = sharedPreferences.getString("mUserId", mUserId);
+        Log.d("key", mUserId);
+        /////////////////////////////////////////////////////////////////
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -136,16 +150,37 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 String idquest = "test";//TODO a modifier
 
                 // childRef.push().getKey() is used to generate the different key
-                String userId = ref.getReference("Challenge").push().getKey();
-                //  DatabaseReference childRef = ref.getReference("form");
+                final String challengeId = ref.getReference("Challenge").push().getKey();
 
-                Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent, idquest);
+                // On recupere la quete crée par l'user actuel pour link challenge a la quête
+                DatabaseReference refUser =
+                        FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
+                refUser.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        mUserQuest = user.getUser_createdquestID();
+                        String userName = user.getUser_name();
+
+                        childRef.child(challengeId).child("challenge_questId").setValue(mUserQuest);
+                        childRef.child(challengeId).child("challenge_creatorID").setValue(mUserId);
+                        childRef.child(challengeId).child("challenge_creatorname").setValue(userName);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+                Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent, idquest, mUserId);
 
                 challenge.setChallenge_name(nameContent);
                 challenge.setHint_challenge(hintContent);
                 challenge.setChallenge_difficulty(spinnerContent);
 
-                childRef.child(userId).setValue(challenge);
+                childRef.child(challengeId).setValue(challenge);
+
+
 
                 name_challenge.setText("");
                 hint_challenge.setText("");
@@ -176,26 +211,20 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        // TODO : remplacer les toasts par des liens
-        if (id == R.id.nav_home) {
-            Intent intent = new Intent(ChallengesActivity.this, HomeGameMaster.class);
+        // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
+        if (id == R.id.nav_rules) {
+            Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_rules) {
-            Intent intent = new Intent(ChallengesActivity.this, Rules.class);
+        } else if (id == R.id.nav_play) {
+            Intent intent = new Intent(getApplicationContext(), HomeJoueur.class);
             startActivity(intent);
-        } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(ChallengesActivity.this, ProfileActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_camera) {
-            Toast.makeText(ChallengesActivity.this, "Lien page Photo", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_quests) {
-            Intent intent = new Intent(ChallengesActivity.this, HomeGameMaster.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_switch) {
-            Intent intent = new Intent(ChallengesActivity.this, HomeJoueur.class);
+        } else if (id == R.id.nav_create) {
+            startActivity(new Intent(getApplicationContext(), HomeGameMaster.class));
+        } else if (id == R.id.nav_manage) {
+            Intent intent = new Intent(getApplicationContext(), HomeGameMaster.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
-            Toast.makeText(ChallengesActivity.this, "Déco joueur", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Déco joueur", Toast.LENGTH_SHORT).show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
