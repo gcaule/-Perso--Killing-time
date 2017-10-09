@@ -1,37 +1,34 @@
 package fr.indianacroft.wildhunt;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeGameMasterActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    private String mUserId;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homejoueur);
-
-
-
-
+        setContentView(R.layout.activity_homegamemaster);
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -52,7 +49,7 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeJoueur.this, ProfileActivity.class);
+                Intent intent = new Intent(HomeGameMasterActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -65,49 +62,85 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+
+
     }
+
+
+
 
     // Fragments
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
+
             switch (position) {
                 case 0:
-                    //onglet 1 vers Player Activity
-                    HomeJoueur_PlayerActivity playerActivity = new HomeJoueur_PlayerActivity();
-                    return playerActivity;
+                    HomeGameMaster_CreateQuest tab1 = new HomeGameMaster_CreateQuest();
+                    return tab1;
                 case 1:
-                    // onglet 2 vers Lobby Activity
-                    HomeJoueur_LobbyActivity lobbyActivity = new HomeJoueur_LobbyActivity();
-                    return lobbyActivity;
+                    HomeGameMaster_QuestCreated tab2 = new HomeGameMaster_QuestCreated();
+                    return tab2;
+                case 2:
+                    HomeGameMaster_ValidateQuest tab3 = new HomeGameMaster_ValidateQuest();
+                    return tab3;
                 default:
                     return null;
             }
         }
+
+
         @Override
         public int getCount() {
-            // Show 2 total pages.
-            return 2;
+            // Show 3 total pages.
+            return 3;
         }
-        //TODO enlever hardcoding
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    // nom onglet 1
-                    return "Partie en cours";
+                    return getString(R.string.home_game_master_tab1);
                 case 1:
-                    // nom onglet 2
-                    return "Rejoindre Partie";
+                    return getString(R.string.home_game_master_tab2);
+                case 2:
+                    return getString(R.string.home_game_master_tab3);
             }
             return null;
         }
     }
+
+
+
+    // TODO ca ne fonctionne pas !!
+    // Avec un intent extra on choisit sur quel fragment on va arriver.
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String menuFragment = getIntent().getStringExtra("menuFragment");
+
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        // If menuFragment is defined, then this activity was launched with a fragment selection
+        if (menuFragment != null) {
+
+            // Here we can decide what do to -- perhaps load other parameters from the intent extras such as IDs, etc
+            if (menuFragment.equals("createQuest")) {
+                Fragment favoritesFragment = new HomeGameMaster_ValidateQuest();
+                fragmentTransaction.replace(R.id.fragment_container, favoritesFragment);
+                fragmentTransaction.commit();
+            }
+        } else {
+            // Activity was not launched with a menuFragment selected -- continue as if this activity was opened from a launcher (for example)
+            Fragment standardFragment = new HomeGameMaster_QuestCreated();
+            fragmentTransaction.replace(R.id.fragment_container, standardFragment);
+            fragmentTransaction.commit();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -137,15 +170,15 @@ public class HomeJoueur extends AppCompatActivity implements NavigationView.OnNa
             Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_play) {
-            Intent intent = new Intent(getApplicationContext(), HomeJoueur.class);
+            Intent intent = new Intent(getApplicationContext(), HomeJoueurActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_create) {
-            startActivity(new Intent(getApplicationContext(), HomeGameMaster.class));
+            startActivity(new Intent(getApplicationContext(), HomeGameMasterActivity.class));
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), HomeGameMaster.class);
+            Intent intent = new Intent(getApplicationContext(), HomeGameMasterActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
-            Toast.makeText(getApplicationContext(), "Déco joueur", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

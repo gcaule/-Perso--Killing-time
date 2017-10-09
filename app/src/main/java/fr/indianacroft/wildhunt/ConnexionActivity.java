@@ -85,7 +85,7 @@ public class ConnexionActivity extends AppCompatActivity {
                                         editor.putString("mUserId", mUserId);
                                         editor.apply();
 
-                                        startActivity(new Intent(getApplicationContext(), HomeJoueur.class));
+                                        startActivity(new Intent(getApplicationContext(), HomeJoueurActivity.class));
 
 
                                     } else {

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.indianacroft.wildhunt.HomeJoueur">
+    tools:context="fr.indianacroft.wildhunt.HomeJoueurActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="368dp"
@@ -15,7 +15,7 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context="fr.indianacroft.wildhunt.HomeJoueur">
+            tools:context="fr.indianacroft.wildhunt.HomeJoueurActivity">
 
             <TextView
                 android:id="@+id/playerActivityNameQuestTitle"
@@ -50,7 +50,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/playerActivityNameQuestTitle" />
 
             <ImageView
-                android:id="@+id/imageViewHomeJoueurToFind"
+                android:id="@+id/imageViewPlayerActivityPhoto"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:scaleType="fitCenter"
@@ -73,7 +73,7 @@
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewHomeJoueurToFind"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewPlayerActivityPhoto"
                 tools:text="Ici sera présenter le texte de présentation du challenge et de la photo a trouver. Exemple quest_name du quartier etc"
                 android:layout_marginTop="8dp" />
 

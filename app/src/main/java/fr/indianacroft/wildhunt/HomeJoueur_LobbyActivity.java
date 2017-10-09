@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -115,7 +114,7 @@ public class HomeJoueur_LobbyActivity extends Fragment {
         buttonCreateQuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentToFragment = new Intent(getActivity(), HomeGameMaster.class);
+                Intent intentToFragment = new Intent(getActivity(), HomeGameMasterActivity.class);
                 intentToFragment.putExtra("menuFragment", "createQuest");
                 startActivity(intentToFragment);
             }

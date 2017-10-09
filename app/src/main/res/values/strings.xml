@@ -44,6 +44,7 @@
     <string name="hint">Ecrivez ici votre indice</string>
     <string name="create_challenge">Créer le défi</string>
     <string name="toast_challenge">Merci de remplir tous les champs</string>
+    <string name="created">Creation du défi réussi!</string>
 
     // Page Lobby
     <string name="title_home">Home</string>

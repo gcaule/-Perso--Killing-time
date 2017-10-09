@@ -15,11 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class HomeJoueur_PlayerActivity extends Fragment {
 
@@ -37,6 +41,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
     private String mName_challenge;
     private String mDiff_challenge;
     private String mHint_challenge;
+    private String mKey_challenge;
 
 
     @Override
@@ -169,6 +174,8 @@ public class HomeJoueur_PlayerActivity extends Fragment {
     private void searcChallenges(final View rootView) {
         final TextView textViewPlayerActivityHint = (TextView) rootView.findViewById(R.id.textViewPlayerActivityHint);
 
+        final Button playerActivityNumChallenge = (Button) rootView.findViewById(R.id.playerActivityNumChallenge);
+
         // On recupere les données des challenges
         DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge");
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -178,6 +185,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                     Challenge challenge = dsp.getValue(Challenge.class);
                     // On recupere les challenges qui correspondent a la qûete
                     if (challenge.getChallenge_questId().equals(mUser_quest)) {
+                        mKey_challenge = dsp.getKey();
                         mName_challenge = challenge.getChallenge_name();
                         Log.d(mName_challenge, "tag");
                         mHint_challenge = challenge.getHint_challenge();
@@ -185,7 +193,17 @@ public class HomeJoueur_PlayerActivity extends Fragment {
 
 
                         // On change la page dynamiquement !!
-                        final Button playerActivityNumChallenge = (Button) rootView.findViewById(R.id.playerActivityNumChallenge);
+
+
+                        // Reference to an image file in Firebase Storage
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
+                        // ImageView in your Activity
+                        final ImageView imageViewPhotoChallenge = (ImageView) rootView.findViewById(R.id.imageViewPlayerActivityPhoto);
+                        // Load the image using Glide
+                        Glide.with(getContext())
+                                .using(new FirebaseImageLoader())
+                                .load(storageReference)
+                                .into(imageViewPhotoChallenge);
 
 
                         textViewPlayerActivityHint.setText(mHint_challenge);
