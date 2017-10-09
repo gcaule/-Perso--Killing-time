@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/user_name"
+            android:id="@+id/connexionUserName"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:hint="PSEUDO"
@@ -28,7 +28,7 @@
             android:background="@drawable/border"/>
 
         <EditText
-            android:id="@+id/user_password"
+            android:id="@+id/connexionUserPassword"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:hint="PASSWORD"
@@ -42,10 +42,10 @@
             android:inputType="textPassword"/>
         
         <Button
-            android:id="@+id/nardin"
+            android:id="@+id/buttonConnexionSend"
             android:layout_width="130dp"
             android:layout_height="40dp"
-            android:text="Nardin"
+            android:text="@string/connexion"
             android:layout_marginTop="30dp"/>
 
     </LinearLayout>

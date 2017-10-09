@@ -77,11 +77,11 @@
                 android:id="@+id/name_challenge_title"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/name_challenge"
+                app:layout_constraintBottom_toTopOf="@+id/challenge_name"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/name_challenge"
+                android:id="@+id/challenge_name"
                 android:layout_width="368dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -103,7 +103,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/butLoad"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/name_challenge" />
+                app:layout_constraintTop_toBottomOf="@+id/challenge_name" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -171,7 +171,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/imageViewInscriptionLogo"
                 app:layout_constraintBottom_toTopOf="@+id/butUpload"
-                app:layout_constraintTop_toBottomOf="@+id/name_challenge" />
+                app:layout_constraintTop_toBottomOf="@+id/challenge_name" />
 
             <Button
                 android:id="@+id/butUpload"

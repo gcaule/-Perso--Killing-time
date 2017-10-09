@@ -84,8 +84,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/upload_ta_photo"
-                app:layout_constraintRight_toLeftOf="@+id/butLoad"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/butSend"
+                app:layout_constraintLeft_toRightOf="@+id/butLoad"
                 app:layout_constraintBottom_toTopOf="@+id/textView13"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar2" />
 
@@ -94,8 +94,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/prendre_nouvelle_photo"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/butUpload"
+                app:layout_constraintRight_toLeftOf="@+id/butUpload"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/textView13"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar2" />
 
@@ -126,7 +126,7 @@
                 android:text="TextView"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/imageViewAvatar2"
-                app:layout_constraintBottom_toTopOf="@+id/butLoad"
+                app:layout_constraintBottom_toTopOf="@+id/butSend"
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
             <TextView
@@ -148,6 +148,16 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+            <Button
+                android:id="@+id/butSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/envoi_photo"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/butUpload"
+                app:layout_constraintBottom_toTopOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar2" />
 
         </android.support.constraint.ConstraintLayout>
 
