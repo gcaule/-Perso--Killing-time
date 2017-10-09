@@ -22,7 +22,7 @@ public class ConnexionActivity extends AppCompatActivity {
     DatabaseReference childRef;
     EditText user_name;
     EditText user_password;
-    Button nardin;
+    Button connexion;
     final String MyPREFERENCES = "MyPrefs" ;
     final String Name = "NameKey";
     final String Password = "PasswordKey";
@@ -36,7 +36,7 @@ public class ConnexionActivity extends AppCompatActivity {
 
         user_name = (EditText) findViewById(R.id.user_name);
         user_password = (EditText) findViewById(R.id.user_password);
-        nardin = (Button) findViewById(R.id.nardin  );
+        connexion = (Button) findViewById(R.id.connexion);
         ref = FirebaseDatabase.getInstance();
         childRef = ref.getReference("User");
 
@@ -50,7 +50,7 @@ public class ConnexionActivity extends AppCompatActivity {
         }
 
 
-        nardin.setOnClickListener(new View.OnClickListener() {
+        connexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nameContent = user_name.getText().toString();
@@ -66,7 +66,6 @@ public class ConnexionActivity extends AppCompatActivity {
 
 
                 if(user_name.equals(name) && user_password.equals(password)){
-                        Toast.makeText(ConnexionActivity.this, "Thanks", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(ConnexionActivity.this, HomeJoueur.class);
                         startActivity(intent);
                     }else{
