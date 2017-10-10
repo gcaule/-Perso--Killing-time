@@ -10,9 +10,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 public class RulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    Button buttonPlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +36,22 @@ public class RulesActivity extends AppCompatActivity implements NavigationView.O
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /* Bottom Navigation Bar
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationViewHelper.disableShiftMode(navigation);*/
-
         // Avatar
         ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RulesActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Button Play
+        buttonPlay = findViewById(R.id.buttonPlay);
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomeJoueurActivity.class);
                 startActivity(intent);
             }
         });
@@ -83,28 +91,4 @@ public class RulesActivity extends AppCompatActivity implements NavigationView.O
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    /* Bottom Navigation Bar
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    Toast.makeText(HomeGameMasterActivity.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_camera:
-                    Toast.makeText(HomeGameMasterActivity.this, "Créer lien page camera", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_switch:
-                    Intent intent = new Intent(HomeGameMasterActivity.this, HomeJoueurActivity.class);
-                    startActivity(intent);
-                    return true;
-                case R.id.navigation_notifications:
-                    Toast.makeText(HomeGameMasterActivity.this, "Créer lien page Notifications", Toast.LENGTH_SHORT).show();
-                    return true;
-            }
-            return false;
-        }
-    };*/
 }
