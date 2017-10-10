@@ -161,7 +161,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
-        imageViewAvatar2 = (ImageView) findViewById(R.id.imageViewAvatar2);
+        imageViewAvatar2 = (ImageView) findViewById(R.id.imageViewSendPhoto);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {

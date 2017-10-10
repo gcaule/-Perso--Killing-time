@@ -54,6 +54,9 @@
     <string name="lobby_join_party">Jouer !</string>
     <string name="discover_party">Découvrir Partie</string>
 
+    // Page Jouer
+    <string name="send_photo">Envoyer</string>
+
     // Home Game Master
     <string name="home_ngame_master">HOME GAME MASTER</string>
     <string-array name="life_duration">
@@ -86,5 +89,6 @@
 
     // Page Règles du jeu
     <string name="jouer">Jouer</string>
+    <string name="titlePopUp">Envoyer votre solution (Selfie !)</string>
 
 </resources>

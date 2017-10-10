@@ -29,7 +29,7 @@
         app:layout_constraintHorizontal_bias="0.516" />
 
     <ImageView
-        android:id="@+id/imageViewHomeJoueurToFind"
+        android:id="@+id/imageViewPlayerActivityPhoto"
         android:layout_width="217dp"
         android:layout_height="209dp"
         android:scaleType="fitCenter"
@@ -60,7 +60,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/textViewPlayerActivityHint"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewHomeJoueurToFind" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPlayerActivityPhoto" />
 
     <Button
         style="@style/ButtonBlue"
@@ -100,7 +100,7 @@
         android:text="Mettre la difficulté ici"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewHomeJoueurToFind"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewPlayerActivityPhoto"
         app:layout_constraintTop_toBottomOf="@+id/playerActivityNumChallenge" />
 
 </android.support.constraint.ConstraintLayout>
