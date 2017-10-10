@@ -43,7 +43,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // User Id
+        // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
@@ -87,6 +87,21 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         FirebaseStorage storage = FirebaseStorage.getInstance();
         final StorageReference storageRef = storage.getInstance().getReference();
 
+
+        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
+        final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        // Load the image using Glide
+        Glide.with(getApplicationContext())
+                .using(new FirebaseImageLoader())
+                .load(storageReference)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(imageViewAvatar);
+
+        // Upload photos on Firebase
+        butSend = (Button) findViewById(R.id.butSend);
+        butSend.setOnClickListener(new View.OnClickListener() {
         imageViewAvatar2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

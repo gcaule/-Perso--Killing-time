@@ -1,6 +1,8 @@
 package fr.indianacroft.wildhunt;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
@@ -14,19 +16,34 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class HomeGameMasterActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private String mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homegamemaster);
+
+        // Pour recuperer la key d'un user (pour le lier a une quête)
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mUserId = sharedPreferences.getString("mUserId", mUserId);
+        Log.d("key", mUserId);
+        /////////////////////////////////////////////////////////////////
+
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -43,7 +60,17 @@ public class HomeGameMasterActivity extends AppCompatActivity implements Navigat
         navigationView.setNavigationItemSelectedListener(this);
 
         // Avatar
-        ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
+        final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        // Load the image using Glide
+        Glide.with(getApplicationContext())
+                .using(new FirebaseImageLoader())
+                .load(storageReference)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(imageViewAvatar);
+
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

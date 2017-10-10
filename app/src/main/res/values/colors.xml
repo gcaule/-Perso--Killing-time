@@ -4,5 +4,5 @@
     <color name="colorAppBar">#33495E</color>
     <color name="colorYellow">#FFD05C</color>
     <color name="colorBlue2">#84DBFF</color>
-    <color name="colorTransparent">#00ff0000</color>
+    <color name="colorTransparent">#f8ffffff</color>
 </resources>

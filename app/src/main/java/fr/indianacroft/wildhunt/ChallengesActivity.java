@@ -25,6 +25,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -86,7 +89,17 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         navigationView.setNavigationItemSelectedListener(this);
 
         // Avatar
-        ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
+        final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        // Load the image using Glide
+        Glide.with(getApplicationContext())
+                .using(new FirebaseImageLoader())
+                .load(storageReference)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(imageViewAvatar);
+
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,6 +176,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
             }
         });
+
 
         // ProgressDialog
         progressDialog = new ProgressDialog(this);
