@@ -90,5 +90,6 @@
     // Page Règles du jeu
     <string name="jouer">Jouer</string>
     <string name="titlePopUp">Envoyer votre solution (Selfie !)</string>
+    <string name="error_noquest">Aucune Partie active !</string>
 
 </resources>

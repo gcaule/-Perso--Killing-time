@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -67,9 +68,14 @@ public class HomeJoueur_PlayerActivity extends Fragment {
         buttonSendSolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), HomeJoueur_PlayerPopUp.class);
-                intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
-                startActivity(intent);
+                if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
+                    Intent intent = new Intent(getActivity(), HomeJoueur_PlayerPopUp.class);
+                    intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getContext(), R.string.error_noquest, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -201,10 +207,13 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                         // ImageView in your Activity
                         final ImageView imageViewPhotoChallenge = (ImageView) rootView.findViewById(R.id.imageViewPlayerActivityPhoto);
                         // Load the image using Glide
-                        Glide.with(getContext())
-                                .using(new FirebaseImageLoader())
-                                .load(storageReference)
-                                .into(imageViewPhotoChallenge);
+                            Glide.with(getContext())
+                                    .using(new FirebaseImageLoader())
+                                    .load(storageReference)
+                                    .skipMemoryCache(true)
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .into(imageViewPhotoChallenge);
+
 
 
                         textViewPlayerActivityHint.setText(mHint_challenge);

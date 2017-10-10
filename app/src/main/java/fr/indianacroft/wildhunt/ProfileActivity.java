@@ -110,12 +110,14 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
         final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         // Load the image using Glide
-        Glide.with(getApplicationContext())
-                .using(new FirebaseImageLoader())
-                .load(storageReference)
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(imageViewAvatar);
+        if (storageReference.getDownloadUrl().isSuccessful()){
+            Glide.with(getApplicationContext())
+                    .using(new FirebaseImageLoader())
+                    .load(storageReference)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(imageViewAvatar);
+        }
 
         // Upload photos on Firebase
         butSend = (Button) findViewById(R.id.butSend);
