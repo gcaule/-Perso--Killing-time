@@ -28,6 +28,7 @@
     <string name="toast_error_upload">Echec de l\'upload</string>
     <string name="toast_upload_success">Upload réussi !</string>
     <string name="progressdialog_upload">Uploading ...</string>
+    <string name="sauvergarder_les_modifications">Sauvergarder les modifications</string>
 
     // Page Challenge
     <string name="challenge_creation">CREATION DE\nDEFIS</string>
@@ -49,7 +50,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="lobby_create_party">Créer ta propre Partie !</string>
+    <string name="lobby_create_party">Créer ta propre Partie</string>
     <string name="lobby_list_party">Liste des Parties</string>
     <string name="lobby_join_party">Jouer !</string>
     <string name="discover_party">Découvrir Partie</string>
@@ -80,8 +81,8 @@
 
     // Page Connexion
     <string name="connexion">Connexion</string>
-    <string name="error_password">Password faux ou Pseudo déjà pris.</string>
-    <string name="error_fill">Remplissez tout les champs !</string>
+    <string name="error_password">Votre pseudo est déjà utilisé ou votre mot de passe est erroné</string>
+    <string name="error_fill">Veuillez remplir tous les champs demandés</string>
     <string name="created_user">Bienvenue</string>
     <string name="pseudo">PSEUDO</string>
     <string name="password">PASSWORD</string>
@@ -91,5 +92,8 @@
     <string name="jouer">Jouer</string>
     <string name="titlePopUp">Envoyer votre solution (Selfie !)</string>
     <string name="error_noquest">Aucune Partie active !</string>
+
+    // Page Défis à valider
+    <string name="mes_d_fis_valider">Mes défis à valider</string>
 
 </resources>

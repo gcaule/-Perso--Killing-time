@@ -53,7 +53,6 @@ public class HomeJoueur_PlayerActivity extends Fragment {
         final Button buttonHint = (Button) rootView.findViewById(R.id.buttonHomeJoueurHint);
         final TextView textViewPlayerActivityHint = (TextView) rootView.findViewById(R.id.textViewPlayerActivityHint);
 
-
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(rootView.getContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
@@ -78,12 +77,8 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                 }
             }
         });
-
-
         return rootView;
     }
-
-
 
     // METHODE POUR TROUVER USER
     private void searchUser(final View rootView) {
@@ -105,7 +100,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                 // Indice a montrer si indice déja utilisé c'est a dire True dans la bdd
                 if (mUser_indice.equalsIgnoreCase("true")) {
                     textViewPlayerActivityHint.setVisibility(View.VISIBLE);
-                    buttonHint.setBackgroundColor(Color.RED);
+                    buttonHint.setVisibility(View.GONE);
                 } else {
                     textViewPlayerActivityHint.setVisibility(View.GONE);
                 }
@@ -205,7 +200,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                         // Reference to an image file in Firebase Storage
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
                         // ImageView in your Activity
-                        final ImageView imageViewPhotoChallenge = (ImageView) rootView.findViewById(R.id.imageViewPlayerActivityPhoto);
+                        final ImageView imageViewPhotoChallenge = (ImageView) rootView.findViewById(R.id.imageViewHomeJoueurToFind);
                         // Load the image using Glide
                             Glide.with(getContext())
                                     .using(new FirebaseImageLoader())
