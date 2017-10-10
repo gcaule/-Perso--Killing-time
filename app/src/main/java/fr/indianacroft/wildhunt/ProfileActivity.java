@@ -21,6 +21,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -101,6 +105,18 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         FirebaseStorage storage = FirebaseStorage.getInstance();
         final StorageReference storageRef = storage.getInstance().getReference();
 
+
+        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
+        final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        // Load the image using Glide
+        Glide.with(getApplicationContext())
+                .using(new FirebaseImageLoader())
+                .load(storageReference)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(imageViewAvatar);
+
         // Upload photos on Firebase
         butSend = (Button) findViewById(R.id.butSend);
         butSend.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +125,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 if(filePath != null) {
                     progressDialog.show();
                     StorageReference childRef = storageRef.child("Avatar").child(mUserId);
-                    UploadTask uploadTask = childRef.child("avatar - " + mUserId).putFile(filePath);
+                    UploadTask uploadTask = childRef.putFile(filePath);
                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -131,7 +147,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     ByteArrayOutputStream baas = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baas);
                     byte[] data = baas.toByteArray();
-                    UploadTask uploadTask = storageRef.child("Avatar").child(mUserId).child("avatar - " + mUserId).putBytes(data);
+                    UploadTask uploadTask = storageRef.child("Avatar").child(mUserId).putBytes(data);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
