@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wood_background3"
-    tools:layout_editor_absoluteY="81dp"
+    android:background="@color/colorBlue"
+    tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="178dp"
+        android:layout_height="169dp"
+        app:srcCompat="@drawable/camera"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/connexionUserName"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <EditText
+        style="@style/Connexion"
+        android:id="@+id/connexionUserName"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:hint="@string/pseudo"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/connexionUserPassword"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
-        <EditText
-            android:id="@+id/connexionUserName"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:hint="PSEUDO"
-            android:paddingLeft="10dp"
-            android:textColorHint="#000"
-            android:textColor="#000"
-            android:gravity="center"
-            android:textSize="22dp"
-            android:background="@drawable/border"/>
+    <EditText
+        style="@style/Connexion"
+        android:id="@+id/connexionUserPassword"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonConnexionSend"
+        app:layout_constraintTop_toBottomOf="@+id/connexionUserName" />
 
-        <EditText
-            android:id="@+id/connexionUserPassword"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:hint="PASSWORD"
-            android:paddingLeft="10dp"
-            android:textColor="#000"
-            android:textColorHint="#000"
-            android:gravity="center"
-            android:textSize="22dp"
-            android:background="@drawable/border"
-            android:layout_marginTop="20dp"
-            android:inputType="textPassword"/>
-        
-        <Button
-            android:id="@+id/buttonConnexionSend"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:text="@string/connexion"
-            android:layout_marginTop="30dp"/>
+    <Button
+        style="@style/ButtonYellow"
+        android:id="@+id/buttonConnexionSend"
+        android:text="@string/connexion"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/connexionUserPassword" />
 
-    </LinearLayout>
-
-
-
-</android.widget.RelativeLayout>
+</android.support.constraint.ConstraintLayout>
