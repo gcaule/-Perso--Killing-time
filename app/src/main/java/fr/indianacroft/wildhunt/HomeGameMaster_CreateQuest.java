@@ -22,8 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomeGameMaster_CreateQuest extends Fragment {
 
-    Button butNewChallenge;
-    Button butNewChallenge2;
     Button butAddNewChallenge;
     Button button_create_quest;
     EditText name_quest;
@@ -53,22 +51,6 @@ public class HomeGameMaster_CreateQuest extends Fragment {
         spinner_quest.setAdapter(adapter);
 
         // Go to Challenge Activity on click
-        butNewChallenge = (Button) rootView.findViewById(R.id.butNewChallenge);
-        butNewChallenge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ChallengesActivity.class);
-                startActivity(intent);
-            }
-        });
-        butNewChallenge2 = (Button) rootView.findViewById(R.id.butNewChallenge2);
-        butNewChallenge2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ChallengesActivity.class);
-                startActivity(intent);
-            }
-        });
         butAddNewChallenge = (Button) rootView.findViewById(R.id.butAddNewChallenge);
         butAddNewChallenge.setOnClickListener(new View.OnClickListener() {
             @Override

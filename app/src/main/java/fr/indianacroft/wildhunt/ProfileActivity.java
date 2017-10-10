@@ -132,7 +132,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             Toast.makeText(ProfileActivity.this, getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
-
                         }
                     });
                 }

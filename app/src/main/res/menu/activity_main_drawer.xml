@@ -12,7 +12,7 @@
             android:title="@string/nav_rules" />
         <item
             android:id="@+id/nav_play"
-            android:icon="@drawable/map"
+            android:icon="@drawable/play"
             android:title="@string/nav_play" />
         <!--<item-->
             <!--android:id="@+id/nav_profile"-->
@@ -20,16 +20,16 @@
             <!--android:title="@string/nav_profile" />-->
         <item
             android:id="@+id/nav_create"
-            android:icon="@drawable/man"
+            android:icon="@drawable/map"
             android:title="@string/nav_create" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/users"
+            android:icon="@drawable/settings"
             android:title="@string/nav_manage" />
 
         <item
             android:id="@+id/nav_delete"
-            android:icon="@drawable/delete"
+            android:icon="@drawable/delete3"
             android:title="@string/nav_delete" />
     </group>
 
