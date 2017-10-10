@@ -48,7 +48,10 @@
             android:name=".RulesActivity"
             android:label="Rules"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProfileActivity_PopUp"></activity>
+        <activity
+            android:name=".ProfileActivity_PopUp"
+            android:label="ProfilePopUp"
+            android:theme="@style/AppTheme.PopUp" />
     </application>
 
 </manifest>

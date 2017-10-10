@@ -1,20 +1,19 @@
 <resources>
-    // Activities
+    // Activités
     <string name="app_name">WildHunt</string>
     <string name="title_activity_tab_">Tab_Activity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_challenges_">Challenges_Activity</string>
     <string name="title_activity_profile_">Profile</string>
 
-    // Navigation Drawer
-    <string name="drawermenu_title">THE WILD HUNT</string>
-    <string name="drawermenu_menu"></string>
+    // Menu Déroulant
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="drawermenu_title">THE WILD HUNT</string>
     <string name="nav_home">Acceuil</string>
     <string name="nav_rules">Règles du jeu</string>
     <string name="nav_profile">Mon profil</string>
-    <string name="nav_create">Créer une partie</string>
+    <string name="nav_create">Créer ma partie</string>
     <string name="nav_manage">Gérer ma partie</string>
     <string name="nav_play">Jouer</string>
     <string name="nav_delete">Deconnexion</string>
@@ -30,7 +29,12 @@
     <string name="progressdialog_upload">Uploading ...</string>
     <string name="sauvergarder_les_modifications">Sauvergarder les modifications</string>
 
-    // Page Challenge
+    // Page Profil PopUp
+    <string name="valider">Valider</string>
+    <string name="choisir_depuis_nla_gallerie">Choisir depuis\nla gallerie</string>
+    <string name="nouvelle_photo">Nouvelle\nPhoto</string>
+
+    // Page Défi
     <string name="challenge_creation">CREATION DE\nDEFIS</string>
     <string-array name="challenge_difficulty">
         <item>Facile</item>
@@ -46,7 +50,7 @@
     <string name="toast_challenge">Merci de remplir tous les champs</string>
     <string name="created">Creation du défi réussi!</string>
 
-    // Page Lobby
+    // Page Salon
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -55,11 +59,11 @@
     <string name="lobby_join_party">Jouer !</string>
     <string name="discover_party">Découvrir Partie</string>
 
-    // Page Jouer
+    // Page Joueur
     <string name="send_photo">Envoyer</string>
 
-    // Home Game Master
-    <string name="home_ngame_master">HOME GAME MASTER</string>
+    // Page Gestion de Partie
+    <string name="home_ngame_master">GESTION DE PARTIE</string>
     <string-array name="life_duration">
         <item>Courte (3 jours)</item>
         <item>Moyenne (5 jours)</item>
@@ -68,7 +72,7 @@
     <string name="home_game_master_tab1">Ma Partie</string>
     <string name="home_game_master_tab2">Défis à valider</string>
 
-    // Page Create Quest
+    // Page Ma Partie
     <string name="hint_quest_name">Ajoutez ici le nom\nde votre partie</string>
     <string name="hint_quest_description">Décrivez ici votre partie\n(200 caractères max)</string>
     <string name="life_duration_quest_title">Durée de vie</string>
@@ -77,7 +81,7 @@
     <string name="create_challenge_button">Créer un challenge</string>
 
     // Page Défi en cours
-    <string name="warning_hint">Attention, vous perdrez des points ! Re-cliquer pour valider</string>
+    <string name="warning_hint">Attention, vous perdrez des points ! Re-cliquez pour valider</string>
 
     // Page Connexion
     <string name="connexion">Connexion</string>
