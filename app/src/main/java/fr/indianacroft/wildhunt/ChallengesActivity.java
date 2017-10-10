@@ -103,7 +103,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         spinner_challenge.setAdapter(adapter);
 
         // Button Actions / Change ImageView / Text in buttons
-        // TODO : changer les challenges en list view
+        // TODO : SUPPRIMER LES BOUTONS ET REMPLACER PAR CLICK SUR PHOTO
         name_challenge = (EditText) findViewById(R.id.challenge_name);
         hint_challenge = (EditText) findViewById(R.id.hint_challenge);
         butCreateChallenge = (Button) findViewById(R.id.butCreateChallenge);

@@ -23,8 +23,6 @@ public class HomeGameMasterActivity extends AppCompatActivity implements Navigat
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +59,7 @@ public class HomeGameMasterActivity extends AppCompatActivity implements Navigat
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-
-
     }
-
-
-
 
     // Fragments
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -82,21 +74,16 @@ public class HomeGameMasterActivity extends AppCompatActivity implements Navigat
                     HomeGameMaster_CreateQuest tab1 = new HomeGameMaster_CreateQuest();
                     return tab1;
                 case 1:
-                    HomeGameMaster_QuestCreated tab2 = new HomeGameMaster_QuestCreated();
+                    HomeGameMaster_ValidateQuest tab2 = new HomeGameMaster_ValidateQuest();
                     return tab2;
-                case 2:
-                    HomeGameMaster_ValidateQuest tab3 = new HomeGameMaster_ValidateQuest();
-                    return tab3;
                 default:
                     return null;
             }
         }
 
-
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 2;
         }
         @Override
         public CharSequence getPageTitle(int position) {
@@ -105,18 +92,14 @@ public class HomeGameMasterActivity extends AppCompatActivity implements Navigat
                     return getString(R.string.home_game_master_tab1);
                 case 1:
                     return getString(R.string.home_game_master_tab2);
-                case 2:
-                    return getString(R.string.home_game_master_tab3);
             }
             return null;
         }
     }
 
-
-
     // TODO ca ne fonctionne pas !!
     // Avec un intent extra on choisit sur quel fragment on va arriver.
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         String menuFragment = getIntent().getStringExtra("menuFragment");
@@ -139,7 +122,7 @@ public class HomeGameMasterActivity extends AppCompatActivity implements Navigat
             fragmentTransaction.replace(R.id.fragment_container, standardFragment);
             fragmentTransaction.commit();
         }
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
