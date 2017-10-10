@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -71,7 +70,7 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
-                Intent intent = new Intent(view.getContext(), HomeJoueur.class); //TODO envoyer directement dans un fragment avec in put extra
+                Intent intent = new Intent(view.getContext(), HomeJoueurActivity.class); //TODO envoyer directement dans un fragment avec in put extra
                 view.getContext().startActivity(intent);
             }
         });

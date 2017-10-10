@@ -2,8 +2,10 @@ package fr.indianacroft.wildhunt;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -34,11 +37,19 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     int REQUEST_IMAGE_CAPTURE = 1;
     Uri filePath;
     ProgressDialog progressDialog;
+    private String mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        // Pour recuperer la key d'un user (pour le lier a une quête)
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mUserId = sharedPreferences.getString("mUserId", mUserId);
+        Log.d("key", mUserId);
+        /////////////////////////////////////////////////////////////////
+
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -97,8 +108,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             public void onClick(View v) {
                 if(filePath != null) {
                     progressDialog.show();
-                    StorageReference childRef = storageRef.child("image.jpg");
-                    UploadTask uploadTask = childRef.putFile(filePath);
+                    StorageReference childRef = storageRef.child("Avatar").child(mUserId);
+                    UploadTask uploadTask = childRef.child("avatar - " + mUserId).putFile(filePath);
                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -120,7 +131,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     ByteArrayOutputStream baas = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baas);
                     byte[] data = baas.toByteArray();
-                    UploadTask uploadTask = storageRef.child("{image-folder}").putBytes(data);
+                    UploadTask uploadTask = storageRef.child("Avatar").child(mUserId).child("avatar - " + mUserId).putBytes(data);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
@@ -200,15 +211,15 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_play) {
-            Intent intent = new Intent(getApplicationContext(), HomeJoueur.class);
+            Intent intent = new Intent(getApplicationContext(), HomeJoueurActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_create) {
-            startActivity(new Intent(getApplicationContext(), HomeGameMaster.class));
+            startActivity(new Intent(getApplicationContext(), HomeGameMasterActivity.class));
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), HomeGameMaster.class);
+            Intent intent = new Intent(getApplicationContext(), HomeGameMasterActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
-            Toast.makeText(getApplicationContext(), "Déco joueur", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

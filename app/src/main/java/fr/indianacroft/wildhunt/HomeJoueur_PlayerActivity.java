@@ -15,11 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class HomeJoueur_PlayerActivity extends Fragment {
 
@@ -37,6 +41,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
     private String mName_challenge;
     private String mDiff_challenge;
     private String mHint_challenge;
+    private String mKey_challenge;
 
 
     @Override
@@ -47,12 +52,36 @@ public class HomeJoueur_PlayerActivity extends Fragment {
         final Button buttonHint = (Button) rootView.findViewById(R.id.buttonHomeJoueurHint);
         final TextView textViewPlayerActivityHint = (TextView) rootView.findViewById(R.id.textViewPlayerActivityHint);
 
+
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(rootView.getContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
         /////////////////////////////////////////////////////////////////
 
+        // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
+        searchUser(rootView);
+
+        Button buttonSendSolution = (Button) rootView.findViewById(R.id.buttonHomeJoueurSendSolution);
+
+        buttonSendSolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), HomeJoueur_PlayerPopUp.class);
+                startActivity(intent);
+            }
+        });
+
+
+        return rootView;
+    }
+
+
+
+    // METHODE POUR TROUVER USER
+    private void searchUser(final View rootView) {
+        final Button buttonHint = (Button) rootView.findViewById(R.id.buttonHomeJoueurHint);
+        final TextView textViewPlayerActivityHint = (TextView) rootView.findViewById(R.id.textViewPlayerActivityHint);
 
         // On recupere toutes les données de l'user actuel
         final DatabaseReference refUser =
@@ -73,6 +102,28 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                 } else {
                     textViewPlayerActivityHint.setVisibility(View.GONE);
                 }
+                searchQuest(rootView);
+
+                // Indice au clic
+                // TODO enlever les points au clic de l'indice
+                buttonHint.setOnClickListener(new View.OnClickListener() {
+                    boolean isClicked = false;
+
+                    @Override
+                    public void onClick(View view) {
+                        //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
+                        if (mUser_indice.equalsIgnoreCase("false")) {
+                            if (!isClicked) {
+                                isClicked = true;
+                                Toast.makeText(getContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
+                            } else if (isClicked) {
+                                textViewPlayerActivityHint.setVisibility(View.VISIBLE);
+                                buttonHint.setBackgroundColor(Color.RED);
+                                refUser.child("user_indice").setValue("true");
+                            }
+                        }
+                    }
+                });
             }
 
             @Override
@@ -81,6 +132,11 @@ public class HomeJoueur_PlayerActivity extends Fragment {
         });
 
 
+    }
+
+
+    // METHODE POUR TROUVER QUETE
+    private void searchQuest(final View rootView) {
         //On recupere toutes les données de la quete de l'user
         final DatabaseReference refUserQuest = FirebaseDatabase.getInstance().getReference().child("Quest");
         refUserQuest.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -98,11 +154,11 @@ public class HomeJoueur_PlayerActivity extends Fragment {
 
                         final TextView playerActivityQuestName = (TextView) rootView.findViewById(R.id.playerActivityNameQuestTitle);
                         playerActivityQuestName.setText(mQuest_name);
+                        searcChallenges(rootView);
                         return;
-
-
                     }
                 }
+
 
             }
 
@@ -111,8 +167,16 @@ public class HomeJoueur_PlayerActivity extends Fragment {
 
             }
         });
+    }
 
-//        // On recupere les données des challenges
+
+    // METHODE POUR TROUVER CHALLENGE
+    private void searcChallenges(final View rootView) {
+        final TextView textViewPlayerActivityHint = (TextView) rootView.findViewById(R.id.textViewPlayerActivityHint);
+
+        final Button playerActivityNumChallenge = (Button) rootView.findViewById(R.id.playerActivityNumChallenge);
+
+        // On recupere les données des challenges
         DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge");
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -121,6 +185,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
                     Challenge challenge = dsp.getValue(Challenge.class);
                     // On recupere les challenges qui correspondent a la qûete
                     if (challenge.getChallenge_questId().equals(mUser_quest)) {
+                        mKey_challenge = dsp.getKey();
                         mName_challenge = challenge.getChallenge_name();
                         Log.d(mName_challenge, "tag");
                         mHint_challenge = challenge.getHint_challenge();
@@ -128,7 +193,17 @@ public class HomeJoueur_PlayerActivity extends Fragment {
 
 
                         // On change la page dynamiquement !!
-                        final Button playerActivityNumChallenge = (Button) rootView.findViewById(R.id.playerActivityNumChallenge);
+
+
+                        // Reference to an image file in Firebase Storage
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
+                        // ImageView in your Activity
+                        final ImageView imageViewPhotoChallenge = (ImageView) rootView.findViewById(R.id.imageViewPlayerActivityPhoto);
+                        // Load the image using Glide
+                        Glide.with(getContext())
+                                .using(new FirebaseImageLoader())
+                                .load(storageReference)
+                                .into(imageViewPhotoChallenge);
 
 
                         textViewPlayerActivityHint.setText(mHint_challenge);
@@ -143,42 +218,5 @@ public class HomeJoueur_PlayerActivity extends Fragment {
 
             }
         });
-
-
-        // Indice au clic
-        // TODO enlever les points au clic de l'indice
-        buttonHint.setOnClickListener(new View.OnClickListener() {
-            boolean isClicked = false;
-
-            @Override
-            public void onClick(View view) {
-                //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
-                if (mUser_indice.equalsIgnoreCase("false")) {
-                    if (!isClicked) {
-                        isClicked = true;
-                        Toast.makeText(getContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
-                    } else if (isClicked) {
-                        textViewPlayerActivityHint.setVisibility(View.VISIBLE);
-                        buttonHint.setBackgroundColor(Color.RED);
-                        refUser.child("user_indice").setValue("true");
-                    }
-                }
-            }
-        });
-
-
-
-        Button buttonSendSolution = (Button) rootView.findViewById(R.id.buttonHomeJoueurSendSolution);
-
-        buttonSendSolution.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), HomeJoueur_PlayerPopUp.class);
-                startActivity(intent);
-            }
-        });
-
-
-        return rootView;
     }
 }

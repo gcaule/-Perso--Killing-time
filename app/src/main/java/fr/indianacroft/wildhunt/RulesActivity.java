@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class RulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -70,15 +69,15 @@ public class RulesActivity extends AppCompatActivity implements NavigationView.O
             Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_play) {
-            Intent intent = new Intent(getApplicationContext(), HomeJoueur.class);
+            Intent intent = new Intent(getApplicationContext(), HomeJoueurActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_create) {
-            startActivity(new Intent(getApplicationContext(), HomeGameMaster.class));
+            startActivity(new Intent(getApplicationContext(), HomeGameMasterActivity.class));
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), HomeGameMaster.class);
+            Intent intent = new Intent(getApplicationContext(), HomeGameMasterActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
-            Toast.makeText(getApplicationContext(), "Déco joueur", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -92,17 +91,17 @@ public class RulesActivity extends AppCompatActivity implements NavigationView.O
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    Toast.makeText(HomeGameMaster.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeGameMasterActivity.this, "Créer lien page Home", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.navigation_camera:
-                    Toast.makeText(HomeGameMaster.this, "Créer lien page camera", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeGameMasterActivity.this, "Créer lien page camera", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.navigation_switch:
-                    Intent intent = new Intent(HomeGameMaster.this, HomeJoueur.class);
+                    Intent intent = new Intent(HomeGameMasterActivity.this, HomeJoueurActivity.class);
                     startActivity(intent);
                     return true;
                 case R.id.navigation_notifications:
-                    Toast.makeText(HomeGameMaster.this, "Créer lien page Notifications", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeGameMasterActivity.this, "Créer lien page Notifications", Toast.LENGTH_SHORT).show();
                     return true;
             }
             return false;
