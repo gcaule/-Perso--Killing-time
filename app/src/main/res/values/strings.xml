@@ -75,12 +75,18 @@
     <string name="home_game_master_tab2">Défis à valider</string>
 
     // Page Ma Partie
+    <string name="home_player">MA PARTIE</string>
     <string name="hint_quest_name">Ajoutez ici le nom\nde votre partie</string>
     <string name="hint_quest_description">Décrivez ici votre partie\n(200 caractères max)</string>
     <string name="life_duration_quest_title">Durée de vie</string>
     <string name="create_quest_button">Créer la partie</string>
     <string name="add_new_challenge">Ajouter un défi</string>
     <string name="create_challenge_button">Créer un challenge</string>
+
+    // Bottom Bar
+    <string name="abandonner">Abandonner</string>
+    <string name="indice">Indice</string>
+    <string name="soumettre">Soumettre</string>
 
     // Page Défi en cours
     <string name="warning_hint">Attention, vous perdrez des points ! Re-cliquez pour valider</string>
@@ -92,7 +98,6 @@
     <string name="created_user">Bienvenue</string>
     <string name="pseudo">PSEUDO</string>
     <string name="password">PASSWORD</string>
-    <string name="home_player">HOME PLAYER</string>
 
     // Page Règles du jeu
     <string name="jouer">Jouer</string>

@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_leave"
-        android:icon="@drawable/cross"
-        android:title="Abandonner" />
+        android:icon="@drawable/cancel1"
+        android:title="@string/abandonner" />
 
     <item
         android:id="@+id/navigation_hint"
         android:icon="@drawable/hint"
-        android:title="Indice" />
+        android:title="@string/indice" />
 
     <item
         android:id="@+id/navigation_validate"
-        android:icon="@drawable/check"
-        android:title="Valider" />
+        android:icon="@drawable/checked1"
+        android:title="@string/soumettre" />
 
 </menu>
