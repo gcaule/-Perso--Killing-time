@@ -65,12 +65,15 @@ public class HomeJoueurActivity extends AppCompatActivity implements NavigationV
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
         final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         // Load the image using Glide
-        Glide.with(getApplicationContext())
-                .using(new FirebaseImageLoader())
-                .load(storageReference)
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(imageViewAvatar);
+        if (storageReference.getDownloadUrl().isSuccessful()){
+            Glide.with(getApplicationContext())
+                    .using(new FirebaseImageLoader())
+                    .load(storageReference)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(imageViewAvatar);
+        }
+
 
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
