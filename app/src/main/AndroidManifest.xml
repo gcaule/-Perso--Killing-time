@@ -64,7 +64,14 @@
             android:name=".CreateQuestActivity"
             android:label="Create Party"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ValidateQuestActivity"></activity>
+        <activity
+            android:name=".ChallengesActivity_PopUp"
+            android:label="ChallengePopUp"
+            android:theme="@style/AppTheme.PopUp"/>
+        <activity
+            android:name=".ValidateQuestActivity"
+            android:label="Validate"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

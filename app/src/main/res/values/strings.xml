@@ -10,9 +10,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="drawermenu_title">THE WILD HUNT</string>
-    <string name="nav_home">Acceuil</string>
+    <string name="nav_lobby">Rejoindre Partie</string>
     <string name="nav_rules">Règles du jeu</string>
-    <string name="nav_profile">Mon profil</string>
     <string name="nav_create">Créer ma partie</string>
     <string name="nav_manage">Gérer ma partie</string>
     <string name="nav_play">Jouer</string>
@@ -31,7 +30,7 @@
 
     // Page Profil PopUp
     <string name="valider">Valider</string>
-    <string name="choisir_depuis_nla_gallerie">Choisir depuis\nla gallerie</string>
+    <string name="choisir_depuis_nla_gallerie">Upload\nphoto</string>
     <string name="nouvelle_photo">Nouvelle\nPhoto</string>
 
     // Page Défi
@@ -51,16 +50,18 @@
     <string name="created">Creation du défi réussi!</string>
 
     // Page Salon
-    <string name="title_home">Home</string>
+    <string name="title_home">Rejoindre une partie</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="lobby_create_party">Créer ta propre Partie</string>
     <string name="lobby_list_party">Liste des Parties</string>
-    <string name="lobby_join_party">Jouer !</string>
+    <string name="lobby_join_party">Rejoindre cette partie</string>
     <string name="discover_party">Découvrir Partie</string>
 
     // Page Joueur
     <string name="send_photo">Envoyer</string>
+    <string name="error_noquest">Veuillez rejoindre d\'abord une partie</string>
+    <string name="titlePopUp">Envoyer votre solution (Selfie !)</string>
 
     // Page Gestion de Partie
     <string name="home_ngame_master">GESTION DE PARTIE</string>
@@ -73,12 +74,19 @@
     <string name="home_game_master_tab2">Défis à valider</string>
 
     // Page Ma Partie
+    <string name="home_player">MA PARTIE</string>
     <string name="hint_quest_name">Ajoutez ici le nom\nde votre partie</string>
     <string name="hint_quest_description">Décrivez ici votre partie\n(200 caractères max)</string>
     <string name="life_duration_quest_title">Durée de vie</string>
     <string name="create_quest_button">Créer la partie</string>
     <string name="add_new_challenge">Ajouter un défi</string>
     <string name="create_challenge_button">Créer un challenge</string>
+    <string name="challenge">Challenge :</string>
+
+    // Bottom Bar
+    <string name="abandonner">Abandonner</string>
+    <string name="indice">Indice</string>
+    <string name="soumettre">Soumettre</string>
 
     // Page Défi en cours
     <string name="warning_hint">Attention, vous perdrez des points ! Re-cliquez pour valider</string>
@@ -90,15 +98,11 @@
     <string name="created_user">Bienvenue</string>
     <string name="pseudo">PSEUDO</string>
     <string name="password">PASSWORD</string>
-    <string name="home_player">HOME PLAYER</string>
 
     // Page Règles du jeu
     <string name="jouer">Jouer</string>
-    <string name="titlePopUp">Envoyer votre solution (Selfie !)</string>
-    <string name="error_noquest">Aucune Partie active !</string>
 
     // Page Défis à valider
     <string name="mes_d_fis_valider">Mes défis à valider</string>
-    <string name="nav_lobby">Rejoindre Partie</string>
 
 </resources>
