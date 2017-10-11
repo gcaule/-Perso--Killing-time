@@ -13,28 +13,44 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.Spinner;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ValidateQuestActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ImageView imageViewAvatar, imageViewAvatar2;
+    Button butAddNewChallenge;
+    Button button_create_quest;
+    EditText name_quest;
+    EditText description_quest;
+    Spinner spinner_quest;
+    FirebaseDatabase ref;
+    DatabaseReference childRef;
     private String mUserId;
+    private String mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_create_quest);
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
+        /////////////////////////////////////////////////////////////////
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -51,31 +67,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         navigationView.setNavigationItemSelectedListener(this);
 
         // Avatar
-        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
-        imageViewAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ProfileActivity.this, getString(R.string.toast_error_profile), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Lien PopUp
-        imageViewAvatar2 = (ImageView) findViewById(R.id.imageViewAvatar2);
-        imageViewAvatar2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, ProfileActivity_PopUp.class);
-                startActivity(intent);
-            }
-        });
-
-        // Save images from Firebase and update them in Profil page
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
-
-
         // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-         storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
         final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         // Load the image using Glide
         if (storageReference.getDownloadUrl().isSuccessful()){
@@ -86,16 +79,33 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(imageViewAvatar);
         }
-        if (storageReference.getDownloadUrl().isSuccessful()){
-            Glide.with(getApplicationContext())
-                    .using(new FirebaseImageLoader())
-                    .load(storageReference)
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(imageViewAvatar2);
-        }
+
+        imageViewAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
+
+
+
+        // ENTER CODE HERE
+
+
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        return super.onOptionsItemSelected(item);
     }
 
     // Drawer Menu
@@ -108,14 +118,10 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             super.onBackPressed();
         }
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
-    }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
         // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
         if (id == R.id.nav_rules) {
@@ -124,13 +130,10 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         } else if (id == R.id.nav_play) {
             Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_lobby) {
-            Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
-            startActivity(intent);
         } else if (id == R.id.nav_create) {
-            startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
+            startActivity(new Intent(getApplicationContext(), HomeGameMasterActivity.class));
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
+            Intent intent = new Intent(getApplicationContext(), HomeGameMasterActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));

@@ -68,7 +68,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
-                    Intent intent = new Intent(getActivity(), HomeJoueur_PlayerPopUp.class);
+                    Intent intent = new Intent(getActivity(), PlayerActivity_PopUp.class);
                     intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
                     startActivity(intent);
                 }

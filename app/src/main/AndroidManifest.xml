@@ -29,7 +29,7 @@
             android:label="@string/title_activity_tab_"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".HomeJoueur_PlayerPopUp"
+            android:name=".PlayerActivity_PopUp"
             android:label="PartyPopUp"
             android:theme="@style/AppTheme.PopUp" />
         <activity
@@ -60,6 +60,11 @@
             android:name=".LobbyActivity"
             android:label="Lobby"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateQuestActivity"
+            android:label="Create Party"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ValidateQuestActivity"></activity>
     </application>
 
 </manifest>

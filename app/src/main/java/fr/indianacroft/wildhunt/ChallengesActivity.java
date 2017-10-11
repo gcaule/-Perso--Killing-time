@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -55,7 +57,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
     FirebaseDatabase ref;
     DatabaseReference childRef;
     private String mUserId;
-    private String mUserQuest;
+    private String mCreatedQuestId;
     int PICK_IMAGE_REQUEST = 111;
     int REQUEST_IMAGE_CAPTURE = 1;
     Uri filePath;
@@ -71,8 +73,14 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
+//        mCreatedQuestId = sharedPreferences.getString("mCreatedQuest", "");
         Log.d("key", mUserId);
         /////////////////////////////////////////////////////////////////
+
+        searchUser();
+
+
+
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -142,23 +150,6 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             }
         });
 
-//        // Upload & Take photo
-//        butLoad = (Button) findViewById(R.id.butLoad);
-//        butLoad.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                dispatchTakePictureIntent();
-//            }
-//        });
-//        butUpload = (Button) findViewById(R.id.butUpload);
-//        butUpload.setOnClickListener(new Button.OnClickListener(){
-//            @Override
-//            public void onClick(View arg0) {
-//                Intent intent = new Intent(Intent.ACTION_PICK,
-//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(intent, 0);
-//            }
-//        });
 
         // Load & Take photo
         butLoad = (Button) findViewById(R.id.butLoad);
@@ -206,7 +197,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 String idquest = "test";//TODO a modifier
 
                 // childRef.push().getKey() is used to generate the different key
-                final String challengeId = ref.getReference("Challenge").push().getKey();
+                final String challengeId = ref.getReference("Challenge").child(mCreatedQuestId).push().getKey();
 
                 // On recupere la quete crée par l'user actuel pour link challenge a la quête
                 DatabaseReference refUser =
@@ -215,17 +206,22 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         User user = dataSnapshot.getValue(User.class);
-                        mUserQuest = user.getUser_createdquestID();
+                        mCreatedQuestId = user.getUser_createdquestID();
                         String userName = user.getUser_name();
 
-                        childRef.child(challengeId).child("challenge_questId").setValue(mUserQuest);
-                        childRef.child(challengeId).child("challenge_creatorID").setValue(mUserId);
-                        childRef.child(challengeId).child("challenge_creatorname").setValue(userName);
+                        // On envoie les nouvelles a Firebase voir aussi plus bas aux SET
+                        // OUI c'est mal foutu, c'est a revoir pq la on y comprend rien ...........
+                        childRef.child(mCreatedQuestId).child(challengeId).child("challenge_questId").setValue(mCreatedQuestId);
+                        childRef.child(mCreatedQuestId).child(challengeId).child("challenge_creatorID").setValue(mUserId);
+                        childRef.child(mCreatedQuestId).child(challengeId).child("challenge_creatorname").setValue(userName);
+                        //TODO A MODIFIER PAR VALENTIN
+                        //childRef.child(challengeId).child("challenge_nbrePoints").setValue(LA VALEUR INT DU SPINNER);
+
 
                         // Upload photos on Firebase
                         if(filePath != null) {
                             progressDialog.show();
-                            StorageReference childRef = storageRef.child("Quest").child(mUserQuest).child(challengeId);
+                            StorageReference childRef = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId);
                             UploadTask uploadTask = childRef.putFile(filePath);
                             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -248,7 +244,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                             ByteArrayOutputStream baas = new ByteArrayOutputStream();
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baas);
                             byte[] data = baas.toByteArray();
-                            UploadTask uploadTask = storageRef.child("Quest").child(mUserQuest).child(challengeId).putBytes(data);
+                            UploadTask uploadTask = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId).putBytes(data);
                             uploadTask.addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception exception) {
@@ -270,6 +266,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
+
                 // Creation du nouveau challenge
                 Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent, idquest, mUserId);
 
@@ -278,7 +275,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 challenge.setChallenge_difficulty(spinnerContent);
 
 
-                childRef.child(challengeId).setValue(challenge);
+                childRef.child(mCreatedQuestId).child(challengeId).setValue(challenge);
 
 
 
@@ -319,12 +316,15 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_play) {
-            Intent intent = new Intent(getApplicationContext(), HomeJoueurActivity.class);
+            Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_create) {
-            startActivity(new Intent(getApplicationContext(), HomeGameMasterActivity.class));
+        } else if (id == R.id.nav_lobby) {
+            Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_create) {
+            startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), HomeGameMasterActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
@@ -362,5 +362,31 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageViewPhotoChallenge.setImageBitmap(imageBitmap);
         }
+    }
+
+
+
+    // METHODE POUR TROUVER USER
+    private void searchUser() {
+
+        // On recupere toutes les données de l'user actuel
+        final DatabaseReference refUser =
+                FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
+        refUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                mCreatedQuestId = user.getUser_createdquestID();
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
     }
 }

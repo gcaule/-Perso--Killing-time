@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by wilder on 27/09/17.
  */
 
-public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
+public class LobbyViewHolder extends RecyclerView.ViewHolder {
 
     public Button mNamePartyLobby;
     public TextView mDescriptionPartyLobby;
@@ -26,7 +26,7 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
     public Button mJoinPartyLobby;
     private String mUserId;
 
-    public HomeJoueur_LobbyHolder(final View itemView) {
+    public LobbyViewHolder(final View itemView) {
         super(itemView);
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
@@ -70,7 +70,7 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
-                Intent intent = new Intent(view.getContext(), HomeJoueurActivity.class); //TODO envoyer directement dans un fragment avec in put extra
+                Intent intent = new Intent(view.getContext(), PlayerActivity.class);
                 view.getContext().startActivity(intent);
             }
         });
@@ -93,14 +93,14 @@ public class HomeJoueur_LobbyHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    private static HomeJoueur_LobbyHolder.ClickListener mClickListener;
+    private static LobbyViewHolder.ClickListener mClickListener;
 
     //Interface to send callbacks...
     public interface ClickListener{
         public void onItemClick(View view, int position);
     }
 
-    public static void setOnClickListener(HomeJoueur_LobbyHolder.ClickListener clickListener){
+    public static void setOnClickListener(LobbyViewHolder.ClickListener clickListener){
         mClickListener = clickListener;
     }
 
