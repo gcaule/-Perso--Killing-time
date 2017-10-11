@@ -71,7 +71,7 @@
                 android:id="@+id/imageViewAvatar2"
                 android:layout_width="162dp"
                 android:layout_height="126dp"
-                app:srcCompat="@drawable/boy"
+                app:srcCompat="@drawable/pirate5"
                 android:clickable="true"
                 app:layout_constraintRight_toLeftOf="@+id/textView6"
                 app:layout_constraintLeft_toLeftOf="parent"
