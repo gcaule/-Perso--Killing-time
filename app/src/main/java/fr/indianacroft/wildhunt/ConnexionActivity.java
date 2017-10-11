@@ -66,8 +66,6 @@ public class ConnexionActivity extends AppCompatActivity {
                     refUser.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            int compteur = 0;
-
                             for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                                 User userValues = dsp.getValue(User.class);
 
@@ -85,7 +83,7 @@ public class ConnexionActivity extends AppCompatActivity {
                                         editor.putString("mUserId", mUserId);
                                         editor.apply();
 
-                                        startActivity(new Intent(getApplicationContext(), HomeJoueurActivity.class));
+                                        startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
 
 
                                     } else {

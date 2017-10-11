@@ -72,6 +72,11 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         // Save images from Firebase and update them in Profil page
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+
+
+        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
+         storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
+        final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         // Load the image using Glide
         if (storageReference.getDownloadUrl().isSuccessful()){
             Glide.with(getApplicationContext())
@@ -81,6 +86,16 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(imageViewAvatar);
         }
+        if (storageReference.getDownloadUrl().isSuccessful()){
+            Glide.with(getApplicationContext())
+                    .using(new FirebaseImageLoader())
+                    .load(storageReference)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(imageViewAvatar2);
+        }
+
+
     }
 
     // Drawer Menu
