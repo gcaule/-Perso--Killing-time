@@ -277,6 +277,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 challenge.setHint_challenge(hintContent);
                 challenge.setChallenge_difficulty(spinnerContent);
 
+
                 childRef.child(challengeId).setValue(challenge);
 
 

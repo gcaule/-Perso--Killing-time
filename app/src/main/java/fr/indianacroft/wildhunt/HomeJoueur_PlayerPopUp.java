@@ -110,14 +110,14 @@ public class HomeJoueur_PlayerPopUp extends AppCompatActivity {
                 // ImageView in your Activity
 
                 // Load the image using Glide
-                if (storageReference.getDownloadUrl().isSuccessful()){
+//                if (storageReference.getDownloadUrl().isSuccessful()){
                     Glide.with(getApplicationContext())
                             .using(new FirebaseImageLoader())
                             .load(storageReference)
                             .skipMemoryCache(true)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .into(imageViewSendPhoto);
-                }
+
             }
 
             @Override

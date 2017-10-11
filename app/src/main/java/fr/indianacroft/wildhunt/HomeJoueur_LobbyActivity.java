@@ -69,6 +69,7 @@ public class HomeJoueur_LobbyActivity extends Fragment {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mUserId = preferences.getString("mUserId", "");
         // On recupere la qûete dans laquelle il est
+
         // je recupere la KEY de la quête choisi grâce a son nom
         DatabaseReference refUserQuest =
                 FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_quest");
@@ -85,79 +86,7 @@ public class HomeJoueur_LobbyActivity extends Fragment {
         });
 
 
-        // Pour remplir la liste des quêtes avec les quêtes créees!!!
-        final RecyclerView recyclerViewLobby = (RecyclerView) view.findViewById(R.id.recyclerViewHomeJoueurLobby);
-        recyclerViewLobby.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Quest");
-
-
-        final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Quest, HomeJoueur_LobbyHolder>(
-                Quest.class,
-                R.layout.homejoueur_lobby,
-                HomeJoueur_LobbyHolder.class,
-                ref) {
-            @Override
-            public void populateViewHolder(HomeJoueur_LobbyHolder holder, Quest bdd, int position) {
-                holder.setQuest_name(bdd.getQuest_name());
-                holder.setQuest_description(bdd.getQuest_description());
-            }
-        };
-
-        // Set the adapter avec les données et la ligne de separation
-        recyclerViewLobby.addItemDecoration(new SimpleDividerItemDecoration(this));
-        recyclerViewLobby.setAdapter(mAdapter);
-
-        // Bouton pour créer sa party
-        // TODO coder l'intent pour envoyver vers HomeGameMaster_CreateQuest uniquement
-        Button buttonCreateQuest = (Button) view.findViewById(R.id.buttonLobbyCreateParty);
-        buttonCreateQuest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentToFragment = new Intent(getActivity(), HomeGameMasterActivity.class);
-                intentToFragment.putExtra("menuFragment", "createQuest");
-                startActivity(intentToFragment);
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-        // On affiche la description de la party / quete au clic sur sa ligne.
-        // Au clic sur une autre ligne ferme les descriptions ouvert avant.
-        HomeJoueur_LobbyHolder.setOnClickListener(new HomeJoueur_LobbyHolder.ClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                TextView textViewLobbyDescription = (TextView) view.findViewById(R.id.textViewLobbyDescription);
-                Button buttonLobbyJoin = (Button) view.findViewById(R.id.buttonLobbyJoin);
-
-
-
-
-                if (textViewLobbyDescription.getVisibility() == View.VISIBLE) {
-                    textViewLobbyDescription.setVisibility(View.GONE);
-                    buttonLobbyJoin.setVisibility(View.GONE);
-                }else {
-                    textViewLobbyDescription.setVisibility(View.VISIBLE);
-                    buttonLobbyJoin.setVisibility(View.VISIBLE);
-
-                    // Hide Other Description
-                    for (int i = 0; i < mAdapter.getItemCount(); i++) {
-                        if (i != position) {
-                            HomeJoueur_LobbyHolder other = (HomeJoueur_LobbyHolder) recyclerViewLobby.findViewHolderForAdapterPosition(i);
-                            other.mDescriptionPartyLobby.setVisibility(View.GONE);
-                            other.mJoinPartyLobby.setVisibility(View.GONE);
-                        }
-                    }
-                }
-            }
-        });
         return view;
     }
 }
