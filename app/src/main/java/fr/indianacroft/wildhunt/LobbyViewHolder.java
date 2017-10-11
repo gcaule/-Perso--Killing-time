@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LobbyViewHolder extends RecyclerView.ViewHolder {
 
-    public Button mNamePartyLobby;
+    public TextView mNamePartyLobby;
     public TextView mDescriptionPartyLobby;
     public Button mDiscoverPartyLobby;
     public Button mJoinPartyLobby;
@@ -35,7 +35,7 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
         /////////////////////////////////////////////////////////////////
 
 
-        mNamePartyLobby = (Button) itemView.findViewById(R.id.buttonLobbyName);
+        mNamePartyLobby = (TextView) itemView.findViewById(R.id.buttonLobbyName);
 
         mDescriptionPartyLobby = (TextView) itemView.findViewById(R.id.textViewLobbyDescription);
         mDescriptionPartyLobby.setVisibility(View.GONE);

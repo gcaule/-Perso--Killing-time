@@ -44,7 +44,7 @@
                     android:layout_weight="1"
                     android:fontFamily="casual"
                     android:gravity="center"
-                    android:text="@string/profil"
+                    android:text="@string/title_home"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
@@ -81,7 +81,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerViewHomeJoueurLobby" />
 
-            <TextView
+            <!--TextView
                 style="@style/YellowTitle"
                 android:background="@drawable/layout_colors2"
                 android:id="@+id/buttonListQuest"
@@ -90,7 +90,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerViewHomeJoueurLobby"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />-->
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewHomeJoueurLobby"

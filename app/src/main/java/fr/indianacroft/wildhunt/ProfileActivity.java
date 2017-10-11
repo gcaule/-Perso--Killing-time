@@ -49,6 +49,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
 
         // Avatar
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
@@ -73,9 +74,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
 
-
         // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-         storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
+        storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
         final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         // Load the image using Glide
         if (storageReference.getDownloadUrl().isSuccessful()){
