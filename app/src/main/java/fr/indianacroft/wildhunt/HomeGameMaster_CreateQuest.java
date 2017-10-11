@@ -108,7 +108,7 @@ public class HomeGameMaster_CreateQuest extends Fragment {
                 name_quest.setText("");
                 description_quest.setText("");
 
-                //On lie la quête créee a un user
+                //On lie la quête créee a un user creator
                 ref.getReference("User").child(mUserId).child("user_createdquestID").setValue(questid);
                 ref.getReference("User").child(mUserId).child("user_createdquestName").setValue(nameContent);
 

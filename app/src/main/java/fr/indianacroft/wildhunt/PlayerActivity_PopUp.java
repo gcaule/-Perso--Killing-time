@@ -33,7 +33,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
-public class HomeJoueur_PlayerPopUp extends AppCompatActivity {
+public class PlayerActivity_PopUp extends AppCompatActivity {
     int PICK_IMAGE_REQUEST = 111;
     int REQUEST_IMAGE_CAPTURE = 1;
     Uri filePath;

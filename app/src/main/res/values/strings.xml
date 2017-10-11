@@ -99,5 +99,6 @@
 
     // Page Défis à valider
     <string name="mes_d_fis_valider">Mes défis à valider</string>
+    <string name="nav_lobby">Rejoindre Partie</string>
 
 </resources>

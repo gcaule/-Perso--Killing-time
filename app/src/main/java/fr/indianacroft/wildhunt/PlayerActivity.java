@@ -3,7 +3,6 @@ package fr.indianacroft.wildhunt;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,10 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
-
-import static java.security.AccessController.getContext;
 
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -116,7 +112,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onClick(View view) {
                 if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
-                    Intent intent = new Intent(getApplicationContext(), HomeJoueur_PlayerPopUp.class);
+                    Intent intent = new Intent(getApplicationContext(), PlayerActivity_PopUp.class);
                     intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
                     startActivity(intent);
                 }
@@ -151,12 +147,15 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_play) {
+            Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_lobby) {
             Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_create) {
-            startActivity(new Intent(getApplicationContext(), HomeGameMasterActivity.class));
+            startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), HomeGameMasterActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
@@ -266,7 +265,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         final Button playerActivityNumChallenge = (Button) findViewById(R.id.playerActivityNumChallenge);
 
         // On recupere les données des challenges
-        DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge");
+        DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest);
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

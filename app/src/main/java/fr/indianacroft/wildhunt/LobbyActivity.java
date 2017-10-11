@@ -3,9 +3,7 @@ package fr.indianacroft.wildhunt;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -34,10 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
-
-import static java.security.AccessController.getContext;
 
 public class LobbyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -117,13 +111,13 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Quest");
 
 
-        final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Quest, HomeJoueur_LobbyHolder>(
+        final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Quest, LobbyViewHolder>(
                 Quest.class,
                 R.layout.homejoueur_lobby,
-                HomeJoueur_LobbyHolder.class,
+                LobbyViewHolder.class,
                 ref) {
             @Override
-            public void populateViewHolder(HomeJoueur_LobbyHolder holder, Quest bdd, int position) {
+            public void populateViewHolder(LobbyViewHolder holder, Quest bdd, int position) {
                 holder.setQuest_name(bdd.getQuest_name());
                 holder.setQuest_description(bdd.getQuest_description());
             }
@@ -134,20 +128,18 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         recyclerViewLobby.setAdapter(mAdapter);
 
         // Bouton pour créer sa party
-        // TODO coder l'intent pour envoyver vers HomeGameMaster_CreateQuest uniquement
         Button buttonCreateQuest = (Button) findViewById(R.id.buttonLobbyCreateParty);
         buttonCreateQuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentToFragment = new Intent(getApplicationContext(), HomeGameMasterActivity.class);
-                intentToFragment.putExtra("menuFragment", "createQuest");
-                startActivity(intentToFragment);
+               startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
+
             }
         });
 
         // On affiche la description de la party / quete au clic sur sa ligne.
         // Au clic sur une autre ligne ferme les descriptions ouvert avant.
-        HomeJoueur_LobbyHolder.setOnClickListener(new HomeJoueur_LobbyHolder.ClickListener() {
+        LobbyViewHolder.setOnClickListener(new LobbyViewHolder.ClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 TextView textViewLobbyDescription = (TextView) view.findViewById(R.id.textViewLobbyDescription);
@@ -166,7 +158,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                     // Hide Other Description
                     for (int i = 0; i < mAdapter.getItemCount(); i++) {
                         if (i != position) {
-                            HomeJoueur_LobbyHolder other = (HomeJoueur_LobbyHolder) recyclerViewLobby.findViewHolderForAdapterPosition(i);
+                            LobbyViewHolder other = (LobbyViewHolder) recyclerViewLobby.findViewHolderForAdapterPosition(i);
                             other.mDescriptionPartyLobby.setVisibility(View.GONE);
                             other.mJoinPartyLobby.setVisibility(View.GONE);
                         }
@@ -233,10 +225,13 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         } else if (id == R.id.nav_play) {
             Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_lobby) {
+            Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_create) {
-            startActivity(new Intent(getApplicationContext(), HomeGameMasterActivity.class));
+            startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), HomeGameMasterActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
@@ -310,7 +305,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
     private void searcChallenges() {
 
         // On recupere les données des challenges
-        DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge");
+        DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest);
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

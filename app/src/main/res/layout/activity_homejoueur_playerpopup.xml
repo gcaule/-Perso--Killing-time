@@ -7,7 +7,7 @@ android:layout_height="match_parent"
 android:background="@drawable/popup"
 android:orientation="vertical"
 android:theme="@style/AppTheme.PopUp"
-tools:context="fr.indianacroft.wildhunt.HomeJoueur_PlayerPopUp"
+tools:context="fr.indianacroft.wildhunt.PlayerActivity_PopUp"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
 
