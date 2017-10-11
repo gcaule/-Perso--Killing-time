@@ -218,9 +218,13 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                         mUserQuest = user.getUser_createdquestID();
                         String userName = user.getUser_name();
 
+                        // On envoie les nouvelles a Firebase
                         childRef.child(challengeId).child("challenge_questId").setValue(mUserQuest);
                         childRef.child(challengeId).child("challenge_creatorID").setValue(mUserId);
                         childRef.child(challengeId).child("challenge_creatorname").setValue(userName);
+                        //TODO A MODIFIER PAR VALENTIN
+                        //childRef.child(challengeId).child("challenge_nbrePoints").setValue(LA VALEUR INT DU SPINNER);
+
 
                         // Upload photos on Firebase
                         if(filePath != null) {
@@ -270,6 +274,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
+
                 // Creation du nouveau challenge
                 Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent, idquest, mUserId);
 
