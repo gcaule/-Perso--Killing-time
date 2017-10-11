@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,6 +14,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,11 +25,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -170,6 +171,28 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             }
         });
 
+//TODO RECYCLER VIEW
+//        // Pour remplir la liste des challenges avec les challenges créees!!!
+//        final RecyclerView recyclerViewGamesCreated = (RecyclerView) findViewById(R.id.recyclerViewChallengeCreated);
+//        recyclerViewGamesCreated.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+//
+//        DatabaseReference refChallenge = FirebaseDatabase.getInstance().getReference("Challenge").child(mCreatedQuestId);
+//
+//
+//        final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Challenge, ChallengeViewHolder>(
+//                Challenge.class,
+//                R.layout.challenge_recyclerview,
+//                ChallengeViewHolder.class,
+//                refChallenge) {
+//            @Override
+//            public void populateViewHolder(ChallengeViewHolder holder, Challenge challenge, int position) {
+//                holder.setChallenge_name(challenge.getChallenge_name());
+//                holder.setChallenge_difficulty(challenge.getChallenge_difficulty());
+//            }
+//        };
+//
+//        // Set the adapter avec les données et la ligne de separation
+//        recyclerViewGamesCreated.setAdapter(mAdapter);
 
         // ProgressDialog
         progressDialog = new ProgressDialog(this);
@@ -286,6 +309,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 
             }
         });
+
     }
 
     // Drawer Menu
@@ -365,7 +389,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
     }
 
 
-
+    // TODO A completer
     // METHODE POUR TROUVER USER
     private void searchUser() {
 

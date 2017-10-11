@@ -113,7 +113,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
 
         final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Quest, LobbyViewHolder>(
                 Quest.class,
-                R.layout.homejoueur_lobby,
+                R.layout.lobby_recyclerview,
                 LobbyViewHolder.class,
                 ref) {
             @Override
