@@ -237,8 +237,8 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 //                                    Handler handler = new Handler();
 //                                    handler.postDelayed(new Runnable() {
 //                                        public void run() {
-                                            Intent intent = new Intent(ChallengesActivity.this, CreateQuestActivity.class);
-                                            startActivity(intent);
+//                                            Intent intent = new Intent(ChallengesActivity.this, CreateQuestActivity.class);
+//                                            startActivity(intent);
 //                                        }
 //                                    }, 1500);
                                 }
@@ -269,13 +269,13 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_LONG).show();
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        public void run() {
-                                            Intent intent = new Intent(ChallengesActivity.this, CreateQuestActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    }, 1500);
+//                                    Handler handler = new Handler();
+//                                    handler.postDelayed(new Runnable() {
+//                                        public void run() {
+//                                            Intent intent = new Intent(ChallengesActivity.this, CreateQuestActivity.class);
+//                                            startActivity(intent);
+//                                        }
+//                                    }, 1500);
                                 }
                             });
                         }

@@ -111,7 +111,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                 String nameContent = name_quest.getText().toString();
                 String descriptionContent = description_quest.getText().toString();
                 String spinnerContent = spinner_quest.getSelectedItem().toString();
-
+                Toast.makeText(getApplicationContext(), "Partie créée avec succès !\nAjoute des défis maintenant !", Toast.LENGTH_LONG).show();
                 //  DatabaseReference childRef = ref.getReference("form");
                 // On recupere la quete crée par l'user actuel pour link challenge a la quête
                 DatabaseReference refUser =
@@ -121,9 +121,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         User user = dataSnapshot.getValue(User.class);
                         mUserName = user.getUser_name();
-
                         childRef.child(questid).child("quest_creatorName").setValue(mUserName);
-                        Toast.makeText(getApplicationContext(), "Partie créée avec succès !\nAjoute des défis maintenant !", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
