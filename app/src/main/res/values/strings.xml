@@ -91,6 +91,7 @@
     <string name="soumettre">Soumettre</string>
 
     // Page Défi en cours
+    <string name="validate_challenges">VALIDER MES DEFIS</string>
     <string name="warning_hint">Attention, vous perdrez des points ! Re-cliquez pour valider</string>
 
     // Page Connexion
