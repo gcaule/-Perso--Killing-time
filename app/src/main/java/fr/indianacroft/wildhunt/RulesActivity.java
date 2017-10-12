@@ -27,6 +27,9 @@ import com.google.firebase.storage.StorageReference;
 
 public class RulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private String mUserId;
+    private Button buttonPlay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
