@@ -81,7 +81,7 @@ public class RulesActivity extends AppCompatActivity implements NavigationView.O
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeJoueurActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
                 startActivity(intent);
             }
         });

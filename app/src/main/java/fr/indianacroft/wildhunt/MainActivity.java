@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         butPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, HomeJoueurActivity.class);
+                Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
                 startActivity(intent);
             }
         });//Button Play
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         but2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, HomeGameMasterActivity.class);
+                Intent intent = new Intent(MainActivity.this, CreateQuestActivity.class);
                 startActivity(intent);
             }
         });
