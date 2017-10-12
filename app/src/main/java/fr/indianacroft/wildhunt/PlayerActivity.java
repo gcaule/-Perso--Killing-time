@@ -45,6 +45,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     private String mKey_challenge;
     private String mCreatorId;
     private String mQuestId;
+    ImageView imageViewAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         bottomNavigationView.setSelectedItemId(R.id.navigation_validate);
 
         // Avatar
-        ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,16 +91,16 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         });
 
         // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-        // Load the image using Glide
-        if (storageReference.getDownloadUrl().isSuccessful()){
-            Glide.with(getApplicationContext())
-                    .using(new FirebaseImageLoader())
-                    .load(storageReference)
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(imageViewAvatar);
-        }
+//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
+//        // Load the image using Glide
+//        if (storageReference.getDownloadUrl().isSuccessful()){
+//            Glide.with(getApplicationContext())
+//                    .using(new FirebaseImageLoader())
+//                    .load(storageReference)
+//                    .skipMemoryCache(true)
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .into(imageViewAvatar);
+//        }
 
         // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
         searchUser();
@@ -203,7 +204,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     textViewPlayerActivityHint.setVisibility(View.GONE);
                 }
                 searchQuest();
-
 
                 // Indice au clic
                 // TODO enlever les points au clic de l'indice

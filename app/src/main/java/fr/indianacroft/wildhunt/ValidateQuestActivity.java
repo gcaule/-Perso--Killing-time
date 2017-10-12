@@ -48,6 +48,7 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
     DatabaseReference childRef;
     private String mUserId;
     private String mUserName;
+    ImageView imageViewAvatar;
     private ArrayList<Challenge> arrayChallenges = new ArrayList<Challenge>();
 
     @Override
@@ -78,18 +79,19 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
 
         // Avatar
         // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-        final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
-        // Load the image using Glide
-        if (storageReference.getDownloadUrl().isSuccessful()){
-            Glide.with(getApplicationContext())
-                    .using(new FirebaseImageLoader())
-                    .load(storageReference)
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(imageViewAvatar);
-        }
+//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
+//        final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+//        // Load the image using Glide
+//        if (storageReference.getDownloadUrl().isSuccessful()){
+//            Glide.with(getApplicationContext())
+//                    .using(new FirebaseImageLoader())
+//                    .load(storageReference)
+//                    .skipMemoryCache(true)
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .into(imageViewAvatar);
+//        }
 
+        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,28 +104,28 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
 
 
 
-        // ENTER CODE HERE
-        // On recupere toutes les données de l'user actuel
-        // METHODE POUR TROUVER CHALLENGE
-
-            // On recupere les données des challenges
-            DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child("-Kw1GrNvTvd-GL-B4iYB");
-            refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-
-                        // On recupere les challenges qui correspondent a la qûete
-                     HashMap challenges = (HashMap)dsp.getValue();
-                    Challenge challenge = new Challenge();
-                    String name = challenge.getChallenge_name();
-
-                    }
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+//        // ENTER CODE HERE
+//        // On recupere toutes les données de l'user actuel
+//        // METHODE POUR TROUVER CHALLENGE
+//
+//            // On recupere les données des challenges
+//            DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child("-Kw1GrNvTvd-GL-B4iYB");
+//            refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+//
+//                        // On recupere les challenges qui correspondent a la qûete
+//                     HashMap challenges = (HashMap)dsp.getValue();
+//                    Challenge challenge = new Challenge();
+//                    String name = challenge.getChallenge_name();
+//
+//                    }
+//                }
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                }
+//            });
 
 
 
@@ -132,8 +134,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
 
 
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -166,6 +166,11 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
         } else if (id == R.id.nav_play) {
             Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_lobby) {
+            Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_create) {
+            startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
         } else if (id == R.id.nav_create) {
             startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
         } else if (id == R.id.nav_manage) {
@@ -178,14 +183,4 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
-
-    // METHODE POUR TROUVER USER
-    private void searchUser() {
-
-
-    }
-
 }
