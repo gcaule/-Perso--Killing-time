@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context="fr.indianacroft.wildhunt.HomeJoueur"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
@@ -78,6 +79,7 @@
         android:layout_width="158dp"
         android:layout_height="48dp"
         android:text="Abandon défi"
+        android:background="@drawable/border2"
         app:layout_constraintRight_toLeftOf="@+id/buttonHomeJoueurQuitParty"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -87,6 +89,7 @@
         android:id="@+id/buttonHomeJoueurQuitParty"
         android:layout_width="166dp"
         android:layout_height="48dp"
+        android:background="@drawable/border2"
         android:text="Abandon partie"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/buttonHomeJoueurQuitChallenge"

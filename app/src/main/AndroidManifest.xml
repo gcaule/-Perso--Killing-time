@@ -46,8 +46,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RulesActivity"
-            android:label="Rules"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_rules"></activity>
     </application>
 
 </manifest>

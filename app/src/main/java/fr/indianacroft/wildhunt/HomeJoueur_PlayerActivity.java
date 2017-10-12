@@ -113,7 +113,7 @@ public class HomeJoueur_PlayerActivity extends Fragment {
         });
 
 //        // On recupere les données des challenges
-        DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge");
+        DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child("-Kw1GrNvTvd-GL-B4iYB");
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -5,4 +5,9 @@
     <color name="colorYellow">#FFD05C</color>
     <color name="colorBlue2">#84DBFF</color>
     <color name="colorTransparent">#00ff0000</color>
+    <color name="colorRougeTrans">#DDBBBBBB</color>
+    <color name="colorRougeTrans2">#DD7777</color>
+    <color name="colorJauneTrans">#DDBB</color>
+    <color name="colorJauneTrans2">#DD7</color>
+    <color name="colorBackground">#DFF2FF</color>
 </resources>
