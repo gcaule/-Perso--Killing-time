@@ -73,7 +73,8 @@
         <activity
             android:name=".ValidateQuestActivity"
             android:label="Validate"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+            </activity>
     </application>
 
 </manifest>

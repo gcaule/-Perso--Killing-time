@@ -136,6 +136,8 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
             startActivity(intent);
         }else if (id == R.id.nav_create) {
             startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
+        } else if (id == R.id.nav_create) {
+            startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
