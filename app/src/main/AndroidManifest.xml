@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ConnexionActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,7 +64,8 @@
         <activity
             android:name=".CreateQuestActivity"
             android:label="Create Party"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ChallengesActivity_PopUp"
             android:label="ChallengePopUp"

@@ -10,7 +10,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="drawermenu_title">THE WILD HUNT</string>
-    <string name="nav_lobby">Rejoindre Partie</string>
+    <string name="nav_lobby">Rejoindre une partie</string>
     <string name="nav_rules">Règles du jeu</string>
     <string name="nav_create">Créer ma partie</string>
     <string name="nav_manage">Gérer ma partie</string>
@@ -58,11 +58,6 @@
     <string name="lobby_join_party">Rejoindre cette partie</string>
     <string name="discover_party">Découvrir Partie</string>
 
-    // Page Joueur
-    <string name="send_photo">Envoyer</string>
-    <string name="error_noquest">Veuillez rejoindre d\'abord une partie</string>
-    <string name="titlePopUp">Envoyer votre solution (Selfie !)</string>
-
     // Page Gestion de Partie
     <string name="home_ngame_master">GESTION DE PARTIE</string>
     <string-array name="life_duration">
@@ -75,13 +70,20 @@
 
     // Page Ma Partie
     <string name="home_player">MA PARTIE</string>
+    <string name="quest_title">Nom de partie : </string>
     <string name="hint_quest_name">Ajoutez ici le nom\nde votre partie</string>
     <string name="hint_quest_description">Décrivez ici votre partie\n(200 caractères max)</string>
+    <string name="send_photo">Envoyer</string>
+    <string name="error_noquest">Veuillez rejoindre d\'abord une partie</string>
+    <string name="titlePopUp">Envoyer votre solution (Selfie !)</string>
+
+    // Page Créer ma partie
     <string name="life_duration_quest_title">Durée de vie</string>
     <string name="create_quest_button">Créer la partie</string>
-    <string name="add_new_challenge">Ajouter un défi</string>
+    <string name="add_new_challenge">Ajouter des défis à votre nouvelle partie</string>
     <string name="create_challenge_button">Créer un challenge</string>
     <string name="challenge">Challenge :</string>
+    <string name="create_quest">CREER MA PARTIE</string>
 
     // Bottom Bar
     <string name="abandonner">Abandonner</string>

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -50,13 +51,13 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
     String name_challenge_content, hint_challenge_content;
     Spinner spinner_challenge;
     ImageView imageViewInscriptionLogo;
-//    Button butLoad, butUpload;
+    Button butLoad, butUpload;
     Button butCreateChallenge;
     FirebaseDatabase ref;
     DatabaseReference childRef;
     private String mUserId, mCreatedQuestId;
-//    int PICK_IMAGE_REQUEST = 111, REQUEST_IMAGE_CAPTURE = 1;
-//    Uri filePath;
+    int PICK_IMAGE_REQUEST = 111, REQUEST_IMAGE_CAPTURE = 1;
+    Uri filePath;
     ProgressDialog progressDialog;
 
     @Override
@@ -67,7 +68,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
-//        mCreatedQuestId = sharedPreferences.getString("mCreatedQuest", "");
+        mCreatedQuestId = sharedPreferences.getString("mCreatedQuest", "");
         Log.d("key", mUserId);
 
         searchUser();
@@ -116,15 +117,15 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         spinner_challenge.setAdapter(adapter);
 
         // Lien PopUp
-        imageViewInscriptionLogo = (ImageView) findViewById(R.id.imageViewInscriptionLogo);
-        imageViewInscriptionLogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ChallengesActivity.this, ChallengesActivity_PopUp.class);
-                intent.putExtra("mCreatedQuest", mCreatedQuestId);
-                startActivity(intent);
-            }
-        });
+//        imageViewInscriptionLogo = (ImageView) findViewById(R.id.imageViewInscriptionLogo);
+//        imageViewInscriptionLogo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(ChallengesActivity.this, ChallengesActivity_PopUp.class);
+//                intent.putExtra("mCreatedQuest", mCreatedQuestId);
+//                startActivity(intent);
+//            }
+//        });
 
         // Button Actions / Change ImageView / Text in buttons
         // TODO : SUPPRIMER LES BOUTONS ET REMPLACER PAR CLICK SUR PHOTO
@@ -153,23 +154,23 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 
 
         // Load & Take photo
-//        butLoad = (Button) findViewById(R.id.butLoad);
-//        butLoad.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                dispatchTakePictureIntent();
-//            }
-//        });
-//        butUpload = (Button) findViewById(R.id.butUpload);
-//        butUpload.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_PICK);
-//                startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
-//            }
-//        });
+        butLoad = (Button) findViewById(R.id.butLoad);
+        butLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dispatchTakePictureIntent();
+            }
+        });
+        butUpload = (Button) findViewById(R.id.butUpload);
+        butUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_PICK);
+                startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+            }
+        });
 
 //TODO RECYCLER VIEW
 //        // Pour remplir la liste des challenges avec les challenges créees!!!
@@ -250,47 +251,61 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                                     .into(imageViewInscriptionLogo);
 
-//                        // Upload photos on Firebase
-//                        if(filePath != null) {
-//                            progressDialog.show();
-//                            StorageReference childRef = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId);
-//                            UploadTask uploadTask = childRef.putFile(filePath);
-//                            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                                @Override
-//                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                    progressDialog.dismiss();
-//                                    Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
-//                                }
-//                            }).addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    progressDialog.dismiss();
-//                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload) + e, Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                        } else {
-//                            progressDialog.show();
-//                            imageViewPhotoChallenge.setDrawingCacheEnabled(true);
-//                            imageViewPhotoChallenge.buildDrawingCache();
-//                            Bitmap bitmap = imageViewPhotoChallenge.getDrawingCache();
-//                            ByteArrayOutputStream baas = new ByteArrayOutputStream();
-//                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baas);
-//                            byte[] data = baas.toByteArray();
-//                            UploadTask uploadTask = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId).putBytes(data);
-//                            uploadTask.addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception exception) {
-//                                    progressDialog.dismiss();
-//                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload), Toast.LENGTH_LONG).show();
-//                                }
-//                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                                @Override
-//                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                    progressDialog.dismiss();
-//                                    Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_LONG).show();
-//                                }
-//                            });
-//                        }
+                        // Upload photos on Firebase
+                        if(filePath != null) {
+                            progressDialog.show();
+                            StorageReference childRef = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId);
+                            UploadTask uploadTask = childRef.putFile(filePath);
+                            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        public void run() {
+                                            Intent intent = new Intent(ChallengesActivity.this, CreateQuestActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    }, 1500);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload) + e, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            progressDialog.show();
+                            imageViewInscriptionLogo.setDrawingCacheEnabled(true);
+                            imageViewInscriptionLogo.buildDrawingCache();
+                            Bitmap bitmap = imageViewInscriptionLogo.getDrawingCache();
+                            ByteArrayOutputStream baas = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baas);
+                            byte[] data = baas.toByteArray();
+                            UploadTask uploadTask = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId).putBytes(data);
+                            uploadTask.addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload), Toast.LENGTH_LONG).show();
+                                }
+                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_LONG).show();
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        public void run() {
+                                            Intent intent = new Intent(ChallengesActivity.this, CreateQuestActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    }, 1500);
+                                }
+                            });
+                        }
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -308,7 +323,6 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 startActivity(new Intent(getApplicationContext(), ChallengesActivity.class));
             }
         });
-
     }
 
     // Drawer Menu
@@ -357,35 +371,35 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         return true;
     }
 
-//    // Send photos to ImageView
-//    private void dispatchTakePictureIntent() {
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-//        }
-//    }
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        imageViewInscriptionLogo = (ImageView) findViewById(R.id.imageViewInscriptionLogo);
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            filePath = data.getData();
-//            try {
-//                //getting image from gallery
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-//
-//                //Setting image to ImageView
-//                imageViewInscriptionLogo.setImageBitmap(bitmap);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            imageViewInscriptionLogo.setImageBitmap(imageBitmap);
-//        }
-//    }
+    // Send photos to ImageView
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        imageViewInscriptionLogo = (ImageView) findViewById(R.id.imageViewInscriptionLogo);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                //getting image from gallery
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+
+                //Setting image to ImageView
+                imageViewInscriptionLogo.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageViewInscriptionLogo.setImageBitmap(imageBitmap);
+        }
+    }
 
     // METHODE POUR TROUVER USER
     private void searchUser() {

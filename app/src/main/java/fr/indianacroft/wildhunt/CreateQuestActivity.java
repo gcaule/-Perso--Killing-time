@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -127,6 +129,8 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                         mUserName = user.getUser_name();
 
                         childRef.child(questid).child("quest_creatorName").setValue(mUserName);
+                        Toast.makeText(getApplicationContext(), "Partie créée avec succès !\nAjoute des défis maintenant !", Toast.LENGTH_LONG).show();
+
                     }
 
                     @Override
@@ -142,7 +146,6 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
 
                 childRef.child(questid).setValue(quest);
                 childRef.child(questid).child("quest_creatorId").setValue(mUserId);
-
 
                 name_quest.setText("");
                 description_quest.setText("");
@@ -169,9 +172,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
             }
         });
     }
-
-
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

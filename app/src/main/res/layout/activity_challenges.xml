@@ -80,10 +80,10 @@
                 android:gravity="center"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                app:layout_constraintBottom_toTopOf="@+id/imageViewInscriptionLogo"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/imageViewInscriptionLogo"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/imageViewInscriptionLogo"
@@ -91,10 +91,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/camera"
                 android:clickable="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/butUpload"
                 app:layout_constraintBottom_toTopOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/challenge_name"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/challenge_name" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -103,19 +103,19 @@
                 android:gravity="center"
                 android:text="@string/difficulty"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/hint_challenge"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewInscriptionLogo"
                 app:layout_constraintRight_toLeftOf="@+id/spinner_challenge"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/hint_challenge"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewInscriptionLogo" />
 
             <Spinner
                 android:id="@+id/spinner_challenge"
                 android:layout_width="152dp"
                 android:layout_height="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/hint_challenge"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewInscriptionLogo"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/textView5" />
+                app:layout_constraintLeft_toRightOf="@+id/textView5"
+                app:layout_constraintBottom_toTopOf="@+id/hint_challenge"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewInscriptionLogo" />
 
             <EditText
                 android:id="@+id/hint_challenge"
@@ -126,10 +126,10 @@
                 android:background="@drawable/button_shape2"
                 android:hint="@string/hint_name"
                 android:gravity="center"
-                app:layout_constraintBottom_toTopOf="@+id/butCreateChallenge"
-                app:layout_constraintTop_toBottomOf="@+id/textView5"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/butCreateChallenge"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
             <Button
                 android:id="@+id/butCreateChallenge"
@@ -138,30 +138,32 @@
                 android:text="@string/create_challenge"
                 android:textColor="#FFFFFF"
                 android:background="@drawable/button_shape"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hint_challenge"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hint_challenge" />
 
-            <!--<Button-->
-                <!--android:id="@+id/butLoad"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/prendre_nouvelle_photo"-->
-                <!--app:layout_constraintRight_toRightOf="parent"-->
-                <!--app:layout_constraintLeft_toRightOf="@+id/imageViewInscriptionLogo"-->
-                <!--app:layout_constraintBottom_toTopOf="@+id/butUpload"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/challenge_name" />-->
+            <Button
+                style="@style/ButtonBlue"
+                android:id="@+id/butLoad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prendre_nouvelle_photo"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/imageViewInscriptionLogo"
+                app:layout_constraintBottom_toTopOf="@+id/spinner_challenge"
+                app:layout_constraintTop_toBottomOf="@+id/butUpload" />
 
-            <!--<Button-->
-                <!--android:id="@+id/butUpload"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/upload_ta_photo"-->
-                <!--app:layout_constraintRight_toRightOf="parent"-->
-                <!--app:layout_constraintLeft_toRightOf="@+id/imageViewInscriptionLogo"-->
-                <!--app:layout_constraintBottom_toTopOf="@+id/spinner_challenge"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/butLoad" />-->
+            <Button
+                style="@style/ButtonBlue"
+                android:id="@+id/butUpload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/upload_ta_photo"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/imageViewInscriptionLogo"
+                app:layout_constraintBottom_toTopOf="@+id/butLoad"
+                app:layout_constraintTop_toBottomOf="@+id/challenge_name" />
 
         </android.support.constraint.ConstraintLayout>
 
