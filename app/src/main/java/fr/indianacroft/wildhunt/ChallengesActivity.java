@@ -170,23 +170,6 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 //                startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
 //            }
 //        });
-        butLoad = (Button) findViewById(R.id.butLoad);
-        butLoad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dispatchTakePictureIntent();
-            }
-        });
-        butUpload = (Button) findViewById(R.id.butUpload);
-        butUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_PICK);
-                startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
-            }
-        });
 
 //TODO RECYCLER VIEW
 //        // Pour remplir la liste des challenges avec les challenges créees!!!
