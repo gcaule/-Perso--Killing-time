@@ -40,6 +40,8 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
     private String mUserId;
     private String mUserQuest;
     private String mChallengeId;
+    private String mCreatorId;
+    private String mQuestId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
         /////////////////////////////////////////////////////////////////
 
         mChallengeId = getIntent().getStringExtra("mChallengeKey");
+        mCreatorId = getIntent().getStringExtra("mCreatorId");
+        mQuestId = getIntent().getStringExtra("mQuestId");
 
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -146,12 +150,16 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                    ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
+
+
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success) + e, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload) + e, Toast.LENGTH_SHORT).show();
                                 }
                             });
                         } else {
@@ -174,6 +182,8 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                    ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
 
                                 }
                             });

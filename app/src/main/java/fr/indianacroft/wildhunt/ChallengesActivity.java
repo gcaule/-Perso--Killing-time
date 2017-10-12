@@ -15,8 +15,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,7 +28,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,10 +52,10 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
     Button butCreateChallenge;
     FirebaseDatabase ref;
     DatabaseReference childRef;
-    private String mUserId, mCreatedQuestId;
     int PICK_IMAGE_REQUEST = 111, REQUEST_IMAGE_CAPTURE = 1;
     Uri filePath;
     ProgressDialog progressDialog;
+    private String mUserId, mCreatedQuestId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +90,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
         final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         // Load the image using Glide
-        if (storageReference.getDownloadUrl().isSuccessful()){
+        if (storageReference.getDownloadUrl().isSuccessful()) {
             Glide.with(getApplicationContext())
                     .using(new FirebaseImageLoader())
                     .load(storageReference)
@@ -244,15 +241,15 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                         StorageReference strRef = FirebaseStorage.getInstance().getReference("Quest").child(mCreatedQuestId).child(challengeId);
                         // Load the image using Glide
 
-                            Glide.with(getApplicationContext())
-                                    .using(new FirebaseImageLoader())
-                                    .load(strRef)
-                                    .skipMemoryCache(true)
-                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                    .into(imageViewInscriptionLogo);
+                        Glide.with(getApplicationContext())
+                                .using(new FirebaseImageLoader())
+                                .load(strRef)
+                                .skipMemoryCache(true)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .into(imageViewInscriptionLogo);
 
                         // Upload photos on Firebase
-                        if(filePath != null) {
+                        if (filePath != null) {
                             progressDialog.show();
                             StorageReference childRef = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId);
                             UploadTask uploadTask = childRef.putFile(filePath);
@@ -296,17 +293,18 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_LONG).show();
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        public void run() {
-                                            Intent intent = new Intent(ChallengesActivity.this, CreateQuestActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    }, 1500);
+//                                    Handler handler = new Handler();
+//                                    handler.postDelayed(new Runnable() {
+//                                        public void run() {
+//                                            Intent intent = new Intent(ChallengesActivity.this, CreateQuestActivity.class);
+//                                            startActivity(intent);
+//                                        }
+//                                    }, 1500);
                                 }
                             });
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
@@ -335,6 +333,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             super.onBackPressed();
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -343,6 +342,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -358,7 +358,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_lobby) {
             Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
             startActivity(intent);
-        }else if (id == R.id.nav_create) {
+        } else if (id == R.id.nav_create) {
             startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
@@ -378,6 +378,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -28,6 +28,7 @@
         android:layout_height="50dp"
         android:background="@drawable/border"
         android:hint="@string/pseudo"
+        android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/connexionUserPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
