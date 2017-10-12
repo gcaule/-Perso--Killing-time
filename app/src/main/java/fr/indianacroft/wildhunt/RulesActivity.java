@@ -9,6 +9,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.app.Activity;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,10 +26,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class RulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private String mUserId;
-
-    Button buttonPlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

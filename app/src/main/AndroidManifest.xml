@@ -47,6 +47,7 @@
         <activity
             android:name=".RulesActivity"
             android:label="Rules"
+            android:label="@string/title_activity_rules"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PlayerActivity"
@@ -72,6 +73,7 @@
             android:name=".ValidateQuestActivity"
             android:label="Validate"
             android:theme="@style/AppTheme.NoActionBar"/>
+            </activity>
     </application>
 
 </manifest>
