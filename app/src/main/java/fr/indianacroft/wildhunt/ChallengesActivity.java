@@ -220,6 +220,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                         Glide.with(getApplicationContext())
                                 .using(new FirebaseImageLoader())
                                 .load(pathReference)
+                                .error(R.drawable.camera)
                                 .skipMemoryCache(true)
                                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                                 .into(imageViewInscriptionLogo);
