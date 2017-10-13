@@ -88,7 +88,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
 
 
         // ENTER CODE HERE
-        // On recupere toutes les données de l'user actuel
         // METHODE POUR TROUVER CHALLENGE
 
         DatabaseReference refUser =
@@ -97,16 +96,19 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                // On recupere les challenges qui correspondent a la qûete
+                // on recupere la qûete créee par un user
                 User user = dataSnapshot.getValue(User.class);
                 String questId = user.getUser_createdquestID();
 
+                // On parcourt les challenges à valider dans le dossier de la qûete créee (id creator) par un user
+                // Sur firebase ca correspond a user_createdquestid
                 DatabaseReference refAvalider = FirebaseDatabase.getInstance().
                         getReference("User").child(mUserId).child("aValider").child(questId);
                 refAvalider.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+
                             String challengeId = dsp.getKey();
                             String[] userIdTableau = new String[(int) dsp.getChildrenCount()];
                             int i = 0;
