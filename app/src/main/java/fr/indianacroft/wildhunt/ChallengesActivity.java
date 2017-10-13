@@ -185,55 +185,59 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         butCreateChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nameContent = name_challenge.getText().toString();
-                String hintContent = hint_challenge.getText().toString();
+                String nameContent = name_challenge.getText().toString().trim();
+                String hintContent = hint_challenge.getText().toString().trim();
                 String spinnerContent = spinner_challenge.getSelectedItem().toString();
                 String idquest = "test";//TODO a modifier
 
-                // childRef.push().getKey() is used to generate the different key
-                final String challengeId = ref.getReference("Challenge").child(mCreatedQuestId).push().getKey();
+                // Impossible to create if nothing is written
+                if ((nameContent.equals("")) || (hintContent.equals(""))) {
+                    Toast.makeText(getApplicationContext(), R.string.toast_challenge, Toast.LENGTH_LONG).show();
+                } else {
+                    // childRef.push().getKey() is used to generate the different key
+                    final String challengeId = ref.getReference("Challenge").child(mCreatedQuestId).push().getKey();
 
-                // On recupere la quete crée par l'user actuel pour link challenge a la quête
-                DatabaseReference refUser =
-                        FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
-                refUser.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.getValue(User.class);
-                        mCreatedQuestId = user.getUser_createdquestID();
-                        String userName = user.getUser_name();
+                    // On recupere la quete crée par l'user actuel pour link challenge a la quête
+                    DatabaseReference refUser =
+                            FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
+                    refUser.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            mCreatedQuestId = user.getUser_createdquestID();
+                            String userName = user.getUser_name();
 
-                        // On envoie les nouvelles a Firebase voir aussi plus bas aux SET
-                        // OUI c'est mal foutu, c'est a revoir pq la on y comprend rien ...........
-                        childRef.child(mCreatedQuestId).child(challengeId).child("challenge_questId").setValue(mCreatedQuestId);
-                        childRef.child(mCreatedQuestId).child(challengeId).child("challenge_creatorID").setValue(mUserId);
-                        childRef.child(mCreatedQuestId).child(challengeId).child("challenge_creatorname").setValue(userName);
-                        //TODO A MODIFIER PAR VALENTIN
-                        //childRef.child(challengeId).child("challenge_nbrePoints").setValue(LA VALEUR INT DU SPINNER);
+                            // On envoie les nouvelles a Firebase voir aussi plus bas aux SET
+                            // OUI c'est mal foutu, c'est a revoir pq la on y comprend rien ...........
+                            childRef.child(mCreatedQuestId).child(challengeId).child("challenge_questId").setValue(mCreatedQuestId);
+                            childRef.child(mCreatedQuestId).child(challengeId).child("challenge_creatorID").setValue(mUserId);
+                            childRef.child(mCreatedQuestId).child(challengeId).child("challenge_creatorname").setValue(userName);
+                            //TODO A MODIFIER PAR VALENTIN
+                            //childRef.child(challengeId).child("challenge_nbrePoints").setValue(LA VALEUR INT DU SPINNER);
 
-//                        StorageReference strRef = FirebaseStorage.getInstance().getReference("Quest").child(mCreatedQuestId).child(challengeId);
+                            //                        StorageReference strRef = FirebaseStorage.getInstance().getReference("Quest").child(mCreatedQuestId).child(challengeId);
 
-                        // Load the image using Glide
-                        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-                        StorageReference strRef = firebaseStorage.getReference("Quest");
-                        StorageReference pathReference = strRef.child(mCreatedQuestId).child(challengeId);
-                        Glide.with(getApplicationContext())
-                                .using(new FirebaseImageLoader())
-                                .load(pathReference)
-                                .error(R.drawable.camera)
-                                .skipMemoryCache(true)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .into(imageViewInscriptionLogo);
+                            // Load the image using Glide
+                            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                            StorageReference strRef = firebaseStorage.getReference("Quest");
+                            StorageReference pathReference = strRef.child(mCreatedQuestId).child(challengeId);
+                            Glide.with(getApplicationContext())
+                                    .using(new FirebaseImageLoader())
+                                    .load(pathReference)
+                                    .error(R.drawable.camera)
+                                    .skipMemoryCache(true)
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .into(imageViewInscriptionLogo);
 
-                        // Upload photos on Firebase
-                        if(filePath != null) {
-                            progressDialog.show();
-                            StorageReference childRef = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId);
-                            UploadTask uploadTask = childRef.putFile(filePath);
-                            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    progressDialog.dismiss();
+                            // Upload photos on Firebase
+                            if (filePath != null) {
+                                progressDialog.show();
+                                StorageReference childRef = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId);
+                                UploadTask uploadTask = childRef.putFile(filePath);
+                                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        progressDialog.dismiss();
 //                                    Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
 //                                    Handler handler = new Handler();
 //                                    handler.postDelayed(new Runnable() {
@@ -242,34 +246,34 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 //                                            startActivity(intent);
 //                                        }
 //                                    }, 1500);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload) + e, Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            progressDialog.show();
-                            imageViewInscriptionLogo.setDrawingCacheEnabled(true);
-                            imageViewInscriptionLogo.buildDrawingCache();
-                            Bitmap bitmap = imageViewInscriptionLogo.getDrawingCache();
-                            ByteArrayOutputStream baas = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baas);
-                            byte[] data = baas.toByteArray();
-                            UploadTask uploadTask = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId).putBytes(data);
-                            uploadTask.addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload), Toast.LENGTH_LONG).show();
-                                }
-                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_LONG).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload) + e, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                progressDialog.show();
+                                imageViewInscriptionLogo.setDrawingCacheEnabled(true);
+                                imageViewInscriptionLogo.buildDrawingCache();
+                                Bitmap bitmap = imageViewInscriptionLogo.getDrawingCache();
+                                ByteArrayOutputStream baas = new ByteArrayOutputStream();
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baas);
+                                byte[] data = baas.toByteArray();
+                                UploadTask uploadTask = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId).putBytes(data);
+                                uploadTask.addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload), Toast.LENGTH_LONG).show();
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_LONG).show();
 //                                    Handler handler = new Handler();
 //                                    handler.postDelayed(new Runnable() {
 //                                        public void run() {
@@ -277,24 +281,26 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 //                                            startActivity(intent);
 //                                        }
 //                                    }, 1500);
-                                }
-                            });
+                                    }
+                                });
+                            }
                         }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
 
-                // Creation du nouveau challenge
-                Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent, idquest, mUserId);
-                challenge.setChallenge_name(nameContent);
-                challenge.setHint_challenge(hintContent);
-                challenge.setChallenge_difficulty(spinnerContent);
-                childRef.child(mCreatedQuestId).child(challengeId).setValue(challenge);
-                name_challenge.setText("");
-                hint_challenge.setText("");
-                startActivity(new Intent(getApplicationContext(), ChallengesActivity.class));
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+
+                    // Creation du nouveau challenge
+                    Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent, idquest, mUserId);
+                    challenge.setChallenge_name(nameContent);
+                    challenge.setHint_challenge(hintContent);
+                    challenge.setChallenge_difficulty(spinnerContent);
+                    childRef.child(mCreatedQuestId).child(challengeId).setValue(challenge);
+                    name_challenge.setText("");
+                    hint_challenge.setText("");
+                    startActivity(new Intent(getApplicationContext(), ChallengesActivity.class));
+                }
             }
         });
     }
