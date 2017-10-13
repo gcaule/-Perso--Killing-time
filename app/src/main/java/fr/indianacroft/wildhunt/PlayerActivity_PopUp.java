@@ -46,7 +46,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homejoueur_playerpopup);
+        setContentView(R.layout.activity_player_popup);
 
         final ImageView imageViewSendPhoto = (ImageView) findViewById(R.id.imageViewSendPhoto);
 
