@@ -58,7 +58,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-
 //        final Button buttonHint = (Button) findViewById(R.id.buttonHomeJoueurHint);
         final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
 
@@ -129,7 +128,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             }
         });
 
-
 //        Button buttonSendSolution = (Button) findViewById(R.id.buttonHomeJoueurSendSolution);
 //        buttonSendSolution.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -144,7 +142,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 //                }
 //            }
 //        });
-
     }
 
     // Drawer Menu
@@ -248,16 +245,12 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                     })
                                     .setIcon(android.R.drawable.ic_dialog_alert)
                                     .show();
-
-
                         }
-                    });
-
-
+                });
 
                         // Indice au clic
                         // TODO enlever les points au clic de l'indice
-                        View navigation_hint = findViewById(R.id.navigation_hint);
+                View navigation_hint = findViewById(R.id.navigation_hint);
                 navigation_hint.setOnClickListener(new View.OnClickListener() {
                     boolean isClicked = false;
                     @Override

@@ -53,6 +53,8 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
     Button butLoad, butUpload, butCreateChallenge;
     FirebaseDatabase ref;
     DatabaseReference childRef;
+    DatabaseReference refUser = null;
+    ValueEventListener valueEventListener = null;
     private String mUserId, mCreatedQuestId;
     int PICK_IMAGE_REQUEST = 111, REQUEST_IMAGE_CAPTURE = 1;
     Uri filePath;
@@ -198,11 +200,12 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                     final String challengeId = ref.getReference("Challenge").child(mCreatedQuestId).push().getKey();
 
                     // On recupere la quete crée par l'user actuel pour link challenge a la quête
-                    DatabaseReference refUser =
+                    refUser =
                             FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
-                    refUser.addValueEventListener(new ValueEventListener() {
+                    valueEventListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            Toast.makeText(getApplicationContext(), "bug 43", Toast.LENGTH_SHORT).show();
                             User user = dataSnapshot.getValue(User.class);
                             mCreatedQuestId = user.getUser_createdquestID();
                             String userName = user.getUser_name();
@@ -215,7 +218,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                             //TODO A MODIFIER PAR VALENTIN
                             //childRef.child(challengeId).child("challenge_nbrePoints").setValue(LA VALEUR INT DU SPINNER);
 
-                            //                        StorageReference strRef = FirebaseStorage.getInstance().getReference("Quest").child(mCreatedQuestId).child(challengeId);
+//                        StorageReference strRef = FirebaseStorage.getInstance().getReference("Quest").child(mCreatedQuestId).child(challengeId);
 
                             // Load the image using Glide
                             FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
@@ -238,7 +241,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                         progressDialog.dismiss();
-//                                    Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_SHORT).show();
 //                                    Handler handler = new Handler();
 //                                    handler.postDelayed(new Runnable() {
 //                                        public void run() {
@@ -273,7 +276,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                         progressDialog.dismiss();
-                                        Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
 //                                    Handler handler = new Handler();
 //                                    handler.postDelayed(new Runnable() {
 //                                        public void run() {
@@ -289,7 +292,8 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
-                    });
+                    };
+                    refUser.addValueEventListener(valueEventListener);
 
                     // Creation du nouveau challenge
                     Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent, idquest, mUserId);
@@ -303,6 +307,14 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (refUser != null && valueEventListener != null) {
+            refUser.removeEventListener(valueEventListener);
+        }
     }
 
     // Drawer Menu

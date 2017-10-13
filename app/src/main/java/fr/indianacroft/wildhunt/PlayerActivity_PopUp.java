@@ -55,12 +55,10 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
-        /////////////////////////////////////////////////////////////////
 
         mChallengeId = getIntent().getStringExtra("mChallengeKey");
         mCreatorId = getIntent().getStringExtra("mCreatorId");
         mQuestId = getIntent().getStringExtra("mQuestId");
-
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -139,7 +137,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                         ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
                         Handler handler = new Handler();
@@ -149,7 +147,6 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         }, 1500);
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
