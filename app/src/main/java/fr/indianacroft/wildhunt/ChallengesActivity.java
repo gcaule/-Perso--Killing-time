@@ -288,7 +288,6 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                                 });
                             }
                         }
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
