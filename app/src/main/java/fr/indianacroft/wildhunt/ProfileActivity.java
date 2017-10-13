@@ -38,7 +38,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedpreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
-        textView6 = (TextView) findViewById(R.id.textView6);
+        textView6 = (TextView) findViewById(R.id.textViewProfileDatas);
         String sharedPrefUserName = sharedpreferences.getString(userName, "");
         textView6.setText(sharedPrefUserName);
 
@@ -84,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             Glide.with(this)
                     .using(new FirebaseImageLoader())
                     .load(pathReference)
-                    .error(R.drawable.pirate2)
+                    .error(R.drawable.pirate5)
                     .skipMemoryCache(true)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(imageViewAvatar2);

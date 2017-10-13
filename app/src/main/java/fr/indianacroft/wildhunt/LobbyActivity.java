@@ -35,7 +35,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class LobbyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String mUserId;
+//    private String mUserId;
     private String mUser_name;
     private String mUser_quest;
     private String mQuest_name;
@@ -46,7 +46,9 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
     private String mDiff_challenge;
     private String mHint_challenge;
     private String mKey_challenge;
-    ImageView imageViewAvatar;
+    ImageView imageViewAvatar, imageViewTest;
+    private String mUserId, mCreatedQuestId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,11 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 holder.setQuest_description(bdd.getQuest_description());
             }
         };
+
+//        int position = 0;
+//        if (position == recyclerViewLobby.getChildCount() - 1) {
+//            recyclerViewLobby.smoothScrollToPosition(position);
+//        }
 
         // Set the adapter avec les données et la ligne de separation
         recyclerViewLobby.addItemDecoration(new LobbyActivity.SimpleDividerItemDecoration(this));

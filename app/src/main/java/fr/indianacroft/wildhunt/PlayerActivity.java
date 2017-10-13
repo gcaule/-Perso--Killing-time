@@ -179,6 +179,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     private void searchUser() {
 //        final Button buttonHint = (Button) findViewById(R.id.buttonHomeJoueurHint);
         final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
+        final TextView textViewPlayerActivityHint2 = (TextView) findViewById(R.id.textViewPlayerActivityHint2);
 
         // On recupere toutes les données de l'user actuel
         final DatabaseReference refUser =
@@ -195,9 +196,11 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 // Indice a montrer si indice déja utilisé c'est a dire True dans la bdd
                 if (mUser_indice.equalsIgnoreCase("true")) {
                     textViewPlayerActivityHint.setVisibility(View.VISIBLE);
+                    textViewPlayerActivityHint2.setVisibility(View.VISIBLE);
 //                    buttonHint.setVisibility(View.GONE);
                 } else {
                     textViewPlayerActivityHint.setVisibility(View.GONE);
+                    textViewPlayerActivityHint2.setVisibility(View.GONE);
                 }
                 searchQuest();
 
@@ -215,6 +218,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                 Toast.makeText(getApplicationContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
                             } else if (isClicked) {
                                 textViewPlayerActivityHint.setVisibility(View.VISIBLE);
+                                textViewPlayerActivityHint2.setVisibility(View.VISIBLE);
 //                                buttonHint.setBackgroundColor(Color.RED);
                                 refUser.child("user_indice").setValue("true");
                             }
