@@ -44,7 +44,7 @@
                     android:layout_weight="1"
                     android:fontFamily="casual"
                     android:gravity="center"
-                    android:text="@string/valider"
+                    android:text="@string/mes_d_fis_valider"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>

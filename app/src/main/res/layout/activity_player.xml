@@ -113,7 +113,6 @@
 
             </LinearLayout>
 
-
             <ImageView
                 android:id="@+id/imageViewHomeJoueurToFind"
                 android:layout_width="345dp"

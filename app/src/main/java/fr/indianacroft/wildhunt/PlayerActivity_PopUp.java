@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -129,54 +130,66 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
         butSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                        // Upload photos on Firebase
-                        if (filePath != null) {
-                            progressDialog.show();
-                            StorageReference childRef = storageRef.child("User").child(mUserId).child("QuestToBeValidated").child(mUserQuest).child(mChallengeId);
-                            UploadTask uploadTask = childRef.putFile(filePath);
-                            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
-                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                    ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
+            // Upload photos on Firebase
+            if (filePath != null) {
+                progressDialog.show();
+                StorageReference childRef = storageRef.child("User").child(mUserId).child("QuestToBeValidated").child(mUserQuest).child(mChallengeId);
+                UploadTask uploadTask = childRef.putFile(filePath);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                        ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                Intent intent = new Intent(PlayerActivity_PopUp.this, PlayerActivity.class);
+                                startActivity(intent);
+                            }
+                        }, 1500);
 
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload) + e, Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            progressDialog.show();
-                            imageViewSendPhoto.setDrawingCacheEnabled(true);
-                            imageViewSendPhoto.buildDrawingCache();
-                            Bitmap bitmap = imageViewSendPhoto.getDrawingCache();
-                            ByteArrayOutputStream baas = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baas);
-                            byte[] data = baas.toByteArray();
-                            UploadTask uploadTask = storageRef.child("User").child(mUserId).child("QuestToBeValidated").child(mUserQuest).child(mChallengeId).putBytes(data);
-                            uploadTask.addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload), Toast.LENGTH_LONG).show();
-                                }
-                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
-                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                    ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
-
-                                }
-                            });
-                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload) + e, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                progressDialog.show();
+                imageViewSendPhoto.setDrawingCacheEnabled(true);
+                imageViewSendPhoto.buildDrawingCache();
+                Bitmap bitmap = imageViewSendPhoto.getDrawingCache();
+                ByteArrayOutputStream baas = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baas);
+                byte[] data = baas.toByteArray();
+                UploadTask uploadTask = storageRef.child("User").child(mUserId).child("QuestToBeValidated").child(mUserQuest).child(mChallengeId).putBytes(data);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload), Toast.LENGTH_LONG).show();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                        ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                Intent intent = new Intent(PlayerActivity_PopUp.this, PlayerActivity.class);
+                                startActivity(intent);
+                            }
+                        }, 1500);
+                    }
+                });
+            }
             }
         });
     }
