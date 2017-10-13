@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="fr.indianacroft.wildhunt.ChallengesActivity_PopUp"
-    android:background="@drawable/layout_colors2">
+    android:background="@drawable/border">
 
     <Button
         style="@style/ButtonBlue"

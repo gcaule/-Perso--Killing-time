@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context="fr.indianacroft.wildhunt.HomeGameMasterActivity$PlaceholderFragment"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
 
     <TextView
         style="@style/YellowTitle"
-        android:background="@drawable/layout_colors2"
+        android:background="@drawable/button_shape2"
         android:id="@+id/textView34"
         android:text="@string/mes_d_fis_valider"
         android:clickable="false"
