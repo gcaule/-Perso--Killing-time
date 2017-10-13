@@ -49,6 +49,9 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     private String mDiff_challenge;
     private String mHint_challenge;
     private String mKey_challenge;
+    private String mCreatorId;
+    private String mQuestId;
+    ImageView imageViewAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +89,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         bottomNavigationView.setSelectedItemId(R.id.navigation_validate);
 
         // Avatar
-        ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,16 +98,16 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         });
 
         // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-        // Load the image using Glide
-        if (storageReference.getDownloadUrl().isSuccessful()){
-            Glide.with(getApplicationContext())
-                    .using(new FirebaseImageLoader())
-                    .load(storageReference)
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(imageViewAvatar);
-        }
+//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
+//        // Load the image using Glide
+//        if (storageReference.getDownloadUrl().isSuccessful()){
+//            Glide.with(getApplicationContext())
+//                    .using(new FirebaseImageLoader())
+//                    .load(storageReference)
+//                    .skipMemoryCache(true)
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .into(imageViewAvatar);
+//        }
 
         // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
         searchUser();
@@ -116,6 +119,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
                     Intent intent = new Intent(getApplicationContext(), PlayerActivity_PopUp.class);
                     intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
+                    intent.putExtra("mCreatorId", mCreatorId);
+                    intent.putExtra("mQuestId", mQuestId);
                     startActivity(intent);
                 }
                 else{
@@ -343,6 +348,9 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         Log.d(mName_challenge, "tag");
                         mHint_challenge = challenge.getHint_challenge();
                         mDiff_challenge = challenge.getChallenge_difficulty();
+                        mCreatorId = challenge.getChallenge_creatorID();
+                        mQuestId = challenge.getChallenge_questId();
+
                         // On change la page dynamiquement !!
                         // Reference to an image file in Firebase Storage
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
