@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,12 +18,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class ValidateQuestActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +40,7 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
     ImageView imageViewAvatar;
     private String mUserId;
     private String mUserName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,19 +113,50 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-
-                            String challengeId = dsp.getKey();
-                            String[] userIdTableau = new String[(int) dsp.getChildrenCount()];
+                            // On recupere l'Id du challenge qu'on analyse
+                            String challengeIdToValidate = dsp.getKey();
+                            ArrayList<Pair> mapChallengeToValidate = new ArrayList<Pair>((int) dsp.getChildrenCount());
+                            // On créer un tableau de la taille de tout les challenges présent
+//                            String[] userIdTableau = new String[(int) dsp.getChildrenCount()];
                             int i = 0;
                             for (DataSnapshot dsp2 : dsp.getChildren()) {
                                 if ((boolean)dsp2.getValue() == false) {
-                                    userIdTableau[i] = dsp2.getKey();
+                                    String userIdToValidate = dsp2.getKey();
+                                    Pair<String, String> pair = new Pair<String, String>(challengeIdToValidate, userIdToValidate);
+                                    mapChallengeToValidate.add(pair);
+//                                    userIdTableau[i] = dsp2.getKey();
+
+
+
                                 }
+
+                                /* //Store data as pait in arraylist
+                                ArrayList<Pair> mapChalengUser = new ArrayList<Pair>();
+                                Pair<String, String> pair = new Pair<String, String>(calengeId, userId);
+                                mapChalengUser.add(pair);
+                                // Get Data from Pairs in ArrayList
+                                chalengeId = mapChalengUser.get(index).first;
+                                userId = mapChalengUser.get(index).second;*/
 
                                 i++;
                             }
-                            //TODO recuperer le challenge correspondant a cet identifiant
+                            String test = mapChallengeToValidate.get(0).first.toString();
+                            String test2 = mapChallengeToValidate.get(0).second.toString();
+                            String test3 = mapChallengeToValidate.get(1).first.toString();
+                            String test4 = mapChallengeToValidate.get(1).second.toString();
+
+                            TextView challName = (TextView) findViewById(R.id.challengeNameToValidate);
+                            challName.setText(test);
+                            TextView idName = (TextView) findViewById(R.id.idNameToValidate);
+                            idName.setText(test2);
+                            TextView teseeeet = (TextView) findViewById(R.id.challengename2);
+                            teseeeet.setText(test3);
+                            TextView tezqtezt = (TextView) findViewById(R.id.idname2);
+                            tezqtezt.setText(test4);
+
                         }
+
+
                     }
 
                     @Override
@@ -136,6 +172,8 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+
 
 
     }
