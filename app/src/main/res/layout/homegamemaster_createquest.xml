@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBackground"
     tools:context="fr.indianacroft.wildhunt.HomeGameMasterActivity">
 
     <EditText
@@ -19,7 +20,8 @@
         android:hint="@string/hint_quest_name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/button_shape2"
+        android:background="@drawable/border"
+        android:textColor="@color/colorBlue"
         android:layout_below="@+id/playerActivityNameQuestTitle"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,7 +33,8 @@
         android:layout_width="326dp"
         android:layout_height="107dp"
         android:ems="10"
-        android:background="@drawable/button_shape2"
+        android:background="@drawable/border"
+        android:textColor="@color/colorBlue"
         android:inputType="textPersonName"
         android:gravity="center"
         android:hint="@string/hint_quest_description"
@@ -50,6 +53,8 @@
         android:text="@string/life_duration_quest_title"
         android:textStyle="bold"
         android:gravity="center"
+        android:background="@drawable/border2"
+        android:textColorHint="@color/colorBlue"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/name_quest"
         android:layout_toEndOf="@+id/name_quest"
@@ -102,7 +107,8 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="328dp"
         android:layout_height="155dp"
-        android:background="@drawable/button_shape2"
+        android:background="@drawable/border"
+        android:textColor="@color/colorBlue"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/recyclerView"

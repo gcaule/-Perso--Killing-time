@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    android:background="@drawable/backgroundtest2">
+    android:background="@color/colorBackground">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -88,11 +88,13 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:textColor="@color/colorBlue"
+                android:textColorHint="@color/colorBlue"
                 android:gravity="center"
                 android:hint="@string/hint_quest_name"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:background="@drawable/button_shape2"
+                android:background="@drawable/border"
                 android:layout_below="@+id/playerActivityNameQuestTitle"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -104,9 +106,11 @@
                 android:layout_width="326dp"
                 android:layout_height="107dp"
                 android:ems="10"
-                android:background="@drawable/button_shape2"
+                android:background="@drawable/border"
                 android:inputType="textPersonName"
                 android:gravity="center"
+                android:textColor="@color/colorBlue"
+                android:textColorHint="@color/colorBlue"
                 android:hint="@string/hint_quest_description"
                 android:maxLength="200"
                 android:layout_alignParentLeft="true"
@@ -123,6 +127,7 @@
                 android:text="@string/life_duration_quest_title"
                 android:textStyle="bold"
                 android:gravity="center"
+                android:background="@drawable/border2"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/name_quest"
                 android:layout_toEndOf="@+id/name_quest"
@@ -176,6 +181,7 @@
                 android:id="@+id/recyclerViewChallengeCreated"
                 android:layout_width="283dp"
                 android:layout_height="77dp"
+                android:background="@drawable/border"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -185,7 +191,7 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.NavigationView
+  <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

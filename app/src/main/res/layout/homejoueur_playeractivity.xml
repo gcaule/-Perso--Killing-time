@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorBackground"
     tools:context="fr.indianacroft.wildhunt.HomeJoueurActivity"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
@@ -21,7 +22,7 @@
 
     <Button
         style="@style/YellowTitle"
-        android:background="@drawable/layout_colors2"
+        android:background="@drawable/border"
         android:id="@+id/playerActivityNumChallenge"
         tools:text="Challenge N°"
         tools:layout_editor_absoluteY="47dp"

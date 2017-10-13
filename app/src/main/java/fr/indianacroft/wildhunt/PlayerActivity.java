@@ -1,7 +1,9 @@
 package fr.indianacroft.wildhunt;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,6 +11,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -29,6 +32,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import static fr.indianacroft.wildhunt.R.id.buttonHomeJoueurQuitChallenge;
+import static fr.indianacroft.wildhunt.R.id.navigation_leave;
 
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -51,6 +57,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
+
 
 //        final Button buttonHint = (Button) findViewById(R.id.buttonHomeJoueurHint);
         final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
@@ -121,6 +128,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 }
             }
         });
+
+
 //        Button buttonSendSolution = (Button) findViewById(R.id.buttonHomeJoueurSendSolution);
 //        buttonSendSolution.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -135,6 +144,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 //                }
 //            }
 //        });
+
     }
 
     // Drawer Menu
@@ -208,9 +218,46 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 }
                 searchQuest();
 
-                // Indice au clic
-                // TODO enlever les points au clic de l'indice
-                View navigation_hint = findViewById(R.id.navigation_hint);
+                View navigation_leave = findViewById(R.id.navigation_leave);
+                navigation_leave.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            AlertDialog.Builder builder;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                builder = new AlertDialog.Builder(PlayerActivity.this, R.style.MyDialog);
+                            } else {
+                                builder = new AlertDialog.Builder(PlayerActivity.this);
+                            }
+                            builder.setTitle("Supprimer la partie")
+                                    .setMessage("Etes vous sur de vouloir abandonner la partie")
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
+                                                Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
+                                                intent.putExtra("mChallengeKey", mKey_challenge);
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    })
+                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+
+
+                        }
+                    });
+
+
+
+                        // Indice au clic
+                        // TODO enlever les points au clic de l'indice
+                        View navigation_hint = findViewById(R.id.navigation_hint);
                 navigation_hint.setOnClickListener(new View.OnClickListener() {
                     boolean isClicked = false;
                     @Override
@@ -229,6 +276,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         }
                     }
                 });
+
 //                buttonHint.setOnClickListener(new View.OnClickListener() {
 //                    boolean isClicked = false;
 //

@@ -14,6 +14,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="MyDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.PopUp">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
