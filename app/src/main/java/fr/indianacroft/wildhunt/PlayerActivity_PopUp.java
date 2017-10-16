@@ -109,18 +109,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
                 mUserQuest = user.getUser_quest();
 
-                // Reference to an image file in Firebase Storage
-                StorageReference storageReference = FirebaseStorage.getInstance().getReference("User").child(mUserId).child("QuestToBeValidated").child(mUserQuest).child(mChallengeId);
-                // ImageView in your Activity
 
-                // Load the image using Glide
-//                if (storageReference.getDownloadUrl().isSuccessful()){
-                    Glide.with(getApplicationContext())
-                            .using(new FirebaseImageLoader())
-                            .load(storageReference)
-                            .skipMemoryCache(true)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .into(imageViewSendPhoto);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -192,6 +181,19 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                         }, 1500);
                     }
                 });
+                // Reference to an image file in Firebase Storage
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference("User").child(mUserId).child("QuestToBeValidated").child(mUserQuest).child(mChallengeId);
+                // ImageView in your Activity
+
+                // Load the image using Glide
+//                if (storageReference.getDownloadUrl().isSuccessful()){
+                Glide.with(getApplicationContext())
+                        .using(new FirebaseImageLoader())
+                        .load(storageReference)
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into(imageViewSendPhoto);
+
             }
             }
         });

@@ -147,6 +147,7 @@ public class ValidateAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, ChallengeToValidateActivity.class);
                 intent.putExtra("ToValidate", challengeName);
                 intent.putExtra("UserToValidate", userName);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
