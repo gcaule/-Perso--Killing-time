@@ -102,6 +102,7 @@ public class ConnexionActivity extends AppCompatActivity {
                             user.setUser_password(mEncrypt(userPasswordContent,"AES"));
                             user.setUser_quest(questContent);
                             user.setUser_indice("false");
+                            user.setUser_createdquestID("null");
                             String userId = refUser.push().getKey();
                             refUser.child(userId).setValue(user);
 

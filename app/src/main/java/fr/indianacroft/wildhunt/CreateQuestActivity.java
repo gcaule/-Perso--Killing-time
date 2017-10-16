@@ -93,6 +93,24 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         // childRef.push().getKey() is used to generate the different key
         final String questid = ref.getReference("Quest").push().getKey();
 
+        // If user is new, can create quest, if no, can't
+        DatabaseReference db1 = FirebaseDatabase.getInstance().getReference("User");
+        DatabaseReference db2 = db1.child(mUserId).child("user_createdquestID");
+        db2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String test3 = dataSnapshot.getValue(String.class);
+                if (test3.equals("null")) {
+                    button_create_quest.setVisibility(View.VISIBLE);
+                } else {
+                    button_create_quest.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
         button_create_quest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,6 +159,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     editor.putString("mCreatedQuest", questid);
                     editor.apply();
                 }
+                button_create_quest.setVisibility(View.GONE);
             }
         });
 
