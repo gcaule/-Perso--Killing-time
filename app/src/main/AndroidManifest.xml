@@ -18,7 +18,7 @@
         <activity
             android:name=".ConnexionActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,12 +65,18 @@
         <activity
             android:name=".ChallengesActivity_PopUp"
             android:label="ChallengePopUp"
-            android:theme="@style/AppTheme.PopUp"/>
+            android:theme="@style/AppTheme.PopUp" />
         <activity
             android:name=".ValidateQuestActivity"
             android:label="Validate"
-            android:theme="@style/AppTheme.NoActionBar">
-            </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChallengeToValidateActivity"
+            android:label="Validate"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChallengeToValidateActivity_PopUp"
+            android:theme="@style/AppTheme.PopUp" />
     </application>
 
 </manifest>

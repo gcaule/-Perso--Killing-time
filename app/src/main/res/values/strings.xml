@@ -120,5 +120,10 @@ A toi de jouer !</string>
 
     // Page Défis à valider
     <string name="mes_d_fis_valider">Mes défis à valider</string>
+    <string name="validate_see">Voir</string>
+    <string name="validate_title">Validation</string>
+    <string name="refuse">Refuser</string>
+    <string name="accept">Accepter</string>
+    <string name="solution">Solution</string>
 
 </resources>

@@ -140,6 +140,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
+                        // On rajoute le champ a valider dans le user Creator
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                         ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
                         Handler handler = new Handler();
@@ -178,6 +179,8 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
+
+                        // On rajoute le champ a valider dans le user Creator
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                         ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
                         Handler handler = new Handler();

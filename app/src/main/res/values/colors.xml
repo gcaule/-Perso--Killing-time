@@ -10,4 +10,5 @@
     <color name="colorJauneTrans2">#DD7</color>
     <color name="colorBackground">#DFF2FF</color>
     <color name="colorTransparent">#f8ffffff</color>
+    <color name="colorPopUpValidate">#DFF2FF</color>
 </resources>
