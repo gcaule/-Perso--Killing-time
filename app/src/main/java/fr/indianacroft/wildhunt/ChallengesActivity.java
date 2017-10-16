@@ -199,13 +199,13 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                     // childRef.push().getKey() is used to generate the different key
                     final String challengeId = ref.getReference("Challenge").child(mCreatedQuestId).push().getKey();
 
+
                     // On recupere la quete crée par l'user actuel pour link challenge a la quête
                     refUser =
                             FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
                     valueEventListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Toast.makeText(getApplicationContext(), "bug 43", Toast.LENGTH_SHORT).show();
                             User user = dataSnapshot.getValue(User.class);
                             mCreatedQuestId = user.getUser_createdquestID();
                             String userName = user.getUser_name();

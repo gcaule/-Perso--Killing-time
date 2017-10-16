@@ -59,6 +59,7 @@
     <string name="lobby_list_party">Liste des Parties</string>
     <string name="lobby_join_party">Rejoindre cette partie</string>
     <string name="discover_party">Découvrir Partie</string>
+    <string name="toast_error_party">Vous ne pouvez pas rejoindre votre propre partie\nMerci d\'en selectionner une autre</string>
 
     // Page Gestion de Partie
     <string name="home_ngame_master">GESTION DE PARTIE</string>
