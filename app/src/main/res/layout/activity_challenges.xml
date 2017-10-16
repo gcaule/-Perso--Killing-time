@@ -89,7 +89,7 @@
                 android:id="@+id/imageViewInscriptionLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/camera"
+                android:src="@drawable/camera"
                 android:clickable="true"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/butUpload"

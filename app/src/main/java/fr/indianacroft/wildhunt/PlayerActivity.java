@@ -317,7 +317,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         mQuest_name = quest.getQuest_name();
                         Log.d(mQuest_name, "quest");
                         mQuest_description = quest.getQuest_description();
-                        mLife_duration = quest.getLife_duration();
+
 
                         final TextView playerActivityQuestName = (TextView) findViewById(R.id.playerActivityNameQuestTitle);
                         playerActivityQuestName.setText(mQuest_name);
@@ -360,6 +360,9 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
                         // ImageView in your Activity
                         final ImageView imageViewPhotoChallenge = (ImageView) findViewById(R.id.imageViewHomeJoueurToFind);
+                        final TextView playerActivityDuration = (TextView) findViewById(R.id.textViewDifficulty);
+
+
                         // Load the image using Glide
                         Glide.with(getApplicationContext())
                                 .using(new FirebaseImageLoader())
@@ -369,6 +372,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                 .into(imageViewPhotoChallenge);
                         textViewPlayerActivityHint.setText(mHint_challenge);
                         playerActivityNumChallenge.setText(mName_challenge);
+                        playerActivityDuration.setText(mDiff_challenge);
                         return;
                     }
                 }
