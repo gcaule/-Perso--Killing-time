@@ -232,10 +232,10 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 // Indice a montrer si indice déja utilisé c'est a dire True dans la bdd
                 if (mUser_indice.equalsIgnoreCase("true")) {
                     textViewPlayerActivityHint.setVisibility(View.VISIBLE);
-                    textViewPlayerActivityHint2.setVisibility(View.VISIBLE);
+                    textViewPlayerActivityHint2.setText(R.string.hint_no_need);
                 } else {
                     textViewPlayerActivityHint.setVisibility(View.GONE);
-                    textViewPlayerActivityHint2.setVisibility(View.GONE);
+                    textViewPlayerActivityHint2.setText(R.string.hint_need);
                 }
                 searchQuest();
 

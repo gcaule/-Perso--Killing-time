@@ -93,18 +93,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
             }
         });
 
-//        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-//        // Load the image using Glide
-//        if (storageReference.getDownloadUrl().isSuccessful()){
-//            Glide.with(getApplicationContext())
-//                    .using(new FirebaseImageLoader())
-//                    .load(storageReference)
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .into(imageViewAvatar);
-//        }
-
         // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
         searchUser();
 

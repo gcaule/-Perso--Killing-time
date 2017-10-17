@@ -50,7 +50,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.activity_create_quest);
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
-       final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
 
@@ -108,9 +108,10 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         db2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String test3 = dataSnapshot.getValue(String.class);
-                if (test3.equals("null")) {
+                String questCreatedOrNot = dataSnapshot.getValue(String.class);
+                if (questCreatedOrNot.equals("null")) {
                     button_create_quest.setVisibility(View.VISIBLE);
+                    butAddNewChallenge.setVisibility(View.GONE);
                 } else {
                     button_create_quest.setVisibility(View.GONE);
                 }
@@ -123,6 +124,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         button_create_quest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                butAddNewChallenge.setVisibility(View.VISIBLE);
                 String nameContent = name_quest.getText().toString().trim();
                 String descriptionContent = description_quest.getText().toString().trim();
                 String spinnerContent = spinner_quest.getSelectedItem().toString();

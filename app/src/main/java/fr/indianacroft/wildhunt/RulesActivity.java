@@ -25,6 +25,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -43,7 +48,6 @@ public class RulesActivity extends AppCompatActivity implements NavigationView.O
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
-        /////////////////////////////////////////////////////////////////
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,21 +70,6 @@ public class RulesActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));            }
         });
 
-        // Avatar
-        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-//        final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
-//        // Load the image using Glide
-//        // TODO : corriger affichage avatar qd l'utilisateur est nouveau
-//        if (storageReference.getDownloadUrl().isSuccessful()){
-//            Glide.with(getApplicationContext())
-//                    .using(new FirebaseImageLoader())
-//                    .load(storageReference)
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .into(imageViewAvatar);
-//        }
-
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,13 +79,37 @@ public class RulesActivity extends AppCompatActivity implements NavigationView.O
             }
         });
 
-        // Button Play
-        buttonPlay = findViewById(R.id.buttonPlay);
-        buttonPlay.setOnClickListener(new View.OnClickListener() {
+        // If user is new, can create quest, if no, can't
+        DatabaseReference db1 = FirebaseDatabase.getInstance().getReference("User");
+        DatabaseReference db2 = db1.child(mUserId).child("user_quest");
+        db2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
-                startActivity(intent);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String questOrNot = dataSnapshot.getValue(String.class);
+                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                    // Button Play to Lobby if user is new
+                    buttonPlay = findViewById(R.id.buttonPlay);
+                    buttonPlay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                } else {
+                    // Button Play to My Quest if User is known
+                    buttonPlay = findViewById(R.id.buttonPlay);
+                    buttonPlay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
