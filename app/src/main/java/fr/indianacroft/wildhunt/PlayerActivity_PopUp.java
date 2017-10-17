@@ -55,12 +55,10 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
-        /////////////////////////////////////////////////////////////////
 
         mChallengeId = getIntent().getStringExtra("mChallengeKey");
         mCreatorId = getIntent().getStringExtra("mCreatorId");
         mQuestId = getIntent().getStringExtra("mQuestId");
-
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -109,7 +107,18 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
                 mUserQuest = user.getUser_quest();
 
+                // Reference to an image file in Firebase Storage
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference("User").child(mUserId).child("QuestToBeValidated").child(mUserQuest).child(mChallengeId);
+                // ImageView in your Activity
 
+                // Load the image using Glide
+//                if (storageReference.getDownloadUrl().isSuccessful()){
+                    Glide.with(getApplicationContext())
+                            .using(new FirebaseImageLoader())
+                            .load(storageReference)
+                            .skipMemoryCache(true)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .into(imageViewSendPhoto);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -128,8 +137,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
-                        // On rajoute le champ a valider dans le user Creator
+                        Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                         ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
                         Handler handler = new Handler();
@@ -139,7 +147,6 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         }, 1500);
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -168,8 +175,6 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
-
-                        // On rajoute le champ a valider dans le user Creator
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                         ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
                         Handler handler = new Handler();
@@ -181,19 +186,6 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                         }, 1500);
                     }
                 });
-                // Reference to an image file in Firebase Storage
-                StorageReference storageReference = FirebaseStorage.getInstance().getReference("User").child(mUserId).child("QuestToBeValidated").child(mUserQuest).child(mChallengeId);
-                // ImageView in your Activity
-
-                // Load the image using Glide
-//                if (storageReference.getDownloadUrl().isSuccessful()){
-                Glide.with(getApplicationContext())
-                        .using(new FirebaseImageLoader())
-                        .load(storageReference)
-                        .skipMemoryCache(true)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .into(imageViewSendPhoto);
-
             }
             }
         });

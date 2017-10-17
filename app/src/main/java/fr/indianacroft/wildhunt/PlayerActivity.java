@@ -4,25 +4,27 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -51,71 +53,16 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     private String mCreatorId;
     private String mQuestId;
     private String mUser_challenge;
-    // Bottom Navigation Bar
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            searchUser();
-//            searchQuest();
-//            searcChallenges();
-//            final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
-//            boolean isClicked = false;
-            final DatabaseReference refUser =
-                    FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
 
-            switch (item.getItemId()) {
-                case R.id.navigation_validate:
-//                    item.setCheckable(false);
-//                    Button buttonSendSolution = (Button) findViewById(R.id.buttonHomeJoueurSendSolution);
-//                    buttonSendSolution.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
-//                                Intent intent = new Intent(getApplicationContext(), HomeJoueur_PlayerPopUp.class);
-//                                intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
-//                                startActivity(intent);
-//                            }
-//                            else{
-//                                Toast.makeText(getApplicationContext(), R.string.error_noquest, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-                    return true;
-                case R.id.navigation_hint:
-//                    item.setCheckable(false);
-//                    buttonHint.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-                    //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
-//                            if (mUser_indice.equalsIgnoreCase("false")) {
-//                                if (!isClicked) {
-//                                    isClicked = true;
-//                                    Toast.makeText(getApplicationContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
-//                                } else if (isClicked) {
-//                                    textViewPlayerActivityHint.setVisibility(View.VISIBLE);
-////                                    buttonHint.setBackgroundColor(Color.RED);
-//                                    refUser.child("user_indice").setValue("true");
-//                                }
-//                            }
-//                        }
-//                    });
-                    return true;
-                case R.id.navigation_leave:
-//                    item.setCheckable(false);
-                    return true;
-            }
-            return false;
-        }
-    };
+//    private String mUserId, mUser_quest, mUser_name, mQuest_description, mQuest_name, mUser_indice,
+//            mName_challenge, mDiff_challenge, mHint_challenge, mKey_challenge, mCreatorId, mQuestId;
+    ImageView imageViewAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-
-//        final Button buttonHint = (Button) findViewById(R.id.buttonHomeJoueurHint);
         final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
@@ -137,10 +84,16 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        View headerview = navigationView.getHeaderView(0);
+        headerview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
+            }
+        });
 
         // Bottom Navigation bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-//        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setAnimation(null);
         bottomNavigationView.setSelectedItemId(R.id.navigation_validate);
 
@@ -152,18 +105,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
             }
         });
-
-        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-//        // Load the image using Glide
-//        if (storageReference.getDownloadUrl().isSuccessful()){
-//            Glide.with(getApplicationContext())
-//                    .using(new FirebaseImageLoader())
-//                    .load(storageReference)
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .into(imageViewAvatar);
-//        }
 
         // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
         searchUser();
@@ -212,13 +153,11 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -238,6 +177,12 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
@@ -246,9 +191,22 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         return true;
     }
 
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.nav_share);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        return true;
+    }
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
+    }
+
     // METHODE POUR TROUVER USER
     private void searchUser() {
-//        final Button buttonHint = (Button) findViewById(R.id.buttonHomeJoueurHint);
         final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
         final TextView textViewPlayerActivityHint2 = (TextView) findViewById(R.id.textViewPlayerActivityHint2);
 
@@ -271,7 +229,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 if (mUser_indice.equalsIgnoreCase("true")) {
                     textViewPlayerActivityHint.setVisibility(View.VISIBLE);
                     textViewPlayerActivityHint2.setVisibility(View.VISIBLE);
-//                    buttonHint.setVisibility(View.GONE);
                 } else {
                     textViewPlayerActivityHint.setVisibility(View.GONE);
                     textViewPlayerActivityHint2.setVisibility(View.GONE);
@@ -356,7 +313,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 //                    }
 //                });
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -387,7 +343,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
