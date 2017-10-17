@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -200,8 +200,10 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 mUser_name = user.getUser_name();
-                mUser_quest = user.getUser_quest();
+                mUser_quest = user.getUser_quest(); // on recupere la quete dans laquelle il est actuellement
                 mUser_indice = user.getUser_indice();
+                mUser_challenge = user.getUser_challenge(); // on recupere le challenge dans lequel il est actuellement
+
                 Log.d("indice", mUser_indice);
 
                 // Indice a montrer si indice déja utilisé c'est a dire True dans la bdd
@@ -252,7 +254,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 View navigation_hint = findViewById(R.id.navigation_hint);
                 navigation_hint.setOnClickListener(new View.OnClickListener() {
                     boolean isClicked = false;
-
                     @Override
                     public void onClick(View v) {
                         //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
@@ -311,7 +312,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         mQuest_description = quest.getQuest_description();
                         final TextView playerActivityQuestName = (TextView) findViewById(R.id.playerActivityNameQuestTitle);
                         playerActivityQuestName.setText(mQuest_name);
-                        searcChallenges();
+                        searchChallenges();
                         return;
                     }
                 }
@@ -322,34 +323,91 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         });
     }
 
-    // METHODE POUR TROUVER CHALLENGE
-    private void searcChallenges() {
-        final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
-        final Button playerActivityNumChallenge = (Button) findViewById(R.id.playerActivityNumChallenge);
+    // METHODE POUR TROUVER TOUT LES CHALLENGES
+    private void searchChallenges() {
+
 
         // On recupere les données des challenges
         DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest);
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                final String[] mapChallenges = new String[((int) dataSnapshot.getChildrenCount())];
+                int i = 0;
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                     Challenge challenge = dsp.getValue(Challenge.class);
                     // On recupere les challenges qui correspondent a la qûete
-                    if (challenge.getChallenge_questId().equals(mUser_quest)) {
+                    // On les ajoutes au tableau
                         mKey_challenge = dsp.getKey();
-                        mName_challenge = challenge.getChallenge_name();
-                        Log.d(mName_challenge, "tag");
-                        mHint_challenge = challenge.getHint_challenge();
-                        mDiff_challenge = challenge.getChallenge_difficulty();
-                        mCreatorId = challenge.getChallenge_creatorID();
-                        mQuestId = challenge.getChallenge_questId();
+                        mapChallenges[i] = mKey_challenge;
 
-                        // On change la page dynamiquement !!
-                        // Reference to an image file in Firebase Storage
-                        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
-                        // ImageView in your Activity
-                        final ImageView imageViewPhotoChallenge = (ImageView) findViewById(R.id.imageViewHomeJoueurToFind);
-                        final TextView playerActivityDuration = (TextView) findViewById(R.id.textViewDifficulty);
+                    i++;
+                }
+                // Si le challenge dans le tableau correspond au challenge en cours du joueur
+                for (int j = 0; j < mapChallenges.length; j++) {
+                    if (mapChallenges[j].equals(mUser_challenge)) {
+
+                        // On verifie si ce challenge n'est pas dans le tableau des dones
+                        final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("User").child(mUserId);
+                        final int finalJ = j;
+                        refUser.child("challenge_done").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // Tableau des challenges dones
+                                final String[] mapChallengesDone = new String[((int) dataSnapshot.getChildrenCount())];
+                                final int[] i = {0};
+                                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                                    final String challengeKey = dsp.getKey();
+                                    User checkDone = dsp.getValue(User.class);
+                                    String check = checkDone.getState();
+                                    if (check.equals("true")) {
+                                        mapChallengesDone[i[0]] = challengeKey;
+                                    }
+                                    i[0]++;
+
+
+                                }
+
+                                //On parcourt les challenges dones
+                                for (int h = 0; h < mapChallengesDone.length; h++) {
+                                    if (mapChallenges[finalJ].equals(mapChallengesDone[h])) {
+                                        // Si le challenge actuel correspond a un challenge done
+                                        // on passe au challenge d'indice suivant
+                                        mUser_challenge = mapChallenges[finalJ + 1];
+                                        Toast.makeText(PlayerActivity.this, "Votre défi a été validé, vous passez au suivant !", Toast.LENGTH_SHORT).show();
+                                    }
+
+
+                                }
+
+                                // On set le challenge sur la page
+                                final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
+
+                                final Button playerActivityNumChallenge = (Button) findViewById(R.id.playerActivityNumChallenge);
+
+                                // On recupere les données des challenges
+                                DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest).child(mUser_challenge);
+                                refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                            Challenge challenge = dataSnapshot.getValue(Challenge.class);
+                                            // On recupere les challenges qui correspondent a la qûete
+
+                                                mKey_challenge = dataSnapshot.getKey();
+                                                mName_challenge = challenge.getChallenge_name();
+                                                Log.d(mName_challenge, "tag");
+                                                mHint_challenge = challenge.getHint_challenge();
+                                                mDiff_challenge = challenge.getChallenge_difficulty();
+                                                mCreatorId = challenge.getChallenge_creatorID();
+                                                mQuestId = challenge.getChallenge_questId();
+
+                                                // On change la page dynamiquement !!
+                                                // Reference to an image file in Firebase Storage
+                                                StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
+                                                // ImageView in your Activity
+                                                final ImageView imageViewPhotoChallenge = (ImageView) findViewById(R.id.imageViewHomeJoueurToFind);
+                                                final TextView playerActivityDuration = (TextView) findViewById(R.id.textViewDifficulty);
 
                         // Load the image using Glide
                         Glide.with(getApplicationContext())

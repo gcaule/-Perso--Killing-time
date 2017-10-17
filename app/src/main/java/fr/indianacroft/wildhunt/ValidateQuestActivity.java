@@ -1,5 +1,6 @@
 package fr.indianacroft.wildhunt;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -112,12 +114,13 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                 refAvalider.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        final ArrayList<Pair> mapChallengeToValidate = new ArrayList<Pair>((int) dataSnapshot.getChildrenCount());
                         for (final DataSnapshot dsp : dataSnapshot.getChildren()) {
                             // On créer un tableau de la taille de tout les challenges présent
-                            final ArrayList<Pair> mapChallengeToValidate = new ArrayList<Pair>((int) dsp.getChildrenCount());
+
 
                             // On recupere l'Id du challenge qu'on analyse
-                            String challengeIdToValidate = dsp.getKey();
+                            final String challengeIdToValidate = dsp.getKey();
 
                             DatabaseReference refChallengeIdToValidate =
                                     FirebaseDatabase.getInstance().getReference("Challenge").child(questId).child(challengeIdToValidate);
@@ -134,7 +137,7 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                                         if ((boolean) dsp2.getValue() == false) {
 
                                             // On recupere l'ID de l'user qui doit être validé
-                                            String userIdToValidate = dsp2.getKey();
+                                            final String userIdToValidate = dsp2.getKey();
 
                                             DatabaseReference refUserToValidate = FirebaseDatabase.getInstance().getReference("User").child(userIdToValidate);
                                             refUserToValidate.addValueEventListener(new ValueEventListener() {
@@ -144,14 +147,23 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                                                     User user = dataSnapshot.getValue(User.class);
                                                     String userName = user.getUser_name();
                                                     // On link dans un Pair son pseudo avec le nom du challenge
-                                                    Pair<String, String> pair = new Pair<String, String>(challengeName, userName);
+                                                    Pair<String, String> pair = new Pair<String, String>(challengeIdToValidate, userIdToValidate);
                                                     mapChallengeToValidate.add(pair);
 
 
-                                                    String test = mapChallengeToValidate.get(0).first.toString();
-                                                    String test2 = mapChallengeToValidate.get(0).second.toString();
-//                                                    String test3 = mapChallengeToValidate.get(1).first.toString();
-//                                                    String test4 = mapChallengeToValidate.get(1).second.toString();
+//                                                    String test = mapChallengeToValidate.get(0).first.toString();
+//                                                    String test2 = mapChallengeToValidate.get(0).second.toString();
+////                                                    String test3 = mapChallengeToValidate.get(1).first.toString();
+////                                                    String test4 = mapChallengeToValidate.get(1).second.toString();
+//
+//                                                    TextView challName = (TextView) findViewById(R.id.challengeNameToValidate);
+//                                                    challName.setText(test);
+//                                                    TextView idName = (TextView) findViewById(R.id.idNameToValidate);
+//                                                    idName.setText(test2);
+////                                                    TextView teseeeet = (TextView) findViewById(R.id.challengename2);
+////                                                    teseeeet.setText(test3);
+////                                                    TextView tezqtezt = (TextView) findViewById(R.id.idname2);
+////                                                    tezqtezt.setText(test4);
 
                                                     TextView challName = (TextView) findViewById(R.id.challengeNameToValidate);
                                                     challName.setText(test);
@@ -161,6 +173,12 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
 //                                                    teseeeet.setText(test3);
 //                                                    TextView tezqtezt = (TextView) findViewById(R.id.idname2);
 //                                                    tezqtezt.setText(test4);
+                                                    final ValidateAdapter myAdapter = new ValidateAdapter(getApplicationContext(), mapChallengeToValidate);
+                                                    ListView listview = (ListView) findViewById(R.id.listView);
+                                                    listview.setAdapter(myAdapter);
+
+
+
                                                 }
 
                                                 @Override
