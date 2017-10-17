@@ -267,7 +267,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                             } else if (isClicked) {
                                 textViewPlayerActivityHint.setVisibility(View.VISIBLE);
                                 textViewPlayerActivityHint2.setVisibility(View.VISIBLE);
-//                                buttonHint.setBackgroundColor(Color.RED);
+//
                                 refUser.child("user_indice").setValue("true");
                             }
                         }
@@ -380,6 +380,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         DatabaseReference refChallengeUser =
                                                 FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_challenge");
                                         refChallengeUser.setValue(mUser_challenge);
+
                                     }
                                 }
 
