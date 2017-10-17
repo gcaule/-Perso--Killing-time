@@ -11,11 +11,14 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -44,18 +47,17 @@ import java.io.ByteArrayOutputStream;
 public class ChallengesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     EditText name_challenge, hint_challenge;
+    String mUserId, mCreatedQuestId, mUserName;
     ImageView imageViewInscriptionLogo, imageViewAvatar;
     Spinner spinner_challenge;
     Button butLoad, butUpload, butCreateChallenge;
     FirebaseDatabase ref;
     DatabaseReference childRef;
-    DatabaseReference refUser = null;
+    final DatabaseReference refUser = null;
     ValueEventListener valueEventListener = null;
-    private String mUserId, mCreatedQuestId;
     int PICK_IMAGE_REQUEST = 111, REQUEST_IMAGE_CAPTURE = 1;
     Uri filePath;
     ProgressDialog progressDialog;
-    private String mUserId, mCreatedQuestId, mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,6 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         mCreatedQuestId = sharedPreferences.getString("mCreatedQuest", "");
         Log.d("key", mUserId);
-
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -83,6 +84,12 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        View headerview = navigationView.getHeaderView(0);
+        headerview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PlayerActivity.class));            }
+        });
 
         // Avatar
 //        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
@@ -142,7 +149,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             }
         });
 
-//TODO RECYCLER VIEW
+//          TODO RECYCLER VIEW
 //        // Pour remplir la liste des challenges avec les challenges créees!!!
 //        final RecyclerView recyclerViewGamesCreated = (RecyclerView) findViewById(R.id.recyclerViewChallengeCreated);
 //        recyclerViewGamesCreated.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -214,9 +221,8 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                     // childRef.push().getKey() is used to generate the different key
                     final String challengeId = ref.getReference("Challenge").child(mCreatedQuestId).push().getKey();
 
-
                     // On recupere la quete crée par l'user actuel pour link challenge a la quête
-                    refUser =
+                    DatabaseReference refUser =
                             FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
                     valueEventListener = new ValueEventListener() {
                         @Override
@@ -374,12 +380,32 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
+        }  else if (id == R.id.nav_share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.nav_share);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        return true;
+    }
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
     }
 
     // Send photos to ImageView

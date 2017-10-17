@@ -18,10 +18,7 @@ public class ValidateViewHolder extends RecyclerView.ViewHolder{
     public ValidateViewHolder(View itemView) {
         super(itemView);}
 
-
-
-    ///////// POUR RENTRER LES DONNEES DANS LE RECYCLER VIEW \\\\\\\\\\\\\\\
-    //______________________________________________________\\
+    // POUR RENTRER LES DONNEES DANS LE RECYCLER VIEW
 
     // Pour mettre le nom de la party / quête dans le reclycer view
     public void setChallenge_name(String challenge_name) {

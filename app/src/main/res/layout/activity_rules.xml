@@ -77,7 +77,10 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:padding="2dp"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"

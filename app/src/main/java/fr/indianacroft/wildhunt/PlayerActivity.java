@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -16,10 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
@@ -33,24 +36,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import static fr.indianacroft.wildhunt.R.id.buttonHomeJoueurQuitChallenge;
-import static fr.indianacroft.wildhunt.R.id.navigation_leave;
-
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String mUserId;
-    private String mUser_name;
-    private String mUser_quest;
-    private String mQuest_name;
-    private String mUser_indice;
-    private String mQuest_description;
-    private String mLife_duration;
-    private String mName_challenge;
-    private String mDiff_challenge;
-    private String mHint_challenge;
-    private String mKey_challenge;
-    private String mCreatorId;
-    private String mQuestId;
+    private String mUserId, mUser_quest, mUser_name, mQuest_description, mQuest_name, mUser_indice,
+            mName_challenge, mDiff_challenge, mHint_challenge, mKey_challenge, mCreatorId, mQuestId;
     ImageView imageViewAvatar;
 
     @Override
@@ -58,10 +47,9 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-//        final Button buttonHint = (Button) findViewById(R.id.buttonHomeJoueurHint);
         final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
 
-        // Pour recuperer la key d'un user (pour le lier a une quête)
+        // To find User Key and link it to a quest
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
@@ -80,10 +68,16 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        View headerview = navigationView.getHeaderView(0);
+        headerview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
+            }
+        });
 
         // Bottom Navigation bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-//        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setAnimation(null);
         bottomNavigationView.setSelectedItemId(R.id.navigation_validate);
 
@@ -96,18 +90,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             }
         });
 
-        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-//        // Load the image using Glide
-//        if (storageReference.getDownloadUrl().isSuccessful()){
-//            Glide.with(getApplicationContext())
-//                    .using(new FirebaseImageLoader())
-//                    .load(storageReference)
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .into(imageViewAvatar);
-//        }
-
         // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
         searchUser();
 
@@ -115,14 +97,13 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         navigation_validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
+                if (!mUser_quest.equals("Pas de qûete pour l'instant")) {
                     Intent intent = new Intent(getApplicationContext(), PlayerActivity_PopUp.class);
                     intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
                     intent.putExtra("mCreatorId", mCreatorId);
                     intent.putExtra("mQuestId", mQuestId);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), R.string.error_noquest, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -170,7 +151,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.nav_play) {
             Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
             startActivity(intent);
-        }else if (id == R.id.nav_lobby) {
+        } else if (id == R.id.nav_lobby) {
             Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_create) {
@@ -178,6 +159,12 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
@@ -186,9 +173,22 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         return true;
     }
 
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.nav_share);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        return true;
+    }
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
+    }
+
     // METHODE POUR TROUVER USER
     private void searchUser() {
-//        final Button buttonHint = (Button) findViewById(R.id.buttonHomeJoueurHint);
         final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
         final TextView textViewPlayerActivityHint2 = (TextView) findViewById(R.id.textViewPlayerActivityHint2);
 
@@ -208,7 +208,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 if (mUser_indice.equalsIgnoreCase("true")) {
                     textViewPlayerActivityHint.setVisibility(View.VISIBLE);
                     textViewPlayerActivityHint2.setVisibility(View.VISIBLE);
-//                    buttonHint.setVisibility(View.GONE);
                 } else {
                     textViewPlayerActivityHint.setVisibility(View.GONE);
                     textViewPlayerActivityHint2.setVisibility(View.GONE);
@@ -218,41 +217,42 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 View navigation_leave = findViewById(R.id.navigation_leave);
                 navigation_leave.setOnClickListener(new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View view) {
-                            AlertDialog.Builder builder;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                builder = new AlertDialog.Builder(PlayerActivity.this, R.style.MyDialog);
-                            } else {
-                                builder = new AlertDialog.Builder(PlayerActivity.this);
-                            }
-                            builder.setTitle("Supprimer la partie")
-                                    .setMessage("Etes vous sur de vouloir abandonner la partie")
-                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
-                                                Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
-                                                intent.putExtra("mChallengeKey", mKey_challenge);
-                                                startActivity(intent);
-                                            }
-                                        }
-                                    })
-                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    })
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .show();
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(PlayerActivity.this, R.style.MyDialog);
+                        } else {
+                            builder = new AlertDialog.Builder(PlayerActivity.this);
                         }
+                        builder.setTitle("Supprimer la partie")
+                                .setMessage("Etes vous sur de vouloir abandonner la partie")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (!mUser_quest.equals("Pas de qûete pour l'instant")) {
+                                            Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
+                                            intent.putExtra("mChallengeKey", mKey_challenge);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
                 });
 
-                        // Indice au clic
-                        // TODO enlever les points au clic de l'indice
+                // Indice au clic
+                // TODO enlever les points au clic de l'indice
                 View navigation_hint = findViewById(R.id.navigation_hint);
                 navigation_hint.setOnClickListener(new View.OnClickListener() {
                     boolean isClicked = false;
+
                     @Override
                     public void onClick(View v) {
                         //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
@@ -306,12 +306,9 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     Quest quest = dsp.getValue(Quest.class);
                     // On recupere la qûete liée a un user
                     if (mUser_quest.equals(dsp.getKey())) {
-
                         mQuest_name = quest.getQuest_name();
                         Log.d(mQuest_name, "quest");
                         mQuest_description = quest.getQuest_description();
-
-
                         final TextView playerActivityQuestName = (TextView) findViewById(R.id.playerActivityNameQuestTitle);
                         playerActivityQuestName.setText(mQuest_name);
                         searcChallenges();
@@ -328,7 +325,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     // METHODE POUR TROUVER CHALLENGE
     private void searcChallenges() {
         final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
-
         final Button playerActivityNumChallenge = (Button) findViewById(R.id.playerActivityNumChallenge);
 
         // On recupere les données des challenges
@@ -355,7 +351,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         final ImageView imageViewPhotoChallenge = (ImageView) findViewById(R.id.imageViewHomeJoueurToFind);
                         final TextView playerActivityDuration = (TextView) findViewById(R.id.textViewDifficulty);
 
-
                         // Load the image using Glide
                         Glide.with(getApplicationContext())
                                 .using(new FirebaseImageLoader())
@@ -381,79 +376,15 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            searchUser();
-//            searchQuest();
-//            searcChallenges();
-//            final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
-//            boolean isClicked = false;
-            final DatabaseReference refUser =
-                    FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
-
             switch (item.getItemId()) {
                 case R.id.navigation_validate:
-//                    item.setCheckable(false);
-//                    Button buttonSendSolution = (Button) findViewById(R.id.buttonHomeJoueurSendSolution);
-//                    buttonSendSolution.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
-//                                Intent intent = new Intent(getApplicationContext(), HomeJoueur_PlayerPopUp.class);
-//                                intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
-//                                startActivity(intent);
-//                            }
-//                            else{
-//                                Toast.makeText(getApplicationContext(), R.string.error_noquest, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
                     return true;
                 case R.id.navigation_hint:
-//                    item.setCheckable(false);
-//                    buttonHint.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-                            //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
-//                            if (mUser_indice.equalsIgnoreCase("false")) {
-//                                if (!isClicked) {
-//                                    isClicked = true;
-//                                    Toast.makeText(getApplicationContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
-//                                } else if (isClicked) {
-//                                    textViewPlayerActivityHint.setVisibility(View.VISIBLE);
-////                                    buttonHint.setBackgroundColor(Color.RED);
-//                                    refUser.child("user_indice").setValue("true");
-//                                }
-//                            }
-//                        }
-//                    });
                     return true;
                 case R.id.navigation_leave:
-//                    item.setCheckable(false);
                     return true;
             }
             return false;
         }
     };
-//    public static class BottomNavigationViewHelper {
-//        public static void disableShiftMode(BottomNavigationView view) {
-//            BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
-//            try {
-//                Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
-//                shiftingMode.setAccessible(true);
-//                shiftingMode.setBoolean(menuView, false);
-//                shiftingMode.setAccessible(false);
-//                for (int i = 0; i < menuView.getChildCount(); i++) {
-//                    BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
-//                    //noinspection RestrictedApi
-//                    item.setShiftingMode(false);
-//                    // set once again checked value, so view will be updated
-//                    //noinspection RestrictedApi
-//                    item.setChecked(item.getItemData().isChecked());
-//                }
-//            } catch (NoSuchFieldException e) {
-//                Log.e("BNVHelper", "Unable to get shift mode field", e);
-//            } catch (IllegalAccessException e) {
-//                Log.e("BNVHelper", "Unable to change value of shift mode", e);
-//            }
-//        }
-//    }
 }
