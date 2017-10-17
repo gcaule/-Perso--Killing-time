@@ -62,6 +62,7 @@
     <string name="lobby_join_party">Rejoindre cette partie</string>
     <string name="discover_party">Découvrir Partie</string>
     <string name="toast_error_party">Vous ne pouvez pas rejoindre votre propre partie\nMerci d\'en selectionner une autre</string>
+    <string name="impossible_lobby">Impossible de rejoindre votre propre partie</string>
 
     // Page Gestion de Partie
     <string name="home_ngame_master">GESTION DE PARTIE</string>
@@ -81,7 +82,8 @@
     <string name="send_photo">Envoyer</string>
     <string name="error_noquest">Veuillez rejoindre d\'abord une partie</string>
     <string name="titlePopUp">Envoyer votre solution (Selfie !)</string>
-    <string name="votre_indice_a_t_utilis">Votre indice a été utilisé !</string>
+    <string name="hint_no_need">Votre indice a été utilisé !</string>
+    <string name="hint_need">Besoin d\'un indice ?</string>
 
     // Page Créer ma partie
     <string name="life_duration_quest_title">Durée de vie</string>

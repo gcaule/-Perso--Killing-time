@@ -23,10 +23,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class LobbyViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView mNamePartyLobby;
-    public TextView mDescriptionPartyLobby;
-    public Button mDiscoverPartyLobby;
-    public Button mJoinPartyLobby;
+    public TextView mNamePartyLobby, mDescriptionPartyLobby;
+    public Button mDiscoverPartyLobby, mJoinPartyLobby;
     private String mUserId;
 
     public LobbyViewHolder(final View itemView) {
@@ -60,9 +58,10 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String userCreatedQuestName = dataSnapshot.getValue(String.class);
-
+                        // Avoid user to join his own quest
                         if (quest_name.equals(userCreatedQuestName)) {
                             mJoinPartyLobby.setVisibility(View.GONE);
+                            mDescriptionPartyLobby.setText(R.string.impossible_lobby);
                             Toast.makeText(itemView.getContext(), R.string.toast_error_party, Toast.LENGTH_LONG).show();
                         }
                     }
