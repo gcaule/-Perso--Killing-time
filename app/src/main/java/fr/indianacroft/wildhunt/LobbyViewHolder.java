@@ -53,10 +53,10 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                 final String quest_name = mNamePartyLobby.getText().toString();
 
                 // Get name of created quest
-                DatabaseReference caca = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference cacamoisi = caca.child("User").child(mUserId).child("user_createdquestName");
+                DatabaseReference data1 = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference data2 = data1.child("User").child(mUserId).child("user_createdquestName");
                 // Compare quest created to quest_name
-                cacamoisi.addListenerForSingleValueEvent(new ValueEventListener() {
+                data2.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String userCreatedQuestName = dataSnapshot.getValue(String.class);

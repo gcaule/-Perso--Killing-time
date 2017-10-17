@@ -42,7 +42,7 @@
                     android:id="@+id/imageViewAvatar"
                     android:layout_width="66dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/man"
+                    android:src="@drawable/pirate_head"
                     android:layout_gravity="end"
                     android:padding="5dp" />
 

@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +54,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
-        /////////////////////////////////////////////////////////////////
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -79,7 +77,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
             }
         });
 
-
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,10 +86,8 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
             }
         });
 
-
         // ENTER CODE HERE
         // METHODE POUR TROUVER CHALLENGE
-
         DatabaseReference refUser =
                 FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
         refUser.addValueEventListener(new ValueEventListener() {
@@ -110,11 +105,9 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                 refAvalider.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
                         final ArrayList<Pair> mapChallengeToValidate = new ArrayList<Pair>((int) dataSnapshot.getChildrenCount());
                         for (final DataSnapshot dsp : dataSnapshot.getChildren()) {
                             // On créer un tableau de la taille de tout les challenges présent
-
 
                             // On recupere l'Id du challenge qu'on analyse
                             final String challengeIdToValidate = dsp.getKey();
@@ -151,41 +144,29 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                                                     ListView listview = (ListView) findViewById(R.id.listView);
                                                     listview.setAdapter(myAdapter);
                                                 }
-
                                                 @Override
                                                 public void onCancelled(DatabaseError databaseError) {
-
                                                 }
                                             });
                                         }
                                         i++;
                                     }
-
                                 }
-
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
-
                                 }
                             });
                         }
-
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-
     }
 
     @Override
@@ -244,13 +225,13 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
         return true;
     }
 
+    // Share via other apps
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.nav_share);
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         return true;
     }
-
     private void setShareIntent(Intent shareIntent) {
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(shareIntent);
