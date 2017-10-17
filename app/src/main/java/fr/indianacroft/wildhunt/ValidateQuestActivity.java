@@ -226,7 +226,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
     }
 
     // Share via other apps
-    private ShareActionProvider mShareActionProvider;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.nav_share);
