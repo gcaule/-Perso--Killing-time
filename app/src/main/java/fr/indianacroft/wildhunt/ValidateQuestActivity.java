@@ -60,7 +60,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
-        /////////////////////////////////////////////////////////////////
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -83,7 +82,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));            }
         });
 
-
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,10 +91,8 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
             }
         });
 
-
         // ENTER CODE HERE
         // METHODE POUR TROUVER CHALLENGE
-
         DatabaseReference refUser =
                 FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
         refUser.addValueEventListener(new ValueEventListener() {
@@ -117,7 +113,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                         final ArrayList<Pair> mapChallengeToValidate = new ArrayList<Pair>((int) dataSnapshot.getChildrenCount());
                         for (final DataSnapshot dsp : dataSnapshot.getChildren()) {
                             // On créer un tableau de la taille de tout les challenges présent
-
 
                             // On recupere l'Id du challenge qu'on analyse
                             final String challengeIdToValidate = dsp.getKey();
@@ -150,7 +145,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                                                     Pair<String, String> pair = new Pair<String, String>(challengeIdToValidate, userIdToValidate);
                                                     mapChallengeToValidate.add(pair);
 
-
 //                                                    String test = mapChallengeToValidate.get(0).first.toString();
 //                                                    String test2 = mapChallengeToValidate.get(0).second.toString();
 ////                                                    String test3 = mapChallengeToValidate.get(1).first.toString();
@@ -165,10 +159,10 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
 ////                                                    TextView tezqtezt = (TextView) findViewById(R.id.idname2);
 ////                                                    tezqtezt.setText(test4);
 
-                                                    TextView challName = (TextView) findViewById(R.id.challengeNameToValidate);
-                                                    challName.setText(test);
-                                                    TextView idName = (TextView) findViewById(R.id.idNameToValidate);
-                                                    idName.setText(test2);
+//                                                    TextView challName = (TextView) findViewById(R.id.challengeNameToValidate);
+//                                                    challName.setText(test);
+//                                                    TextView idName = (TextView) findViewById(R.id.idNameToValidate);
+//                                                    idName.setText(test2);
 //                                                    TextView teseeeet = (TextView) findViewById(R.id.challengename2);
 //                                                    teseeeet.setText(test3);
 //                                                    TextView tezqtezt = (TextView) findViewById(R.id.idname2);
@@ -176,45 +170,30 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                                                     final ValidateAdapter myAdapter = new ValidateAdapter(getApplicationContext(), mapChallengeToValidate);
                                                     ListView listview = (ListView) findViewById(R.id.listView);
                                                     listview.setAdapter(myAdapter);
-
-
-
                                                 }
-
                                                 @Override
                                                 public void onCancelled(DatabaseError databaseError) {
-
                                                 }
                                             });
                                         }
                                         i++;
                                     }
-
                                 }
-
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
-
                                 }
                             });
                         }
-
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-
     }
 
     @Override

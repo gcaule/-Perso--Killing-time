@@ -39,7 +39,8 @@ import com.google.firebase.storage.StorageReference;
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private String mUserId, mUser_quest, mUser_name, mQuest_description, mQuest_name, mUser_indice,
-            mName_challenge, mDiff_challenge, mHint_challenge, mKey_challenge, mCreatorId, mQuestId;
+            mName_challenge, mDiff_challenge, mHint_challenge, mKey_challenge, mCreatorId, mQuestId,
+            mUser_challenge;
     ImageView imageViewAvatar;
 
     @Override
@@ -326,7 +327,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     // METHODE POUR TROUVER TOUT LES CHALLENGES
     private void searchChallenges() {
 
-
         // On recupere les données des challenges
         DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest);
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -338,8 +338,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     Challenge challenge = dsp.getValue(Challenge.class);
                     // On recupere les challenges qui correspondent a la qûete
                     // On les ajoutes au tableau
-                        mKey_challenge = dsp.getKey();
-                        mapChallenges[i] = mKey_challenge;
+                    mKey_challenge = dsp.getKey();
+                    mapChallenges[i] = mKey_challenge;
 
                     i++;
                 }
@@ -364,8 +364,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         mapChallengesDone[i[0]] = challengeKey;
                                     }
                                     i[0]++;
-
-
                                 }
 
                                 //On parcourt les challenges dones
@@ -376,8 +374,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         mUser_challenge = mapChallenges[finalJ + 1];
                                         Toast.makeText(PlayerActivity.this, "Votre défi a été validé, vous passez au suivant !", Toast.LENGTH_SHORT).show();
                                     }
-
-
                                 }
 
                                 // On set le challenge sur la page
@@ -391,35 +387,45 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                            Challenge challenge = dataSnapshot.getValue(Challenge.class);
-                                            // On recupere les challenges qui correspondent a la qûete
+                                        Challenge challenge = dataSnapshot.getValue(Challenge.class);
+                                        // On recupere les challenges qui correspondent a la qûete
 
-                                                mKey_challenge = dataSnapshot.getKey();
-                                                mName_challenge = challenge.getChallenge_name();
-                                                Log.d(mName_challenge, "tag");
-                                                mHint_challenge = challenge.getHint_challenge();
-                                                mDiff_challenge = challenge.getChallenge_difficulty();
-                                                mCreatorId = challenge.getChallenge_creatorID();
-                                                mQuestId = challenge.getChallenge_questId();
+                                        mKey_challenge = dataSnapshot.getKey();
+                                        mName_challenge = challenge.getChallenge_name();
+                                        Log.d(mName_challenge, "tag");
+                                        mHint_challenge = challenge.getHint_challenge();
+                                        mDiff_challenge = challenge.getChallenge_difficulty();
+                                        mCreatorId = challenge.getChallenge_creatorID();
+                                        mQuestId = challenge.getChallenge_questId();
 
-                                                // On change la page dynamiquement !!
-                                                // Reference to an image file in Firebase Storage
-                                                StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
-                                                // ImageView in your Activity
-                                                final ImageView imageViewPhotoChallenge = (ImageView) findViewById(R.id.imageViewHomeJoueurToFind);
-                                                final TextView playerActivityDuration = (TextView) findViewById(R.id.textViewDifficulty);
+                                        // On change la page dynamiquement !!
+                                        // Reference to an image file in Firebase Storage
+                                        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
+                                        // ImageView in your Activity
+                                        final ImageView imageViewPhotoChallenge = (ImageView) findViewById(R.id.imageViewHomeJoueurToFind);
+                                        final TextView playerActivityDuration = (TextView) findViewById(R.id.textViewDifficulty);
 
-                        // Load the image using Glide
-                        Glide.with(getApplicationContext())
-                                .using(new FirebaseImageLoader())
-                                .load(storageReference)
-                                .skipMemoryCache(true)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .into(imageViewPhotoChallenge);
-                        textViewPlayerActivityHint.setText(mHint_challenge);
-                        playerActivityNumChallenge.setText(mName_challenge);
-                        playerActivityDuration.setText(mDiff_challenge);
-                        return;
+                                        // Load the image using Glide
+                                        Glide.with(getApplicationContext())
+                                                .using(new FirebaseImageLoader())
+                                                .load(storageReference)
+                                                .skipMemoryCache(true)
+                                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                                .into(imageViewPhotoChallenge);
+                                        textViewPlayerActivityHint.setText(mHint_challenge);
+                                        playerActivityNumChallenge.setText(mName_challenge);
+                                        playerActivityDuration.setText(mDiff_challenge);
+                                        return;
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
                     }
                 }
             }
@@ -430,7 +436,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     }
 
     // Bottom Navigation Bar
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
