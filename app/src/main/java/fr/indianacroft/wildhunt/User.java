@@ -14,6 +14,16 @@ public class User {
     private String user_indice;
     private String user_challenge;
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    private int score;
+
     public String getState() {
         return state;
     }

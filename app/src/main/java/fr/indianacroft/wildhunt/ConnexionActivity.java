@@ -103,6 +103,7 @@ public class ConnexionActivity extends AppCompatActivity {
                             user.setUser_quest(questContent);
                             user.setUser_indice("false");
                             user.setUser_createdquestID("null");
+                            user.setScore(0);
                             String userId = refUser.push().getKey();
                             refUser.child(userId).setValue(user);
 
