@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -136,11 +136,13 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             super.onBackPressed();
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -336,6 +338,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 int i = 0;
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                     Challenge challenge = dsp.getValue(Challenge.class);
+
                     // On recupere les challenges qui correspondent a la qûete
                     // On les ajoutes au tableau
                     mKey_challenge = dsp.getKey();
@@ -373,6 +376,10 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         // on passe au challenge d'indice suivant
                                         mUser_challenge = mapChallenges[finalJ + 1];
                                         Toast.makeText(PlayerActivity.this, "Votre défi a été validé, vous passez au suivant !", Toast.LENGTH_SHORT).show();
+                                        // On assigne l'ID du challenge au joueur
+                                        DatabaseReference refChallengeUser =
+                                                FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_challenge");
+                                        refChallengeUser.setValue(mUser_challenge);
                                     }
                                 }
 

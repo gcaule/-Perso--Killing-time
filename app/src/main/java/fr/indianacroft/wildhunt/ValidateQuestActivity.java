@@ -1,6 +1,5 @@
 package fr.indianacroft.wildhunt;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,16 +17,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +29,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ValidateQuestActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,7 +42,8 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
     ImageView imageViewAvatar;
     private String mUserId;
     private String mUserName;
-
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +73,8 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
         headerview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PlayerActivity.class));            }
+                startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
+            }
         });
 
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
@@ -145,28 +140,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                                                     Pair<String, String> pair = new Pair<String, String>(challengeIdToValidate, userIdToValidate);
                                                     mapChallengeToValidate.add(pair);
 
-//                                                    String test = mapChallengeToValidate.get(0).first.toString();
-//                                                    String test2 = mapChallengeToValidate.get(0).second.toString();
-////                                                    String test3 = mapChallengeToValidate.get(1).first.toString();
-////                                                    String test4 = mapChallengeToValidate.get(1).second.toString();
-//
-//                                                    TextView challName = (TextView) findViewById(R.id.challengeNameToValidate);
-//                                                    challName.setText(test);
-//                                                    TextView idName = (TextView) findViewById(R.id.idNameToValidate);
-//                                                    idName.setText(test2);
-////                                                    TextView teseeeet = (TextView) findViewById(R.id.challengename2);
-////                                                    teseeeet.setText(test3);
-////                                                    TextView tezqtezt = (TextView) findViewById(R.id.idname2);
-////                                                    tezqtezt.setText(test4);
-
-//                                                    TextView challName = (TextView) findViewById(R.id.challengeNameToValidate);
-//                                                    challName.setText(test);
-//                                                    TextView idName = (TextView) findViewById(R.id.idNameToValidate);
-//                                                    idName.setText(test2);
-//                                                    TextView teseeeet = (TextView) findViewById(R.id.challengename2);
-//                                                    teseeeet.setText(test3);
-//                                                    TextView tezqtezt = (TextView) findViewById(R.id.idname2);
-//                                                    tezqtezt.setText(test4);
                                                     final ValidateAdapter myAdapter = new ValidateAdapter(getApplicationContext(), mapChallengeToValidate);
                                                     ListView listview = (ListView) findViewById(R.id.listView);
                                                     listview.setAdapter(myAdapter);
@@ -238,7 +211,7 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
-        }  else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
