@@ -38,7 +38,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ImageView imageViewAvatar;
+
     private String mUserId;
     private String mUser_name;
     private String mUser_quest;
@@ -403,6 +403,10 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         // on passe au challenge d'indice suivant
                                         mUser_challenge = mapChallenges[finalJ + 1];
                                         Toast.makeText(PlayerActivity.this, "Votre défi a été validé, vous passez au suivant !", Toast.LENGTH_SHORT).show();
+                                        // On assigne l'ID du challenge au joueur
+                                        DatabaseReference refChallengeUser =
+                                                FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_challenge");
+                                        refChallengeUser.setValue(mUser_challenge);
                                     }
 
 
