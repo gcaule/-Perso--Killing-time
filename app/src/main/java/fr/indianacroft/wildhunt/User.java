@@ -12,6 +12,17 @@ public class User {
     private String user_quest;
     private String user_createdquestID;
     private String user_indice;
+    private String user_challenge;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    private String state;
 
     public User() {
         // Needed for firebase
@@ -26,6 +37,18 @@ public class User {
     public User(String user_createdquestID) {
         this.user_createdquestID = user_createdquestID;
     }
+
+
+
+
+    public String getUser_challenge() {
+        return user_challenge;
+    }
+
+    public void setUser_challenge(String user_challenge) {
+        this.user_challenge = user_challenge;
+    }
+
 
     public String getUser_indice() {
         return user_indice;

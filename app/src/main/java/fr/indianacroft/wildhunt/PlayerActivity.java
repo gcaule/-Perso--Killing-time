@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -33,11 +34,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import static fr.indianacroft.wildhunt.R.id.buttonHomeJoueurQuitChallenge;
-import static fr.indianacroft.wildhunt.R.id.navigation_leave;
-
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    ImageView imageViewAvatar;
     private String mUserId;
     private String mUser_name;
     private String mUser_quest;
@@ -51,7 +50,64 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     private String mKey_challenge;
     private String mCreatorId;
     private String mQuestId;
-    ImageView imageViewAvatar;
+    private String mUser_challenge;
+    // Bottom Navigation Bar
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            searchUser();
+//            searchQuest();
+//            searcChallenges();
+//            final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
+//            boolean isClicked = false;
+            final DatabaseReference refUser =
+                    FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
+
+            switch (item.getItemId()) {
+                case R.id.navigation_validate:
+//                    item.setCheckable(false);
+//                    Button buttonSendSolution = (Button) findViewById(R.id.buttonHomeJoueurSendSolution);
+//                    buttonSendSolution.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
+//                                Intent intent = new Intent(getApplicationContext(), HomeJoueur_PlayerPopUp.class);
+//                                intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
+//                                startActivity(intent);
+//                            }
+//                            else{
+//                                Toast.makeText(getApplicationContext(), R.string.error_noquest, Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
+                    return true;
+                case R.id.navigation_hint:
+//                    item.setCheckable(false);
+//                    buttonHint.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+                    //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
+//                            if (mUser_indice.equalsIgnoreCase("false")) {
+//                                if (!isClicked) {
+//                                    isClicked = true;
+//                                    Toast.makeText(getApplicationContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
+//                                } else if (isClicked) {
+//                                    textViewPlayerActivityHint.setVisibility(View.VISIBLE);
+////                                    buttonHint.setBackgroundColor(Color.RED);
+//                                    refUser.child("user_indice").setValue("true");
+//                                }
+//                            }
+//                        }
+//                    });
+                    return true;
+                case R.id.navigation_leave:
+//                    item.setCheckable(false);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,14 +172,13 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         navigation_validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
+                if (!mUser_quest.equals("Pas de qûete pour l'instant")) {
                     Intent intent = new Intent(getApplicationContext(), PlayerActivity_PopUp.class);
                     intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
                     intent.putExtra("mCreatorId", mCreatorId);
                     intent.putExtra("mQuestId", mQuestId);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), R.string.error_noquest, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -157,11 +212,13 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             super.onBackPressed();
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -173,7 +230,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.nav_play) {
             Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
             startActivity(intent);
-        }else if (id == R.id.nav_lobby) {
+        } else if (id == R.id.nav_lobby) {
             Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_create) {
@@ -203,8 +260,11 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 mUser_name = user.getUser_name();
-                mUser_quest = user.getUser_quest();
+                mUser_quest = user.getUser_quest(); // on recupere la quete dans laquelle il est actuellement
                 mUser_indice = user.getUser_indice();
+                mUser_challenge = user.getUser_challenge(); // on recupere le challenge dans lequel il est actuellement
+
+
                 Log.d("indice", mUser_indice);
 
                 // Indice a montrer si indice déja utilisé c'est a dire True dans la bdd
@@ -221,45 +281,45 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 View navigation_leave = findViewById(R.id.navigation_leave);
                 navigation_leave.setOnClickListener(new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View view) {
-                            AlertDialog.Builder builder;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                builder = new AlertDialog.Builder(PlayerActivity.this, R.style.MyDialog);
-                            } else {
-                                builder = new AlertDialog.Builder(PlayerActivity.this);
-                            }
-                            builder.setTitle("Supprimer la partie")
-                                    .setMessage("Etes vous sur de vouloir abandonner la partie")
-                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
-                                                Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
-                                                intent.putExtra("mChallengeKey", mKey_challenge);
-                                                startActivity(intent);
-                                            }
-                                        }
-                                    })
-                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    })
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .show();
-
-
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(PlayerActivity.this, R.style.MyDialog);
+                        } else {
+                            builder = new AlertDialog.Builder(PlayerActivity.this);
                         }
-                    });
+                        builder.setTitle("Supprimer la partie")
+                                .setMessage("Etes vous sur de vouloir abandonner la partie")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (!mUser_quest.equals("Pas de qûete pour l'instant")) {
+                                            Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
+                                            intent.putExtra("mChallengeKey", mKey_challenge);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
 
 
+                    }
+                });
 
-                        // Indice au clic
-                        // TODO enlever les points au clic de l'indice
-                        View navigation_hint = findViewById(R.id.navigation_hint);
+
+                // Indice au clic
+                // TODO enlever les points au clic de l'indice
+                View navigation_hint = findViewById(R.id.navigation_hint);
                 navigation_hint.setOnClickListener(new View.OnClickListener() {
                     boolean isClicked = false;
+
                     @Override
                     public void onClick(View v) {
                         //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
@@ -296,6 +356,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 //                    }
 //                });
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -321,125 +382,147 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 
                         final TextView playerActivityQuestName = (TextView) findViewById(R.id.playerActivityNameQuestTitle);
                         playerActivityQuestName.setText(mQuest_name);
-                        searcChallenges();
+                        searchChallenges();
                         return;
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
 
-    // METHODE POUR TROUVER CHALLENGE
-    private void searcChallenges() {
-        final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
+    // METHODE POUR TROUVER TOUT LES CHALLENGES
+    private void searchChallenges() {
 
-        final Button playerActivityNumChallenge = (Button) findViewById(R.id.playerActivityNumChallenge);
 
         // On recupere les données des challenges
         DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest);
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                final String[] mapChallenges = new String[((int) dataSnapshot.getChildrenCount())];
+                int i = 0;
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                     Challenge challenge = dsp.getValue(Challenge.class);
+
                     // On recupere les challenges qui correspondent a la qûete
-                    if (challenge.getChallenge_questId().equals(mUser_quest)) {
+                    // On les ajoutes au tableau
+
                         mKey_challenge = dsp.getKey();
-                        mName_challenge = challenge.getChallenge_name();
-                        Log.d(mName_challenge, "tag");
-                        mHint_challenge = challenge.getHint_challenge();
-                        mDiff_challenge = challenge.getChallenge_difficulty();
-                        mCreatorId = challenge.getChallenge_creatorID();
-                        mQuestId = challenge.getChallenge_questId();
+                        mapChallenges[i] = mKey_challenge;
 
-                        // On change la page dynamiquement !!
-                        // Reference to an image file in Firebase Storage
-                        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
-                        // ImageView in your Activity
-                        final ImageView imageViewPhotoChallenge = (ImageView) findViewById(R.id.imageViewHomeJoueurToFind);
-                        final TextView playerActivityDuration = (TextView) findViewById(R.id.textViewDifficulty);
+                    i++;
+                }
+                // Si le challenge dans le tableau correspond au challenge en cours du joueur
+                for (int j = 0; j < mapChallenges.length; j++) {
+                    if (mapChallenges[j].equals(mUser_challenge)) {
+
+                        // On verifie si ce challenge n'est pas dans le tableau des dones
+                        final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("User").child(mUserId);
+                        final int finalJ = j;
+                        refUser.child("challenge_done").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // Tableau des challenges dones
+                                final String[] mapChallengesDone = new String[((int) dataSnapshot.getChildrenCount())];
+                                final int[] i = {0};
+                                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                                    final String challengeKey = dsp.getKey();
+                                    User checkDone = dsp.getValue(User.class);
+                                    String check = checkDone.getState();
+                                    if (check.equals("true")) {
+                                        mapChallengesDone[i[0]] = challengeKey;
+                                    }
+                                    i[0]++;
 
 
-                        // Load the image using Glide
-                        Glide.with(getApplicationContext())
-                                .using(new FirebaseImageLoader())
-                                .load(storageReference)
-                                .skipMemoryCache(true)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .into(imageViewPhotoChallenge);
-                        textViewPlayerActivityHint.setText(mHint_challenge);
-                        playerActivityNumChallenge.setText(mName_challenge);
-                        playerActivityDuration.setText(mDiff_challenge);
-                        return;
+                                }
+
+                                //On parcourt les challenges dones
+                                for (int h = 0; h < mapChallengesDone.length; h++) {
+                                    if (mapChallenges[finalJ].equals(mapChallengesDone[h])) {
+                                        // Si le challenge actuel correspond a un challenge done
+                                        // on passe au challenge d'indice suivant
+                                        mUser_challenge = mapChallenges[finalJ + 1];
+                                        Toast.makeText(PlayerActivity.this, "Votre défi a été validé, vous passez au suivant !", Toast.LENGTH_SHORT).show();
+                                    }
+
+
+                                }
+
+                                // On set le challenge sur la page
+                                final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
+
+                                final Button playerActivityNumChallenge = (Button) findViewById(R.id.playerActivityNumChallenge);
+
+                                // On recupere les données des challenges
+                                DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest).child(mUser_challenge);
+                                refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                            Challenge challenge = dataSnapshot.getValue(Challenge.class);
+                                            // On recupere les challenges qui correspondent a la qûete
+
+                                                mKey_challenge = dataSnapshot.getKey();
+                                                mName_challenge = challenge.getChallenge_name();
+                                                Log.d(mName_challenge, "tag");
+                                                mHint_challenge = challenge.getHint_challenge();
+                                                mDiff_challenge = challenge.getChallenge_difficulty();
+                                                mCreatorId = challenge.getChallenge_creatorID();
+                                                mQuestId = challenge.getChallenge_questId();
+
+                                                // On change la page dynamiquement !!
+                                                // Reference to an image file in Firebase Storage
+                                                StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
+                                                // ImageView in your Activity
+                                                final ImageView imageViewPhotoChallenge = (ImageView) findViewById(R.id.imageViewHomeJoueurToFind);
+                                                final TextView playerActivityDuration = (TextView) findViewById(R.id.textViewDifficulty);
+
+
+                                                // Load the image using Glide
+                                                Glide.with(getApplicationContext())
+                                                        .using(new FirebaseImageLoader())
+                                                        .load(storageReference)
+                                                        .skipMemoryCache(true)
+                                                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                                        .into(imageViewPhotoChallenge);
+                                                textViewPlayerActivityHint.setText(mHint_challenge);
+                                                playerActivityNumChallenge.setText(mName_challenge);
+                                                playerActivityDuration.setText(mDiff_challenge);
+
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
                     }
+
+
                 }
             }
+
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
-
-    // Bottom Navigation Bar
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            searchUser();
-//            searchQuest();
-//            searcChallenges();
-//            final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
-//            boolean isClicked = false;
-            final DatabaseReference refUser =
-                    FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
-
-            switch (item.getItemId()) {
-                case R.id.navigation_validate:
-//                    item.setCheckable(false);
-//                    Button buttonSendSolution = (Button) findViewById(R.id.buttonHomeJoueurSendSolution);
-//                    buttonSendSolution.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
-//                                Intent intent = new Intent(getApplicationContext(), HomeJoueur_PlayerPopUp.class);
-//                                intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
-//                                startActivity(intent);
-//                            }
-//                            else{
-//                                Toast.makeText(getApplicationContext(), R.string.error_noquest, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-                    return true;
-                case R.id.navigation_hint:
-//                    item.setCheckable(false);
-//                    buttonHint.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-                            //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
-//                            if (mUser_indice.equalsIgnoreCase("false")) {
-//                                if (!isClicked) {
-//                                    isClicked = true;
-//                                    Toast.makeText(getApplicationContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
-//                                } else if (isClicked) {
-//                                    textViewPlayerActivityHint.setVisibility(View.VISIBLE);
-////                                    buttonHint.setBackgroundColor(Color.RED);
-//                                    refUser.child("user_indice").setValue("true");
-//                                }
-//                            }
-//                        }
-//                    });
-                    return true;
-                case R.id.navigation_leave:
-//                    item.setCheckable(false);
-                    return true;
-            }
-            return false;
-        }
-    };
 //    public static class BottomNavigationViewHelper {
 //        public static void disableShiftMode(BottomNavigationView view) {
 //            BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);

@@ -258,7 +258,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                                         ref.child("User").child(mUserId).child("aValider").child(mUser_quest).child(challengeId).child(userId).setValue(true);
 
                                         // Modifier le champ dans le user Player pour mettre le challenge en done !
-                                        ref.child("User").child(userId).child("challenge_done").child(challengeId).setValue(true);
+                                        ref.child("User").child(userId).child("challenge_done").child(challengeId).child("state").setValue("true");
 
                                         // On retourne a la page de correction
                                         startActivity(new Intent(getApplicationContext(), ValidateQuestActivity.class));
