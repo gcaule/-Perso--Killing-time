@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -15,8 +14,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,7 +27,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,6 +55,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
     int PICK_IMAGE_REQUEST = 111, REQUEST_IMAGE_CAPTURE = 1;
     Uri filePath;
     ProgressDialog progressDialog;
+    private String mUserId, mCreatedQuestId, mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +67,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         mCreatedQuestId = sharedPreferences.getString("mCreatedQuest", "");
         Log.d("key", mUserId);
-        searchUser();
+
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -184,6 +181,24 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         ref = FirebaseDatabase.getInstance();
         childRef = ref.getReference("Challenge");
 
+        DatabaseReference refUser =
+                FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
+        refUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                mCreatedQuestId = user.getUser_createdquestID();
+                mUserName = user.getUser_name();
+
+                //StorageReference strRef = FirebaseStorage.getInstance().getReference("Quest").child(mCreatedQuestId).child(challengeId);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        //ON CLICK
         butCreateChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -300,6 +315,11 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                     challenge.setHint_challenge(hintContent);
                     challenge.setChallenge_difficulty(spinnerContent);
                     childRef.child(mCreatedQuestId).child(challengeId).setValue(challenge);
+                    childRef.child(mCreatedQuestId).child(challengeId).child("challenge_questId").setValue(mCreatedQuestId);
+                    childRef.child(mCreatedQuestId).child(challengeId).child("challenge_creatorID").setValue(mUserId);
+                    childRef.child(mCreatedQuestId).child(challengeId).child("challenge_creatorname").setValue(mUserName);
+                    //TODO A MODIFIER PAR VALENTIN
+                    //childRef.child(challengeId).child("challenge_nbrePoints").setValue(LA VALEUR INT DU SPINNER);
                     name_challenge.setText("");
                     hint_challenge.setText("");
                     startActivity(new Intent(getApplicationContext(), ChallengesActivity.class));
@@ -349,7 +369,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_lobby) {
             Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
             startActivity(intent);
-        }else if (id == R.id.nav_create) {
+        } else if (id == R.id.nav_create) {
             startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
