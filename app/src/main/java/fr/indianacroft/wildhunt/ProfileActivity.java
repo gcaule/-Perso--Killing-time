@@ -22,6 +22,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -84,6 +89,25 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 startActivity(intent);
             }
         });
+
+
+        // pour afficher le score
+
+        FirebaseDatabase ref = FirebaseDatabase.getInstance();
+        DatabaseReference refScore = ref.getReference("User").child(mUserId);
+        refScore.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                int score = user.getScore();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         // Drop Image from Firebase to upload it on Profil page
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();

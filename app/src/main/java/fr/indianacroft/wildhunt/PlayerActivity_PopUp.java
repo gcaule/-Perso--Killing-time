@@ -44,6 +44,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
     private String mCreatorId;
     private String mQuestId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +100,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
         // On recupere la quete crée par l'user actuel pour link challenge a la quête
-        DatabaseReference refUser =
+        final DatabaseReference refUser =
                 FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
         refUser.addValueEventListener(new ValueEventListener() {
             @Override
@@ -128,6 +129,10 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
         butSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Modifier le champ dans le user Player pour mettre le challenge en done !
+               refUser.child("challenge_done").child(mChallengeId).child("state").setValue("true");
+
             // Upload photos on Firebase
             if (filePath != null) {
                 progressDialog.show();

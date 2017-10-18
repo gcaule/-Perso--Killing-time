@@ -75,16 +75,16 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
         // Join quest
         mJoinPartyLobby.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
             //TODO directement recuperer l'ID de la quete selectionnée
             // je recupere le nom de la quete selectionné
             final String quest_name = mNamePartyLobby.getText().toString();
 
             // Get name of created quest
-            DatabaseReference caca = FirebaseDatabase.getInstance().getReference();
-            DatabaseReference cacamoisi = caca.child("User").child(mUserId).child("user_createdquestName");
+            DatabaseReference data1 = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference data2 = data1.child("User").child(mUserId).child("user_createdquestName");
             // Compare quest created to quest_name
-            cacamoisi.addListenerForSingleValueEvent(new ValueEventListener() {
+            data2.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String userCreatedQuestName = dataSnapshot.getValue(String.class);
@@ -113,6 +113,9 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                                                 DatabaseReference refChallengeUser =
                                                         FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_challenge");
                                                 refChallengeUser.setValue(challengeKey);
+
+                                                Intent intent = new Intent(view.getContext(), PlayerActivity.class);
+                                                view.getContext().startActivity(intent);
                                                 return;
                                             }
                                         }
@@ -132,13 +135,14 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                             public void onCancelled(DatabaseError databaseError) {
                             }
                         });
+
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
-            Intent intent = new Intent(view.getContext(), PlayerActivity.class);
-            view.getContext().startActivity(intent);
+
             }
         });
 

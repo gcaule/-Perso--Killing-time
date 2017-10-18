@@ -223,6 +223,10 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
 
                                     public void onClick(DialogInterface dialog, int which) {
                                         Toast.makeText(ChallengeToValidateActivity.this, "Défi refusé!", Toast.LENGTH_SHORT).show();
+                                        // Modifier le champ dans le user Creator pour le mettre en true !
+                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                        ref.child("User").child(mUserId).child("aValider").child(mUser_quest).child(challengeId).child(userId).setValue(null);
+
                                         startActivity(new Intent(getApplicationContext(), ValidateQuestActivity.class));
                                     }
                                 })
@@ -263,7 +267,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                                         ref.child("User").child(mUserId).child("aValider").child(mUser_quest).child(challengeId).child(userId).setValue(true);
 
                                         // Modifier le champ dans le user Player pour mettre le challenge en done !
-                                        ref.child("User").child(userId).child("challenge_done").child(challengeId).child("state").setValue("true");
+                                        //ref.child("User").child(userId).child("challenge_done").child(challengeId).child("state").setValue("true");
 
                                         // On update son score !!
                                         if (mUser_indice.equals("true")) {

@@ -13,25 +13,7 @@ public class User {
     private String user_createdquestID;
     private String user_indice;
     private String user_challenge;
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     private int score;
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
     private String state;
 
     public User() {
@@ -48,8 +30,21 @@ public class User {
         this.user_createdquestID = user_createdquestID;
     }
 
+    public int getScore() {
+        return score;
+    }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public String getUser_challenge() {
         return user_challenge;

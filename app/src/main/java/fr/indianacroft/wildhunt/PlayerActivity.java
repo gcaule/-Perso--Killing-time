@@ -306,23 +306,23 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     // METHODE POUR TROUVER QUETE
     private void searchQuest() {
         //On recupere toutes les données de la quete de l'user
-        final DatabaseReference refUserQuest = FirebaseDatabase.getInstance().getReference().child("Quest");
+        final DatabaseReference refUserQuest = FirebaseDatabase.getInstance().getReference().child("Quest").child(mUser_quest);
         refUserQuest.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    Quest quest = dsp.getValue(Quest.class);
+
+                    Quest quest = dataSnapshot.getValue(Quest.class);
                     // On recupere la qûete liée a un user
-                    if (mUser_quest.equals(dsp.getKey())) {
-                        mQuest_name = quest.getQuest_name();
-                        Log.d(mQuest_name, "quest");
-                        mQuest_description = quest.getQuest_description();
-                        final TextView playerActivityQuestName = (TextView) findViewById(R.id.playerActivityNameQuestTitle);
-                        playerActivityQuestName.setText(mQuest_name);
-                        searchChallenges();
-                        return;
-                    }
-                }
+                        if (quest != null) {
+                            mQuest_name = quest.getQuest_name();
+                            Log.d(mQuest_name, "quest");
+                            mQuest_description = quest.getQuest_description();
+                            final TextView playerActivityQuestName = (TextView) findViewById(R.id.playerActivityNameQuestTitle);
+                            playerActivityQuestName.setText(mQuest_name);
+                            searchChallenges();
+                        }
+
+
             }
 
             @Override
@@ -346,8 +346,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 
                     // On recupere les challenges qui correspondent a la qûete
                     // On les ajoutes au tableau
-                    mKey_challenge = dsp.getKey();
-                    mapChallenges[i] = mKey_challenge;
+                    mapChallenges[i] = dsp.getKey();
 
                     i++;
                 }
@@ -413,14 +412,16 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                     }
                                 }
 
+
                                 // On set le challenge sur la page
                                 final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
 
                                 final Button playerActivityNumChallenge = (Button) findViewById(R.id.playerActivityNumChallenge);
 
                                 // On recupere les données des challenges
-                                DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest).child(mUser_challenge);
-                                refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                DatabaseReference refUserChall = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest).child(mUser_challenge);
+                                refUserChall.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -461,6 +462,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                     public void onCancelled(DatabaseError databaseError) {
                                     }
                                 });
+
                             }
 
                             @Override
@@ -475,5 +477,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
     }
+
+
 }
