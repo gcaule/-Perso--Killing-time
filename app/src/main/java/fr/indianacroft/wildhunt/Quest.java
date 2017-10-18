@@ -9,6 +9,7 @@ public class Quest {
     private String quest_name;
     private String quest_description;
     private String life_duration;
+    private String quest_creatorId;
 
     //
     public Quest() {
@@ -20,6 +21,14 @@ public class Quest {
         this.quest_name = quest_name;
         this.quest_description = quest_description;
         this.life_duration = life_duration;
+    }
+
+    public String getQuest_creatorId() {
+        return quest_creatorId;
+    }
+
+    public void setQuest_creatorId(String quest_creatorId) {
+        this.quest_creatorId = quest_creatorId;
     }
 
     // Attributs
