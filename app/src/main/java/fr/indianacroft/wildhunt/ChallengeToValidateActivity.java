@@ -39,7 +39,6 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
     private String mUser_name;
     private String mUser_quest;
     private String mQuest_name;
-    private String mUser_indice;
     private String mQuest_description;
     private String mLife_duration;
     private String mName_challenge;
@@ -48,6 +47,9 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
     private String mKey_challenge;
     private String mCreatorId;
     private String mQuestId;
+    private int mUser_score;
+    private String mUser_indice;
+    private int mNbrePoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +141,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
     private void searchUser() {
 
         String userId = getIntent().getStringExtra("UserToValidate");
-        // On recupere toutes les données de l'user actuel
+        // On recupere toutes les données de l'user à valider
         final DatabaseReference refUser =
                 FirebaseDatabase.getInstance().getReference().child("User").child(userId);
         refUser.addValueEventListener(new ValueEventListener() {
@@ -148,6 +150,8 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                 User user = dataSnapshot.getValue(User.class);
                 mUser_name = user.getUser_name();
                 mUser_quest = user.getUser_quest();
+                mUser_score = user.getScore();
+                mUser_indice = user.getUser_indice();
 
                 TextView userName = (TextView) findViewById(R.id.validateUserName);
                 userName.setText(mUser_name);
@@ -175,6 +179,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Challenge challenge = dataSnapshot.getValue(Challenge.class);
                 String name = challenge.getChallenge_name();
+                mNbrePoints = challenge.getChallenge_nbrePoints();
 
                 TextView challengeName = (TextView) findViewById(R.id.validateChallenge);
                 challengeName.setText(name);
@@ -259,6 +264,13 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
 
                                         // Modifier le champ dans le user Player pour mettre le challenge en done !
                                         ref.child("User").child(userId).child("challenge_done").child(challengeId).child("state").setValue("true");
+
+                                        // On update son score !!
+                                        if (mUser_indice.equals("true")) {
+                                            mNbrePoints = mNbrePoints / 2;
+                                        }
+                                        mNbrePoints = mUser_score + mNbrePoints;
+                                        ref.child("User").child(userId).child("score").setValue(mNbrePoints);
 
                                         // On retourne a la page de correction
                                         startActivity(new Intent(getApplicationContext(), ValidateQuestActivity.class));

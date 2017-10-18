@@ -400,13 +400,13 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 
                                             refUser.child("User").child(mUserId).child("user_challenge").setValue(mUser_challenge);
                                             refUser.child("User").child(mUserId).child("user_indice").setValue("false");
-                                            break;
+                                            return;
                                         } else {
                                             Toast.makeText(PlayerActivity.this, "Bravo vous avez terminé tout les défis ! Redirection en cours", Toast.LENGTH_SHORT).show();
                                             refUser.child("User").child(mUserId).child("user_challenge").setValue("null");
                                             refUser.child("User").child(mUserId).child("user_quest").setValue("Pas de qûete pour l'instant");
                                             startActivity(new Intent(getApplicationContext(), LobbyActivity.class));
-                                            break;
+                                            return;
 
                                         }
 
