@@ -135,6 +135,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
 
         // On affiche la description de la party / quete au clic sur sa ligne.
         // Au clic sur une autre ligne ferme les descriptions ouvert avant.
+
         LobbyViewHolder.setOnClickListener(new LobbyViewHolder.ClickListener() {
             @Override
             public void onItemClick(View view, int position) {
