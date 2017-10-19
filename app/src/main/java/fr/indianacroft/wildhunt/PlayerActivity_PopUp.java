@@ -34,8 +34,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
-import static fr.indianacroft.wildhunt.Notification.sendNotification;
-
 public class PlayerActivity_PopUp extends AppCompatActivity {
     int PICK_IMAGE_REQUEST = 111;
     int REQUEST_IMAGE_CAPTURE = 1;
@@ -138,38 +136,29 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
 
 
 
+                // TEST DE NOTIFS
 
-
-
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                final DatabaseReference refCreatorId = database.getReference("Quest");
-                refCreatorId.child(mUserQuest).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        Quest quest = dataSnapshot.getValue(Quest.class);
-                        String user_creatorId = quest.getQuest_creatorId();
-
-                        // Test Notifs
-                        sendNotification(
-                                user_creatorId, //receiver_id, /*who the notification is meant for*/
-                                "Chat message from John Duff", /*Message to be displayed on the notification*/
-                                "New chat message", /*Message title*/
-                                "chat_view" /*Notification type, You can use this to determine what activities to stack when the receiver clicks on the notification item*/
-                        );
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                    }
-                });
-
-
-
-
-
-
-
-
+//                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                final DatabaseReference refCreatorId = database.getReference("Quest");
+//                refCreatorId.child(mUserQuest).addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                        Quest quest = dataSnapshot.getValue(Quest.class);
+//                        String user_creatorId = quest.getQuest_creatorId();
+//
+//                        // Test Notifs
+//                        Utilities.sendNotification(
+//                                user_creatorId, //receiver_id, /*who the notification is meant for*/
+//                                "Chat message from John Duff", /*Message to be displayed on the notification*/
+//                                "New chat message", /*Message title*/
+//                                "chat_view" /*Notification type, You can use this to determine what activities to stack when the receiver clicks on the notification item*/
+//                        );
+//                    }
+//                    @Override
+//                    public void onCancelled(DatabaseError error) {
+//                    }
+//                });
 
             // Upload photos on Firebase
             if (filePath != null) {
