@@ -41,10 +41,10 @@ public class ConnexionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connexion);
 
         // Musique
-        mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.suspense_music);
-        mMediaPlayer.setLooping(true);
-        mMediaPlayer.setVolume(100,100);
-        mMediaPlayer.start();
+//        mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.suspense_music);
+//        mMediaPlayer.setLooping(true);
+//        mMediaPlayer.setVolume(100,100);
+//        mMediaPlayer.start();
 
 
         final EditText editTextUserName = (EditText) findViewById(R.id.connexionUserName);
