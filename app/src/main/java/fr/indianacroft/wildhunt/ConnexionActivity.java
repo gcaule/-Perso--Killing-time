@@ -1,5 +1,6 @@
 package fr.indianacroft.wildhunt;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -11,7 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -56,6 +57,7 @@ public class ConnexionActivity extends AppCompatActivity {
         final String sharedPrefUserName = sharedpreferences.getString(userName, "");
         final String sharedPrefUserPassword = sharedpreferences.getString(userPassword, "");
         final String sharedPrefUserKey = sharedpreferences.getString(mUserId, "");
+        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
 
         //On rempli les editText avec les sharedPreferences si c'est pas notre premiere connexion
         if (!sharedPrefUserName.isEmpty() && !sharedPrefUserPassword.isEmpty()) {
@@ -67,6 +69,26 @@ public class ConnexionActivity extends AppCompatActivity {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                final ProgressDialog progressDialog = new ProgressDialog(ConnexionActivity.this);
+//                progressDialog.setMessage("Chargement..."); // Setting Message
+//                progressDialog.setTitle("ProgressDialog"); // Setting Title
+//                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+//                progressDialog.show(); // Display Progress Dialog
+//                progressDialog.setCancelable(false);
+//                new Thread(new Runnable() {
+//                    public void run() {
+//                        try {
+//                            Thread.sleep(10000);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        progressDialog.dismiss();
+//                    }
+//                }).start();
+
+
+                simpleProgressBar.setVisibility(View.VISIBLE);
 
                 //On recupere le contenu des edit text
                 final String userNameContent = editTextUserName.getText().toString();
@@ -109,13 +131,13 @@ public class ConnexionActivity extends AppCompatActivity {
                                                     // Direct to Lobby if user is known & does not have quest
                                                     Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
                                                     startActivity(intent);
-                                                }
-                                                else {
+                                                } else {
                                                     // Direct to his quest if user is known & has a quest
                                                     Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
                                                     startActivity(intent);
                                                 }
                                             }
+
                                             @Override
                                             public void onCancelled(DatabaseError databaseError) {
                                             }
@@ -154,25 +176,28 @@ public class ConnexionActivity extends AppCompatActivity {
                         }
 
                         // Encryptage du mot de passe
-                        public String mEncrypt(String userPassword,String key){
-                            try
-                            {
-                                Key clef = new SecretKeySpec(key.getBytes("ISO-8859-2"),"Blowfish");
-                                Cipher cipher= Cipher.getInstance("Blowfish");
-                                cipher.init(Cipher.ENCRYPT_MODE,clef);
+                        public String mEncrypt(String userPassword, String key) {
+                            try {
+                                Key clef = new SecretKeySpec(key.getBytes("ISO-8859-2"), "Blowfish");
+                                Cipher cipher = Cipher.getInstance("Blowfish");
+                                cipher.init(Cipher.ENCRYPT_MODE, clef);
                                 return new String(cipher.doFinal(userPassword.getBytes()));
                             } catch (Exception e) {
                                 return null;
                             }
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
                         }
                     });
                 }
+
             }
+
         });
+
     }
 
 //    @Override

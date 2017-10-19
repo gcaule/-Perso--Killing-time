@@ -135,5 +135,7 @@
     <string name="refuse">Refuser</string>
     <string name="accept">Accepter</string>
     <string name="solution">Solution</string>
+    <string name="partie">Abandon partie?</string>
+    <string name="defi">Anbandon defi?</string>
 
 </resources>
