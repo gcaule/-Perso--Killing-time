@@ -11,17 +11,19 @@ public class Challenge {
     private String hint_challenge;
     private String challenge_creatorID;
     private String challenge_questId;
+    private int challenge_nbrePoints;
 
-    public Challenge(String challenge_name, String challenge_difficulty, String hint_challenge, String challenge_creatorID, String challenge_questId) {
+    public Challenge(String challenge_name, String challenge_difficulty, String hint_challenge, String challenge_creatorID, String challenge_questId, int challenge_nbrePoints) {
         this.challenge_name = challenge_name;
         this.challenge_difficulty = challenge_difficulty;
         this.hint_challenge = hint_challenge;
         this.challenge_creatorID = challenge_creatorID;
         this.challenge_questId = challenge_questId;
+        this.challenge_nbrePoints = challenge_nbrePoints;
     }
 
     public Challenge() {
-        // Needed for Firebase
+// Needed for Firebase
     }
 
     public String getChallenge_name() {
@@ -64,5 +66,11 @@ public class Challenge {
         this.challenge_questId = challenge_questId;
     }
 
+    public int getChallenge_nbrePoints() {
+        return challenge_nbrePoints;
+    }
 
+    public void setChallenge_nbrePoints(int challenge_nbrePoints) {
+        this.challenge_nbrePoints = challenge_nbrePoints;
+    }
 }

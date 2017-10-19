@@ -7,14 +7,17 @@ import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +38,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class LobbyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String mUserId;
+//    private String mUserId;
     private String mUser_name;
     private String mUser_quest;
     private String mQuest_name;
@@ -46,7 +49,9 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
     private String mDiff_challenge;
     private String mHint_challenge;
     private String mKey_challenge;
-    ImageView imageViewAvatar;
+    ImageView imageViewAvatar, imageViewTest;
+    private String mUserId, mCreatedQuestId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,12 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        View headerview = navigationView.getHeaderView(0);
+        headerview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PlayerActivity.class));            }
+        });
 
         // Avatar
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
@@ -81,18 +92,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
             }
         });
-
-//        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-//        // Load the image using Glide
-//        if (storageReference.getDownloadUrl().isSuccessful()){
-//            Glide.with(getApplicationContext())
-//                    .using(new FirebaseImageLoader())
-//                    .load(storageReference)
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .into(imageViewAvatar);
-//        }
 
         // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
         searchUser();
@@ -115,6 +114,11 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
             }
         };
 
+//        int position = 0;
+//        if (position == recyclerViewLobby.getChildCount() - 1) {
+//            recyclerViewLobby.smoothScrollToPosition(position);
+//        }
+
         // Set the adapter avec les données et la ligne de separation
         recyclerViewLobby.addItemDecoration(new LobbyActivity.SimpleDividerItemDecoration(this));
         recyclerViewLobby.setAdapter(mAdapter);
@@ -131,6 +135,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
 
         // On affiche la description de la party / quete au clic sur sa ligne.
         // Au clic sur une autre ligne ferme les descriptions ouvert avant.
+
         LobbyViewHolder.setOnClickListener(new LobbyViewHolder.ClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -220,12 +225,32 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
+        }  else if (id == R.id.nav_share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.nav_share);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        return true;
+    }
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
     }
 
     // METHODE POUR TROUVER USER

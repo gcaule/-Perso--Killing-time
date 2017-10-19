@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_refuse"
+        android:icon="@drawable/cancel1"
+        android:title="@string/refuse" />
+
+    <item
+        android:id="@+id/navigation_solution"
+        android:icon="@drawable/hint"
+        android:title="@string/solution" />
+
+    <item
+        android:id="@+id/navigation_accept"
+        android:icon="@drawable/checked1"
+        android:title="@string/accept" />
+
+</menu>

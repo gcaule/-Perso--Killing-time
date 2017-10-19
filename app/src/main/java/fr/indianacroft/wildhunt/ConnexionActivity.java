@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -40,10 +41,10 @@ public class ConnexionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connexion);
 
         // Musique
-        mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.suspense_music);
-        mMediaPlayer.setLooping(true);
-        mMediaPlayer.setVolume(100,100);
-        mMediaPlayer.start();
+//        mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.suspense_music);
+//        mMediaPlayer.setLooping(true);
+//        mMediaPlayer.setVolume(100,100);
+//        mMediaPlayer.start();
 
 
         final EditText editTextUserName = (EditText) findViewById(R.id.connexionUserName);
@@ -62,19 +63,20 @@ public class ConnexionActivity extends AppCompatActivity {
             editTextUserPassword.setText(sharedPrefUserPassword);
         }
 
-        // Au clic du bouton, c'est la que tout se passe
+        // Au clic du bouton, c'est la que tout se passe !!!!!!!!
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //On recupere le contenu des edit text
 
+                //On recupere le contenu des edit text
                 final String userNameContent = editTextUserName.getText().toString();
                 final String userPasswordContent = editTextUserPassword.getText().toString();
-                // Toast si les champs ne sont pas rempli
+
+                // Toast si les champs ne sont pas remplis
                 if (TextUtils.isEmpty(userNameContent) || TextUtils.isEmpty(userPasswordContent)) {
                     Toast.makeText(getApplicationContext(), R.string.error_fill, Toast.LENGTH_SHORT).show();
                 } else {
-                    //On recupere tout les users
+                    // Sinon on recupere tous les users
                     final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("User");
                     refUser.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -89,34 +91,59 @@ public class ConnexionActivity extends AppCompatActivity {
 
                                         // La clé de l'utilisateur qu'on va utiliser partout dans l'application.
                                         mUserId = dsp.getKey();
-                                        // On sauvegarde dans les sharedPreferences
+                                        // On sauvegarde l'utilisateur connu dans les sharedPreferences
                                         SharedPreferences.Editor editor = sharedpreferences.edit();
                                         editor.putString(userName, userNameContent);
                                         editor.putString(userPassword, userPasswordContent);
                                         editor.putString("mUserId", mUserId);
                                         editor.apply();
-                                        startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
+
+                                        // If user is known : if he has no quest => LobbyActivity; if he has => PlayerActivity
+                                        DatabaseReference db1 = FirebaseDatabase.getInstance().getReference("User");
+                                        DatabaseReference db2 = db1.child(mUserId).child("user_quest");
+                                        db2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                String questOrNot = dataSnapshot.getValue(String.class);
+                                                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                                                    // Direct to Lobby if user is known & does not have quest
+                                                    Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
+                                                    startActivity(intent);
+                                                }
+                                                else {
+                                                    // Direct to his quest if user is known & has a quest
+                                                    Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
+                                                    startActivity(intent);
+                                                }
+                                            }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                            }
+                                        });
                                     } else {
+                                        // Si le mot de passe ou le pseudo ne concordent pas
                                         Toast.makeText(getApplicationContext(), R.string.error_password, Toast.LENGTH_SHORT).show();
                                     }
                                     return;
                                 }
                             }
 
-                            // Le compte n'existe pas, on le créer !
+                            // Utilisateur nouveau : le compte n'existe pas, on le créer !
                             String questContent = "Pas de qûete pour l'instant";
                             User user = new User(userNameContent, userPasswordContent, questContent);
                             user.setUser_name(userNameContent);
                             user.setUser_password(mEncrypt(userPasswordContent, "AES"));
                             user.setUser_quest(questContent);
                             user.setUser_indice("false");
+                            user.setUser_createdquestID("null");
+                            user.setScore(0);
                             String userId = refUser.push().getKey();
                             refUser.child(userId).setValue(user);
 
                             // La clé de l'utilisateur qu'on va utiliser partout dans l'application.
                             mUserId = userId;
 
-                            //On enregistre dans les shared Preferences
+                            // On enregistre dans les shared Preferences
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.putString(userName, userNameContent);
                             editor.putString(userPassword, userPasswordContent);
@@ -126,17 +153,18 @@ public class ConnexionActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), RulesActivity.class));
                         }
 
-                        public String mEncrypt(String userPassword, String key) {
-                            try {
-                                Key clef = new SecretKeySpec(key.getBytes("ISO-8859-2"), "Blowfish");
-                                Cipher cipher = Cipher.getInstance("Blowfish");
-                                cipher.init(Cipher.ENCRYPT_MODE, clef);
+                        // Encryptage du mot de passe
+                        public String mEncrypt(String userPassword,String key){
+                            try
+                            {
+                                Key clef = new SecretKeySpec(key.getBytes("ISO-8859-2"),"Blowfish");
+                                Cipher cipher= Cipher.getInstance("Blowfish");
+                                cipher.init(Cipher.ENCRYPT_MODE,clef);
                                 return new String(cipher.doFinal(userPassword.getBytes()));
                             } catch (Exception e) {
                                 return null;
                             }
                         }
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 

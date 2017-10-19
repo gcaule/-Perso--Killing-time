@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    android:background="@color/colorBackground">
+    android:background="@drawable/backgroundtest2">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -44,7 +44,7 @@
                     android:layout_weight="1"
                     android:fontFamily="casual"
                     android:gravity="center"
-                    android:text="@string/profil"
+                    android:text="@string/mes_d_fis_valider"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
@@ -53,13 +53,35 @@
                     android:id="@+id/imageViewAvatar"
                     android:layout_width="66dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/man"
+                    android:src="@drawable/pirate_head"
                     android:layout_gravity="end"
                     android:padding="5dp"/>
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+        <LinearLayout
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteY="25dp"
+            tools:layout_editor_absoluteX="8dp">
 
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/layout_colors2"
+                android:text="@string/challenge"/>
+
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/layout_colors2"
+                android:text="Nom du joueur" />
+
+        </LinearLayout>
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -67,18 +89,30 @@
             tools:layout_editor_absoluteY="64dp"
             tools:layout_editor_absoluteX="0dp">
 
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginRight="8dp"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="98dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginEnd="8dp"></ListView>
+
         </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 
-   <android.support.design.widget.NavigationView
-       android:id="@+id/nav_view"
-       android:layout_width="wrap_content"
-       android:layout_height="match_parent"
-       android:layout_gravity="start"
-       android:fitsSystemWindows="true"
-       app:headerLayout="@layout/nav_header_main"
-       app:menu="@menu/activity_main_drawer" />
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
 

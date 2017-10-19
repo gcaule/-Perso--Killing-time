@@ -66,5 +66,9 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorBlue</item>
     </style>
-
+    <!--<style name="myImageView">-->
+        <!--<item name="android:padding">5dp</item>-->
+        <!--<item name="android:background">@drawable/layout_colors2</item>-->
+        <!--<item name="android:scaleType">fitCenter</item>-->
+    <!--</style>-->
 </resources>

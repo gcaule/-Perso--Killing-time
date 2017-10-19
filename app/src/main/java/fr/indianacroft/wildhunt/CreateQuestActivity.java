@@ -5,12 +5,15 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -47,7 +50,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.activity_create_quest);
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
-       final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
 
@@ -65,20 +68,14 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        View headerview = navigationView.getHeaderView(0);
+        headerview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PlayerActivity.class));            }
+        });
 
         // Avatar
-        // POUR CHANGER L'AVATAR SUR LA PAGE AVEC CELUI CHOISI
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-//        final ImageView imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
-//        // Load the image using Glide
-//        if (storageReference.getDownloadUrl().isSuccessful()){
-//            Glide.with(getApplicationContext())
-//                    .using(new FirebaseImageLoader())
-//                    .load(storageReference)
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .into(imageViewAvatar);
-//        }
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,49 +102,75 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         // childRef.push().getKey() is used to generate the different key
         final String questid = ref.getReference("Quest").push().getKey();
 
+        // If user is new, can create quest, if no, can't
+        DatabaseReference db1 = FirebaseDatabase.getInstance().getReference("User");
+        DatabaseReference db2 = db1.child(mUserId).child("user_createdquestID");
+        db2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String questCreatedOrNot = dataSnapshot.getValue(String.class);
+                if (questCreatedOrNot.equals("null")) {
+                    button_create_quest.setVisibility(View.VISIBLE);
+                    butAddNewChallenge.setVisibility(View.GONE);
+                } else {
+                    button_create_quest.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
         button_create_quest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nameContent = name_quest.getText().toString();
-                String descriptionContent = description_quest.getText().toString();
+                butAddNewChallenge.setVisibility(View.VISIBLE);
+                String nameContent = name_quest.getText().toString().trim();
+                String descriptionContent = description_quest.getText().toString().trim();
                 String spinnerContent = spinner_quest.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), "Partie créée avec succès !\nAjoute des défis maintenant !", Toast.LENGTH_LONG).show();
-                //  DatabaseReference childRef = ref.getReference("form");
-                // On recupere la quete crée par l'user actuel pour link challenge a la quête
-                DatabaseReference refUser =
-                        FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
-                refUser.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.getValue(User.class);
-                        mUserName = user.getUser_name();
-                        childRef.child(questid).child("quest_creatorName").setValue(mUserName);
-                    }
+                // Impossible to create if nothing is written
+                if ((nameContent.equals("")) || (descriptionContent.equals(""))) {
+                    Toast.makeText(getApplicationContext(), R.string.toast_challenge2, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.toast_createdquest, Toast.LENGTH_LONG).show();
+                    //  DatabaseReference childRef = ref.getReference("form");
+                    // On recupere la quete crée par l'user actuel pour link challenge a la quête
+                    DatabaseReference refUser =
+                            FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
+                    refUser.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            mUserName = user.getUser_name();
+                            childRef.child(questid).child("quest_creatorName").setValue(mUserName);
+                        }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
 
-                Quest quest = new Quest(nameContent, descriptionContent, spinnerContent);
+                    Quest quest = new Quest(nameContent, descriptionContent, spinnerContent);
 
-                quest.setQuest_name(nameContent);
-                quest.setQuest_description(descriptionContent);
-                quest.setLife_duration(spinnerContent);
+                    quest.setQuest_name(nameContent);
+                    quest.setQuest_description(descriptionContent);
+                    quest.setLife_duration(spinnerContent);
 
-                childRef.child(questid).setValue(quest);
-                childRef.child(questid).child("quest_creatorId").setValue(mUserId);
+                    childRef.child(questid).setValue(quest);
+                    childRef.child(questid).child("quest_creatorId").setValue(mUserId);
 
-                name_quest.setText("");
-                description_quest.setText("");
+                    name_quest.setText("");
+                    description_quest.setText("");
 
-                //On lie la quête créee a un user à Firebase
-                ref.getReference("User").child(mUserId).child("user_createdquestID").setValue(questid);
-                ref.getReference("User").child(mUserId).child("user_createdquestName").setValue(nameContent);
-                // Et aux SharedPreferences
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("mCreatedQuest", questid);
-                editor.apply();
+                    //On lie la quête créee a un user à Firebase
+                    ref.getReference("User").child(mUserId).child("user_createdquestID").setValue(questid);
+                    ref.getReference("User").child(mUserId).child("user_createdquestName").setValue(nameContent);
+                    // Et aux SharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("mCreatedQuest", questid);
+                    editor.apply();
+                }
+                button_create_quest.setVisibility(View.GONE);
             }
         });
 
@@ -164,9 +187,6 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
@@ -186,7 +206,6 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
         if (id == R.id.nav_rules) {
             Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
@@ -201,11 +220,31 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
+        }  else if (id == R.id.nav_share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.nav_share);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        return true;
+    }
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
     }
 }

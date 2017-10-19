@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/border"
+    android:background="@drawable/layout_colors2"
     android:theme="@style/AppTheme.PopUp"
     tools:context="fr.indianacroft.wildhunt.ProfileActivity_PopUp"
     tools:layout_editor_absoluteY="0dp"
