@@ -29,6 +29,7 @@ import java.util.ArrayList;
 public class ValidateAdapter extends BaseAdapter {
 
     private String mUserId;
+    private String mQuestId;
 
     private Context context;
     private ArrayList<Pair> map;
@@ -58,6 +59,8 @@ public class ValidateAdapter extends BaseAdapter {
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         mUserId = sharedPreferences.getString("mUserId", mUserId);
+        mQuestId = sharedPreferences.getString("mCreatedQuest", "");
+
         Log.d("key", mUserId);
         /////////////////////////////////////////////////////////////////
 
@@ -86,10 +89,10 @@ public class ValidateAdapter extends BaseAdapter {
 
                 // on recupere la qûete créee par un user
                 User user = dataSnapshot.getValue(User.class);
-                final String questId = user.getUser_createdquestID();
+                final String mQuestId = user.getUser_createdquestID();
 
                 // On recupere le nom du challenge
-                DatabaseReference refChallenge = FirebaseDatabase.getInstance().getReference("Challenge").child(questId).child(challengeName);
+                DatabaseReference refChallenge = FirebaseDatabase.getInstance().getReference("Challenge").child(mQuestId).child(challengeName);
                 refChallenge.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -147,6 +150,7 @@ public class ValidateAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, ChallengeToValidateActivity.class);
                 intent.putExtra("ToValidate", challengeName);
                 intent.putExtra("UserToValidate", userName);
+                intent.putExtra("CreatedQuestId", mQuestId);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

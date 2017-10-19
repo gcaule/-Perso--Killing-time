@@ -94,7 +94,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
             }
         });
 
-        // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
+        // On appele les methodes declarées plus bas (pour chercher l'user, les challenges)
         searchUser();
 
 
@@ -179,8 +179,9 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
     private void searchChallenges() {
         final String challengeId = getIntent().getStringExtra("ToValidate");
         final String userId = getIntent().getStringExtra("UserToValidate");
+        final String createdQuest = getIntent().getStringExtra("CreatedQuestId");
         // On recupere les données des challenges
-        DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest).child(challengeId);
+        DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(createdQuest).child(challengeId);
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -197,7 +198,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                 Log.d("key", mUserId);
 
                 // Reference to an image file in Firebase Storage
-                StorageReference storageReference = FirebaseStorage.getInstance().getReference("User").child(userId).child("QuestToBeValidated").child(mUser_quest).child(challengeId);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference("User").child(userId).child("QuestToBeValidated").child(createdQuest).child(challengeId);
                 // ImageView in your Activity
                 ImageView imagePlayerSolution = (ImageView) findViewById(R.id.imageViewPlayerSolution);
                 // Load the image using Glide
@@ -232,7 +233,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                                         Toast.makeText(ChallengeToValidateActivity.this, "Défi refusé!", Toast.LENGTH_SHORT).show();
                                         // Modifier le champ dans le user Creator pour le mettre en true !
                                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                        ref.child("User").child(mUserId).child("aValider").child(mUser_quest).child(challengeId).child(userId).setValue(null);
+                                        ref.child("User").child(mUserId).child("aValider").child(createdQuest).child(challengeId).child(userId).setValue(null);
 
                                         startActivity(new Intent(getApplicationContext(), ValidateQuestActivity.class));
                                     }
@@ -271,7 +272,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                                         Toast.makeText(ChallengeToValidateActivity.this, "Défi validé!", Toast.LENGTH_SHORT).show();
                                         // Modifier le champ dans le user Creator pour le mettre en true !
                                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                        ref.child("User").child(mUserId).child("aValider").child(mUser_quest).child(challengeId).child(userId).setValue(true);
+                                        ref.child("User").child(mUserId).child("aValider").child(createdQuest).child(challengeId).child(userId).setValue(true);
 
                                         // Modifier le champ dans le user Player pour mettre le challenge en done !
                                         //ref.child("User").child(userId).child("challenge_done").child(challengeId).child("state").setValue("true");
@@ -307,7 +308,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                     public void onClick(View v) {
 
                         Intent intent = new Intent(getApplicationContext(),ChallengeToValidateActivity_PopUp.class);
-                        intent.putExtra("Quest", mUser_quest);
+                        intent.putExtra("Quest", createdQuest);
                         intent.putExtra("Challenge", challengeId);
                         startActivity(intent);
                     }
