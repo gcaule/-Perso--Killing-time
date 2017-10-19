@@ -34,8 +34,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
-import static fr.indianacroft.wildhunt.Notification.sendNotification;
-
 public class PlayerActivity_PopUp extends AppCompatActivity {
     int PICK_IMAGE_REQUEST = 111;
     int REQUEST_IMAGE_CAPTURE = 1;
@@ -131,11 +129,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-
-
-
-
+                // TEST DE NOTIFS
 
 //                FirebaseDatabase database = FirebaseDatabase.getInstance();
 //                final DatabaseReference refCreatorId = database.getReference("Quest");
@@ -147,7 +141,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
 //                        String user_creatorId = quest.getQuest_creatorId();
 //
 //                        // Test Notifs
-//                        sendNotification(
+//                        Utilities.sendNotification(
 //                                user_creatorId, //receiver_id, /*who the notification is meant for*/
 //                                "Chat message from John Duff", /*Message to be displayed on the notification*/
 //                                "New chat message", /*Message title*/
@@ -158,14 +152,6 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
 //                    public void onCancelled(DatabaseError error) {
 //                    }
 //                });
-
-
-
-
-
-
-
-
 
             // Upload photos on Firebase
             if (filePath != null) {
