@@ -146,5 +146,6 @@
     <string name="refuse">Refuser</string>
     <string name="accept">Accepter</string>
     <string name="solution">Solution</string>
+    <string name="defi">Défi %1$d :</string>
 
 </resources>

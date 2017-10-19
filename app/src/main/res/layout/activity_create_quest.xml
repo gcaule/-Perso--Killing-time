@@ -170,17 +170,22 @@
                 android:background="@drawable/button_shape"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/recyclerViewChallengeCreated"
+                app:layout_constraintBottom_toTopOf="@+id/listViewChallengeCreated"
                 app:layout_constraintTop_toBottomOf="@+id/button_create_quest" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewChallengeCreated"
-                android:layout_width="283dp"
-                android:layout_height="77dp"
+            <ListView
+                android:background="@drawable/button_shape2"
+                android:id="@+id/listViewChallengeCreated"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/butAddNewChallenge" />
+                app:layout_constraintTop_toBottomOf="@+id/butAddNewChallenge"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp" />
 
         </android.support.constraint.ConstraintLayout>
 

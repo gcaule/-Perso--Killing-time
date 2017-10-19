@@ -1,7 +1,9 @@
 package fr.indianacroft.wildhunt;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,7 +11,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,12 +21,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +42,6 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
     EditText name_quest, description_quest;
     ImageView imageViewAvatar;
     Spinner spinner_quest;
-    FirebaseDatabase ref;
     DatabaseReference childRef;
     private String mUserId, mUserName;
 
@@ -53,6 +54,10 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
+
+        name_quest = (EditText) findViewById(R.id.name_quest);
+        description_quest = (EditText) findViewById(R.id.description_quest);
+        button_create_quest = (Button) findViewById(R.id.button_create_quest);
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -110,18 +115,12 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         spinner_quest.setAdapter(adapter);
 
         // Database
-        name_quest = (EditText) findViewById(R.id.name_quest);
-        description_quest = (EditText)findViewById(R.id.description_quest);
-        button_create_quest = (Button) findViewById(R.id.button_create_quest);
-
-        ref = FirebaseDatabase.getInstance();
-        childRef = ref.getReference("Quest");
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         // childRef.push().getKey() is used to generate the different key
-        final String questid = ref.getReference("Quest").push().getKey();
+        final String questid = ref.child("Quest").push().getKey();
 
         // If user is new, can create quest, if no, can't
-        DatabaseReference db1 = FirebaseDatabase.getInstance().getReference("User");
-        DatabaseReference db2 = db1.child(mUserId).child("user_createdquestID");
+        DatabaseReference db2 = ref.child("User").child(mUserId).child("user_createdquestID");
         db2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -131,8 +130,27 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     butAddNewChallenge.setVisibility(View.GONE);
                 } else {
                     button_create_quest.setVisibility(View.GONE);
+
+                    // ListView des challenges crées
+                    ListAdapter adapterChall = new FirebaseListAdapter<Challenge>(
+                            CreateQuestActivity.this,
+                            Challenge.class,
+                            R.layout.challenge_listview,
+                            ref.child("Challenge").child(questCreatedOrNot)) {
+                        @Override
+                        protected void populateView(View v, Challenge challenge, int position) {
+                            ((TextView) v.findViewById(R.id.listViewLabel)).setText(getString(R.string.defi, position));
+                            ((TextView) v.findViewById(R.id.listViewChallengeName))
+                                    .setText(challenge.getChallenge_name());
+                            ((TextView) v.findViewById(R.id.listViewChallengeDifficulty))
+                                    .setText(String.valueOf(challenge.getChallenge_difficulty()));
+                        }
+                    };
+                    ListView listView = (ListView) findViewById(R.id.listViewChallengeCreated);
+                    listView.setAdapter(adapterChall);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -180,8 +198,8 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     description_quest.setText("");
 
                     //On lie la quête créee a un user à Firebase
-                    ref.getReference("User").child(mUserId).child("user_createdquestID").setValue(questid);
-                    ref.getReference("User").child(mUserId).child("user_createdquestName").setValue(nameContent);
+                    ref.child("User").child(mUserId).child("user_createdquestID").setValue(questid);
+                    ref.child("User").child(mUserId).child("user_createdquestName").setValue(nameContent);
                     // Et aux SharedPreferences
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("mCreatedQuest", questid);
@@ -229,7 +247,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.nav_play) {
             Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
             startActivity(intent);
-        }else if (id == R.id.nav_lobby) {
+        } else if (id == R.id.nav_lobby) {
             Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_create) {
@@ -237,7 +255,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
-        }  else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
