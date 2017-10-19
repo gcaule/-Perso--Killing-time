@@ -23,18 +23,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class LobbyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,6 +45,8 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
     private String mDiff_challenge;
     private String mHint_challenge;
     private String mKey_challenge;
+    private String mUser_CreatedQuest;
+    private String mUser_CreatedQuestName;
     ImageView imageViewAvatar, imageViewTest;
     private String mUserId, mCreatedQuestId;
 
@@ -158,11 +156,20 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
             public void onItemClick(View view, int position) {
                 TextView textViewLobbyDescription = (TextView) view.findViewById(R.id.textViewLobbyDescription);
                 Button buttonLobbyJoin = (Button) view.findViewById(R.id.buttonLobbyJoin);
+                TextView namePartyLobby = (TextView) view.findViewById(R.id.lobbyName);
+                final String quest_name = namePartyLobby.getText().toString();
 
-                if (textViewLobbyDescription.getVisibility() == View.VISIBLE) {
+
+                if (quest_name.equals(mUser_CreatedQuestName)) {
+                    buttonLobbyJoin.setVisibility(View.GONE);
+                    textViewLobbyDescription.setText(R.string.impossible_lobby);
+                    Toast.makeText(getApplicationContext(), R.string.toast_error_party, Toast.LENGTH_LONG).show();
+
+                } else if (textViewLobbyDescription.getVisibility() == View.VISIBLE) {
                     textViewLobbyDescription.setVisibility(View.GONE);
                     buttonLobbyJoin.setVisibility(View.GONE);
-                }else {
+
+                } else {
                     textViewLobbyDescription.setVisibility(View.VISIBLE);
                     buttonLobbyJoin.setVisibility(View.VISIBLE);
 
@@ -282,6 +289,8 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 User user = dataSnapshot.getValue(User.class);
                 mUser_name = user.getUser_name();
                 mUser_quest = user.getUser_quest();
+                mUser_CreatedQuest = user.getUser_createdquestID();
+                mUser_CreatedQuestName = user.getUser_createdquestName();
                 searchQuest();
             }
             @Override

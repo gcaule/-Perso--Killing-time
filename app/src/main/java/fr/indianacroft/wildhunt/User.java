@@ -11,6 +11,7 @@ public class User {
     private String user_password;
     private String user_quest;
     private String user_createdquestID;
+    private String user_createdquestName;
     private String user_indice;
     private String user_challenge;
     private int score;
@@ -30,6 +31,14 @@ public class User {
 
     public User(String user_createdquestID) {
         this.user_createdquestID = user_createdquestID;
+    }
+
+    public String getUser_createdquestName() {
+        return user_createdquestName;
+    }
+
+    public void setUser_createdquestName(String user_createdquestName) {
+        this.user_createdquestName = user_createdquestName;
     }
 
     public int getScore() {

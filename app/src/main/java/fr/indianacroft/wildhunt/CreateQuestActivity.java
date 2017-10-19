@@ -139,7 +139,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                             ref.child("Challenge").child(questCreatedOrNot)) {
                         @Override
                         protected void populateView(View v, Challenge challenge, int position) {
-                            ((TextView) v.findViewById(R.id.listViewLabel)).setText(getString(R.string.defi, position));
+                            ((TextView) v.findViewById(R.id.listViewLabel)).setText(getString(R.string.defi, (position+1)));
                             ((TextView) v.findViewById(R.id.listViewChallengeName))
                                     .setText(challenge.getChallenge_name());
                             ((TextView) v.findViewById(R.id.listViewChallengeDifficulty))
