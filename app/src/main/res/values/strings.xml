@@ -148,7 +148,7 @@
     <string name="solution">Solution</string>
     <string name="defi">Défi %1$d :</string>
     <string name="nom_du_joueur">Nom du joueur :</string>
-    <string name="abandonpartie">Abandon partie?</string>
-    <string name="abandondefi">Anbandon defi?</string>
+    <string name="abandonpartie">Abandonner la partie ?</string>
+    <string name="abandondefi">Abandonner le defi ?</string>
 
 </resources>

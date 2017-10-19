@@ -3,7 +3,6 @@ package fr.indianacroft.wildhunt;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -38,15 +38,32 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import static fr.indianacroft.wildhunt.R.id.nav_manage;
-import static fr.indianacroft.wildhunt.R.id.visible;
 
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ImageView imageViewAvatar;
+    // Bottom Navigation Bar
+    BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_validate:
+                    return true;
+                case R.id.navigation_hint:
+                    return true;
+                case R.id.navigation_leave:
+                    return true;
+            }
+            return false;
+        }
+    };
     private String mUserId, mUser_quest, mUser_name, mQuest_description, mQuest_name, mUser_indice,
             mName_challenge, mDiff_challenge, mHint_challenge, mKey_challenge, mCreatorId, mQuestId,
             mUser_challenge;
     private int mNbrePoints, mUser_score;
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +110,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     nav_Menu.findItem(R.id.nav_manage).setVisible(false);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -253,27 +271,27 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         }
                         AlertDialog show = builder.setTitle("Abandonner?")
                                 .setMessage("Etes vous sur de vouloir abandonner?")
-                                .setPositiveButton(R.string.partie, new DialogInterface.OnClickListener() {
+                                .setPositiveButton(R.string.abandonpartie, new DialogInterface.OnClickListener() {
 
                                     public void onClick(DialogInterface dialog, int which) {
                                         DatabaseReference refUserQuest = FirebaseDatabase.getInstance()
                                                 .getReference().child("User")
                                                 .child(mUserId).child("user_quest");
                                         refUserQuest.setValue("Pas de qûete pour l'instant");
-                                        startActivity(new Intent(getApplicationContext(),LobbyActivity.class));
+                                        startActivity(new Intent(getApplicationContext(), LobbyActivity.class));
                                     }
                                 })
 
-                                .setNegativeButton(R.string.defi, new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.abandondefi, new DialogInterface.OnClickListener() {
 
 
                                     public void onClick(DialogInterface dialog, int which) {
-                                        DatabaseReference anbandonDefi = FirebaseDatabase.getInstance().getReference().child("User")
+                                        DatabaseReference abandonDefi = FirebaseDatabase.getInstance().getReference().child("User")
                                                 .child(mUserId).child("user_challenge");
-                                        anbandonDefi.setValue("Pas de defi");
+                                        abandonDefi.setValue("Pas de défi pour l'instant");
                                         // Modifier le champ dans le user Player pour mettre le challenge en done !
                                         refUser.child("challenge_done")
-                                                .child( mUser_challenge ).child("state").setValue("true");
+                                                .child(mUser_challenge).child("state").setValue("true");
 
                                     }
                                 })
@@ -321,17 +339,18 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    Quest quest = dataSnapshot.getValue(Quest.class);
-                    // On recupere la qûete liée a un user
-                        if (quest != null) {
-                            mQuest_name = quest.getQuest_name();
-                            Log.d(mQuest_name, "quest");
-                            mQuest_description = quest.getQuest_description();
-                            final TextView playerActivityQuestName = (TextView) findViewById(R.id.playerActivityNameQuestTitle);
-                            playerActivityQuestName.setText(mQuest_name);
-                            searchChallenges();
-                        }
+                Quest quest = dataSnapshot.getValue(Quest.class);
+                // On recupere la qûete liée a un user
+                if (quest != null) {
+                    mQuest_name = quest.getQuest_name();
+                    Log.d(mQuest_name, "quest");
+                    mQuest_description = quest.getQuest_description();
+                    final TextView playerActivityQuestName = (TextView) findViewById(R.id.playerActivityNameQuestTitle);
+                    playerActivityQuestName.setText(mQuest_name);
+                    searchChallenges();
+                }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -462,12 +481,14 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         playerActivityDuration.setText(mDiff_challenge);
                                         return;
                                     }
+
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
                                     }
                                 });
 
                             }
+
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
                             }
@@ -475,30 +496,11 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
 
     }
-
-    // Bottom Navigation Bar
-    BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_validate:
-                    return true;
-                case R.id.navigation_hint:
-                    return true;
-                case R.id.navigation_leave:
-                    return true;
-            }
-            return false;
-        }
-    };
-
-    // Share via other apps
-    private ShareActionProvider mShareActionProvider;
 }
