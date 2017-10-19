@@ -251,18 +251,29 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         } else {
                             builder = new AlertDialog.Builder(PlayerActivity.this);
                         }
-                        builder.setTitle("Supprimer la partie")
-                                .setMessage("Etes vous sur de vouloir abandonner la partie")
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            DatabaseReference refUserQuest = FirebaseDatabase.getInstance()
-                                                    .getReference().child("User")
-                                                    .child(mUserId).child("user_quest");
-                                            refUserQuest.setValue("Pas de quête pour l'instant");
-                                        }
-                                    })
-                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog show = builder.setTitle("Abandonner?")
+                                .setMessage("Etes vous sur de vouloir abandonner?")
+                                .setPositiveButton(R.string.partie, new DialogInterface.OnClickListener() {
+
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        DatabaseReference refUserQuest = FirebaseDatabase.getInstance()
+                                                .getReference().child("User")
+                                                .child(mUserId).child("user_quest");
+                                        refUserQuest.setValue("Pas de qûete pour l'instant");
+                                        startActivity(new Intent(getApplicationContext(),LobbyActivity.class));
+                                    }
+                                })
+
+                                .setNegativeButton(R.string.defi, new DialogInterface.OnClickListener() {
+
+
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        DatabaseReference anbandonDefi = FirebaseDatabase.getInstance().getReference().child("User")
+                                                .child(mUserId).child("user_challenge");
+                                        anbandonDefi.setValue("Pas de defi");
+                                        // Modifier le champ dans le user Player pour mettre le challenge en done !
+                                        refUser.child("challenge_done")
+                                                .child( mUser_challenge ).child("state").setValue("true");
 
                                     }
                                 })
