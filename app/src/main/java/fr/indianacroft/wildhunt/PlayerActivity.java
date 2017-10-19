@@ -3,6 +3,7 @@ package fr.indianacroft.wildhunt;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -25,7 +26,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -254,16 +254,15 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                 .setMessage("Etes vous sur de vouloir abandonner la partie")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (!mUser_quest.equals("Pas de qûete pour l'instant")) {
-                                            Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
-                                            intent.putExtra("mChallengeKey", mKey_challenge);
-                                            startActivity(intent);
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            DatabaseReference refUserQuest = FirebaseDatabase.getInstance()
+                                                    .getReference().child("User")
+                                                    .child(mUserId).child("user_quest");
+                                            refUserQuest.setValue("Pas de quête pour l'instant");
                                         }
-                                    }
-                                })
-                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
+                                    })
+                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
 
                                     }
                                 })
