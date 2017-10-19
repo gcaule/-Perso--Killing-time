@@ -94,7 +94,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
             }
         });
 
-        // On appele les methodes declarées plus bas (pour chercher l'user, les challenges)
+
         // On appele les methodes declarées plus bas (pour chercher l'user et le challenge)
         searchUser();
     }

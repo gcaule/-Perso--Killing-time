@@ -59,7 +59,6 @@ public class ValidateAdapter extends BaseAdapter {
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         mUserId = sharedPreferences.getString("mUserId", mUserId);
-        mQuestId = sharedPreferences.getString("mCreatedQuest", "");
 
         Log.d("key", mUserId);
         /////////////////////////////////////////////////////////////////
@@ -77,7 +76,7 @@ public class ValidateAdapter extends BaseAdapter {
         DatabaseReference refUser =
                 FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
         final View finalConvertView = convertView;
-        final View finalConvertView1 = convertView;
+
         refUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -96,6 +95,7 @@ public class ValidateAdapter extends BaseAdapter {
 
                         TextView nameChall = finalConvertView.findViewById(R.id.challengeToValidate);
                         nameChall.setText(challName);
+
                     }
 
                     @Override
@@ -112,7 +112,7 @@ public class ValidateAdapter extends BaseAdapter {
                         User user = dataSnapshot.getValue(User.class);
                         String userNom = user.getUser_name();
 
-                        TextView nameUser = finalConvertView1.findViewById(R.id.userToValidate);
+                        TextView nameUser = finalConvertView.findViewById(R.id.userToValidate);
                         nameUser .setText(userNom);
                     }
 
@@ -122,35 +122,28 @@ public class ValidateAdapter extends BaseAdapter {
                     }
                 });
 
+
+                Button see = (Button) finalConvertView.findViewById(R.id.see);
+
+                see.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, ChallengeToValidateActivity.class);
+                        intent.putExtra("ToValidate", challengeName);
+                        intent.putExtra("UserToValidate", userName);
+                        intent.putExtra("CreatedQuestId", mQuestId);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
+                });
             }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-
-
-//        TextView nameChall = convertView.findViewById(R.id.challengeToValidate);
-//        nameChall.setText(challengeName);
-
-//        TextView nameUser = convertView.findViewById(R.id.userToValidate);
-//        nameUser .setText(userName);
-
-        Button see = (Button) convertView.findViewById(R.id.see);
-
-        see.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ChallengeToValidateActivity.class);
-                intent.putExtra("ToValidate", challengeName);
-                intent.putExtra("UserToValidate", userName);
-                intent.putExtra("CreatedQuestId", mQuestId);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        });
-
         return convertView;
     }
 }
