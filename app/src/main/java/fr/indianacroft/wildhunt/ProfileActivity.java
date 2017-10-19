@@ -131,7 +131,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 TextView min = (TextView) findViewById(R.id.nbrMin);
                 TextView max = (TextView) findViewById(R.id.nbrMax);
                 simpleProgressBar.getProgressDrawable().setColorFilter(
-                        Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+                        Color.BLUE, android.graphics.PorterDuff.Mode.SRC_IN);
+                simpleProgressBar.setScaleY(3f);
 
                 // Score
                 TextView affPoint = (TextView) findViewById(R.id.point);

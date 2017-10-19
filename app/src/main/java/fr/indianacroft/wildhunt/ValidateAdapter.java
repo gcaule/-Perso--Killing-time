@@ -68,11 +68,6 @@ public class ValidateAdapter extends BaseAdapter {
                     null);
         }
 
-
-
-
-
-
         final String challengeName = map.get(position).first.toString();
         final String userName = map.get(position).second.toString();
 

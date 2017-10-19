@@ -94,10 +94,8 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
             }
         });
 
-        // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
+        // On appele les methodes declarées plus bas (pour chercher l'user et le challenge)
         searchUser();
-
-
     }
 
     // Drawer Menu
@@ -110,13 +108,11 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
