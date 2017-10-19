@@ -2,7 +2,7 @@ package fr.indianacroft.wildhunt;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.camera2.CaptureResult;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +28,8 @@ public class ConnexionActivity extends AppCompatActivity {
 
     final String userName = "NameKey";
     final String userPassword = "PasswordKey";
+    // Sound
+    MediaPlayer mMediaPlayer;
     private boolean auth = false;
     private String mUserId = "UserKey";
     private String mEncrypt = "encrypt";
@@ -37,6 +38,13 @@ public class ConnexionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
+
+        // Musique
+        mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.suspense_music);
+        mMediaPlayer.setLooping(true);
+        mMediaPlayer.setVolume(100,100);
+        mMediaPlayer.start();
+
 
         final EditText editTextUserName = (EditText) findViewById(R.id.connexionUserName);
         final EditText editTextUserPassword = (EditText) findViewById(R.id.connexionUserPassword);
@@ -77,7 +85,7 @@ public class ConnexionActivity extends AppCompatActivity {
                                 //On compare le contenu des edit text avec Firebase grâce au user_name
                                 if (userValues.getUser_name().equals(userNameContent)) {
                                     // On verifie le password
-                                    if (userValues.getUser_password().equals(mEncrypt(userPasswordContent,"AES"))) {
+                                    if (userValues.getUser_password().equals(mEncrypt(userPasswordContent, "AES"))) {
 
                                         // La clé de l'utilisateur qu'on va utiliser partout dans l'application.
                                         mUserId = dsp.getKey();
@@ -99,7 +107,7 @@ public class ConnexionActivity extends AppCompatActivity {
                             String questContent = "Pas de qûete pour l'instant";
                             User user = new User(userNameContent, userPasswordContent, questContent);
                             user.setUser_name(userNameContent);
-                            user.setUser_password(mEncrypt(userPasswordContent,"AES"));
+                            user.setUser_password(mEncrypt(userPasswordContent, "AES"));
                             user.setUser_quest(questContent);
                             user.setUser_indice("false");
                             String userId = refUser.push().getKey();
@@ -115,21 +123,20 @@ public class ConnexionActivity extends AppCompatActivity {
                             editor.putString("mUserId", userId);
                             editor.apply();
                             Toast.makeText(getApplicationContext(), R.string.created_user, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),RulesActivity.class));
+                            startActivity(new Intent(getApplicationContext(), RulesActivity.class));
                         }
-                        public String mEncrypt(String userPassword,String key){
-                            try
-                            {
-                                Key clef = new SecretKeySpec(key.getBytes("ISO-8859-2"),"Blowfish");
-                                Cipher cipher= Cipher.getInstance("Blowfish");
-                                cipher.init(Cipher.ENCRYPT_MODE,clef);
+
+                        public String mEncrypt(String userPassword, String key) {
+                            try {
+                                Key clef = new SecretKeySpec(key.getBytes("ISO-8859-2"), "Blowfish");
+                                Cipher cipher = Cipher.getInstance("Blowfish");
+                                cipher.init(Cipher.ENCRYPT_MODE, clef);
                                 return new String(cipher.doFinal(userPassword.getBytes()));
-                            }
-                            catch (Exception e)
-                            {
+                            } catch (Exception e) {
                                 return null;
                             }
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
@@ -138,5 +145,18 @@ public class ConnexionActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        mMediaPlayer.stop();
+//        mMediaPlayer.release();
+//    }
+   @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mMediaPlayer.stop();
+        mMediaPlayer.release();
     }
 }

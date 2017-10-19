@@ -3,6 +3,7 @@ package fr.indianacroft.wildhunt;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -231,11 +232,10 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                                         public void onClick(DialogInterface dialog, int which) {
-                                            if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
-                                                Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
-                                                intent.putExtra("mChallengeKey", mKey_challenge);
-                                                startActivity(intent);
-                                            }
+                                            DatabaseReference refUserQuest = FirebaseDatabase.getInstance()
+                                                    .getReference().child("User")
+                                                    .child(mUserId).child("user_quest");
+                                            refUserQuest.setValue("Pas de quête pour l'instant");
                                         }
                                     })
                                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -455,4 +455,5 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 //            }
 //        }
 //    }
+//
 }
