@@ -398,7 +398,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                             return;
                                         } else {
                                             Toast.makeText(PlayerActivity.this, "Bravo vous avez terminé tout les défis ! Redirection en cours", Toast.LENGTH_SHORT).show();
-                                            refUser.child("User").child(mUserId).child("user_challenge").setValue("null");
+                                            refUser.child("User").child(mUserId).child("user_challenge").setValue("Pas de défi pour l'instant");
                                             refUser.child("User").child(mUserId).child("user_quest").setValue("Pas de qûete pour l'instant");
                                             startActivity(new Intent(getApplicationContext(), LobbyActivity.class));
                                             return;
