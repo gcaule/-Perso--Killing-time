@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/challengeName"
-        style="@style/YellowTitle"
+        style="@style/Title"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         tools:text="NOM PARTIE"
@@ -20,7 +20,7 @@
         app:layout_constraintLeft_toLeftOf="parent" />
     <TextView
         android:id="@+id/challengeDiff"
-        style="@style/YellowTitle"
+        style="@style/Title"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         tools:text="DIFFICULTY"

@@ -48,18 +48,19 @@
     <style name="ButtonYellow">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#33495E</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">15dp</item>
         <item name="android:textColorHint">#33495E</item>
         <item name="android:background">@drawable/button_shape2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorBlue</item>
     </style>
     <style name="ButtonBlue">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/button_shape</item>
     </style>
-    <style name="YellowTitle">
+    <style name="Title">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>

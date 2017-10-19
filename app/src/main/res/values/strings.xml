@@ -31,6 +31,17 @@
     <string name="sauvergarder_les_modifications">Sauvergarder les modifications</string>
     <string name="vos_donn_es_personnelles">Vos données personnelles :</string>
     <string name="personnalisez_votre_avatar">Personnalisez votre avatar :</string>
+    <string name="scores">Votre score :</string>
+    <string name="point">Point</string>
+    <string name="titre">Titre</string>
+    <string name="touriste">Touriste</string>
+    <string name="voyageur">Voyageur</string>
+    <string name="conquerant">Conquérant</string>
+    <string name="dominateur">Dominateur du monde</string>
+    <string name="votre_pseudo">Votre pseudo :</string>
+    <string name="vous_avez_atteint_le_grade_de">Vous avez atteint le grade de :</string>
+    <string name="d_fi_en_cours">Défi en cours :</string>
+    <string name="partie_en_cours">Partie en cours :</string>
 
     // Page Profil PopUp
     <string name="valider">Valider et continuer</string>

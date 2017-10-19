@@ -34,6 +34,7 @@ public class ConnexionActivity extends AppCompatActivity {
     private boolean auth = false;
     private String mUserId = "UserKey";
     private String mEncrypt = "encrypt";
+    int score;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,7 +131,7 @@ public class ConnexionActivity extends AppCompatActivity {
 
                             // Utilisateur nouveau : le compte n'existe pas, on le créer !
                             String questContent = "Pas de qûete pour l'instant";
-                            User user = new User(userNameContent, userPasswordContent, questContent);
+                            User user = new User(userNameContent, userPasswordContent, questContent, score);
                             user.setUser_name(userNameContent);
                             user.setUser_password(mEncrypt(userPasswordContent, "AES"));
                             user.setUser_quest(questContent);

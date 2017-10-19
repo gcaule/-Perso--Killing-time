@@ -126,7 +126,7 @@
                 android:layout_weight="0.26" />
 
             <TextView
-                style="@style/YellowTitle"
+                style="@style/Title"
                 android:padding="10dp"
                 android:id="@+id/textViewPlayerActivityHint"
                 tools:text="Ici l'indice apparaitra"
@@ -136,7 +136,7 @@
                 android:layout_marginBottom="5dp"/>
 
             <TextView
-                style="@style/YellowTitle"
+                style="@style/Title"
                 android:padding="10dp"
                 android:id="@+id/textViewPlayerActivityHint2"
                 android:background="@drawable/layout_colors2"

@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -86,7 +88,6 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
             }
         });
 
-        // ENTER CODE HERE
         // METHODE POUR TROUVER CHALLENGE
         DatabaseReference refUser =
                 FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);

@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -56,7 +57,6 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge_to_validate);
 
-
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,9 +68,32 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        View headerview = navigationView.getHeaderView(0);
+        headerview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
+            }
+        });
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
+        rootRef.child(mUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild("aValider")) {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_manage).setVisible(true);
+                } else {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_manage).setVisible(false);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         // Bottom Navigation bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation_validate);

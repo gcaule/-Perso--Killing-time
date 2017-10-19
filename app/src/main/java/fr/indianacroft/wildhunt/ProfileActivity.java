@@ -32,8 +32,8 @@ import com.google.firebase.storage.StorageReference;
 
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ImageView imageViewAvatar, imageViewAvatar2;
-    private String mUserId;
+    ImageView imageViewAvatar, imageViewAvatar2, imageView, imageViewMedal;
+    private String mUserId, mUser_challenge, mUser_quest;
     final String userName = "NameKey";
     TextView textView6;
 
@@ -61,14 +61,31 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         View headerview = navigationView.getHeaderView(0);
         headerview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PlayerActivity.class));            }
+                startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
+            }
+        });
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
+        rootRef.child(mUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild("aValider")) {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_manage).setVisible(true);
+                } else {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_manage).setVisible(false);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
 
         // Avatar
@@ -90,24 +107,80 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             }
         });
 
-
-        // pour afficher le score
-
+        // pour afficher le score et le grade personnalisé
+        imageView = (ImageView) findViewById(R.id.imageView);
+        imageViewMedal = (ImageView) findViewById(R.id.imageView2);
         FirebaseDatabase ref = FirebaseDatabase.getInstance();
         DatabaseReference refScore = ref.getReference("User").child(mUserId);
         refScore.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
+                mUser_challenge = user.getUser_challenge();
+                mUser_quest = user.getUser_quest();
                 int score = user.getScore();
-            }
 
+                TextView affPoint = (TextView) findViewById(R.id.point);
+                affPoint.setText(String.valueOf(score));
+                if (score <= 100){
+                    //touriste
+                    TextView touriste = (TextView) findViewById(R.id.titre);
+                    touriste.setText(R.string.touriste);
+                    imageView.setImageResource(R.drawable.jake1);
+                    imageViewMedal.setImageResource(R.drawable.medal_bronze);
+                }if (score >= 100){
+                    //voyageur
+                    TextView voyageur = (TextView) findViewById(R.id.titre);
+                    voyageur.setText(R.string.voyageur);
+                    imageView.setImageResource(R.drawable.jake2);
+                    imageViewMedal.setImageResource(R.drawable.medal_silver);
+                }if (score >= 400){
+                    //conquerant
+                    TextView conquerant = (TextView) findViewById(R.id.titre);
+                    conquerant.setText(R.string.conquerant);
+                    imageView.setImageResource(R.drawable.jake3);
+                    imageViewMedal.setImageResource(R.drawable.medal_gold);
+                }if (score >= 1000){
+                    //dominateur du monde
+                    TextView dominateur = (TextView) findViewById(R.id.titre);
+                    dominateur.setText(R.string.dominateur);
+                    imageView.setImageResource(R.drawable.jake4);
+                    imageViewMedal.setImageResource(R.drawable.medal_gold2);
+                }
+                FirebaseDatabase ref = FirebaseDatabase.getInstance();
+                DatabaseReference refQuest = ref.getReference().child("Quest").child(mUser_quest);
+                refQuest.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Quest quest = dataSnapshot.getValue(Quest.class);
+                        String mQuest_name = quest.getQuest_name();
+                        TextView titreQueste = (TextView) findViewById(R.id.name_quest);
+                        titreQueste.setText(mQuest_name);
+
+                        FirebaseDatabase ref = FirebaseDatabase.getInstance();
+                        DatabaseReference refChallenge = ref.getReference().child("Challenge").child(mUser_quest).child(mUser_challenge);
+                        refChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Challenge challenge = dataSnapshot.getValue(Challenge.class);
+                                String  mChallenge_name = challenge.getChallenge_name();
+                                TextView titreChallenge = (TextView) findViewById(R.id.challenge_name);
+                                titreChallenge.setText(mChallenge_name);
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
-
 
         // Drop Image from Firebase to upload it on Profil page
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
@@ -117,7 +190,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             Glide.with(this)
                     .using(new FirebaseImageLoader())
                     .load(pathReference)
-                    .error(R.drawable.pirate5)
+                    .error(R.drawable.jake5)
                     .skipMemoryCache(true)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(imageViewAvatar2);

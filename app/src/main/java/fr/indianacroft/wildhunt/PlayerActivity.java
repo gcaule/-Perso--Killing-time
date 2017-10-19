@@ -37,31 +37,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import static fr.indianacroft.wildhunt.R.id.nav_manage;
+import static fr.indianacroft.wildhunt.R.id.visible;
+
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ImageView imageViewAvatar;
-    // Bottom Navigation Bar
-    BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_validate:
-                    return true;
-                case R.id.navigation_hint:
-                    return true;
-                case R.id.navigation_leave:
-                    return true;
-            }
-            return false;
-        }
-    };
     private String mUserId, mUser_quest, mUser_name, mQuest_description, mQuest_name, mUser_indice,
             mName_challenge, mDiff_challenge, mHint_challenge, mKey_challenge, mCreatorId, mQuestId,
             mUser_challenge;
     private int mNbrePoints, mUser_score;
-    // Share via other apps
-    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +71,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         View headerview = navigationView.getHeaderView(0);
@@ -94,6 +79,22 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
+            }
+        });
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
+        rootRef.child(mUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild("aValider")) {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_manage).setVisible(true);
+                } else {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_manage).setVisible(false);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
 
@@ -179,7 +180,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             startActivity(intent);
         } else if (id == R.id.nav_create) {
             startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
-        } else if (id == R.id.nav_manage) {
+        } else if (id == nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_share) {
@@ -320,10 +321,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                             playerActivityQuestName.setText(mQuest_name);
                             searchChallenges();
                         }
-
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -411,7 +409,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                     }
                                 }
 
-
                                 // On set le challenge sur la page
                                 final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
 
@@ -436,7 +433,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         mQuestId = challenge.getChallenge_questId();
                                         mNbrePoints = challenge.getChallenge_nbrePoints();
 
-
                                         // On change la page dynamiquement !!
                                         // Reference to an image file in Firebase Storage
                                         StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
@@ -456,14 +452,12 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         playerActivityDuration.setText(mDiff_challenge);
                                         return;
                                     }
-
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
                                     }
                                 });
 
                             }
-
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
                             }
@@ -471,7 +465,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -479,5 +472,23 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 
     }
 
+    // Bottom Navigation Bar
+    BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_validate:
+                    return true;
+                case R.id.navigation_hint:
+                    return true;
+                case R.id.navigation_leave:
+                    return true;
+            }
+            return false;
+        }
+    };
 
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
 }
