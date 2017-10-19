@@ -128,7 +128,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                             ref.child("Challenge").child(questCreatedOrNot)) {
                         @Override
                         protected void populateView(View v, Challenge challenge, int position) {
-                            ((TextView) v.findViewById(R.id.listViewLabel)).setText(getString(R.string.defi, position));
+                            ((TextView) v.findViewById(R.id.listViewLabel)).setText(getString(R.string.defi, (position+1)));
                             ((TextView) v.findViewById(R.id.listViewChallengeName))
                                     .setText(challenge.getChallenge_name());
                             ((TextView) v.findViewById(R.id.listViewChallengeDifficulty))
@@ -167,7 +167,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             User user = dataSnapshot.getValue(User.class);
                             mUserName = user.getUser_name();
-                            childRef.child(questid).child("quest_creatorName").setValue(mUserName);
+                            ref.child("Quest").child(questid).child("quest_creatorName").setValue(mUserName);
                         }
 
                         @Override
@@ -181,8 +181,8 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     quest.setQuest_description(descriptionContent);
                     quest.setLife_duration(spinnerContent);
 
-                    childRef.child(questid).setValue(quest);
-                    childRef.child(questid).child("quest_creatorId").setValue(mUserId);
+                    ref.child("Quest").child(questid).setValue(quest);
+                    ref.child("Quest").child(questid).child("quest_creatorId").setValue(mUserId);
 
                     name_quest.setText("");
                     description_quest.setText("");

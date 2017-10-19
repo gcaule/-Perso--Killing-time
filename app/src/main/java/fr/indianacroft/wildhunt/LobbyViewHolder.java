@@ -15,8 +15,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 /**
  * Created by wilder on 27/09/17.
  */
@@ -34,7 +32,7 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(itemView.getContext());
         mUserId = preferences.getString("mUserId", "");
 
-        mNamePartyLobby = (TextView) itemView.findViewById(R.id.buttonLobbyName);
+        mNamePartyLobby = (TextView) itemView.findViewById(R.id.lobbyName);
 
         mDescriptionPartyLobby = (TextView) itemView.findViewById(R.id.textViewLobbyDescription);
         mDescriptionPartyLobby.setVisibility(View.GONE);
@@ -165,6 +163,8 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
     public static void setOnClickListener(LobbyViewHolder.ClickListener clickListener){
         mClickListener = clickListener;
     }
+
+
 
 ///////// POUR RENTRER LES DONNEES DANS LE RECYCLER VIEW \\\\\\\\\\\\\\\
     //______________________________________________________\\

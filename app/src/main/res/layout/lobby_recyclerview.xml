@@ -22,11 +22,11 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonLobbyJoin"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLobbyName"
+        app:layout_constraintTop_toBottomOf="@+id/lobbyName"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/buttonLobbyName"
+        android:id="@+id/lobbyName"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         tools:text="NOM PARTIE"
@@ -48,7 +48,7 @@
         android:layout_marginRight="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="16dp"
-        app:layout_constraintLeft_toRightOf="@+id/buttonLobbyName"
+        app:layout_constraintLeft_toRightOf="@+id/lobbyName"
         android:layout_marginLeft="8dp"
         app:layout_constraintHorizontal_bias="1.0" />
 
