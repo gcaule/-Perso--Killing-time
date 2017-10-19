@@ -2,6 +2,8 @@ package fr.indianacroft.wildhunt;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
@@ -107,7 +110,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             }
         });
 
-        // pour afficher le score et le grade personnalisé
+        // Pour afficher le score et le grade personnalisé
         imageView = (ImageView) findViewById(R.id.imageView);
         imageViewMedal = (ImageView) findViewById(R.id.imageView2);
         FirebaseDatabase ref = FirebaseDatabase.getInstance();
@@ -116,66 +119,102 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                mUser_challenge = user.getUser_challenge();
                 mUser_quest = user.getUser_quest();
+                mUser_challenge = user.getUser_challenge();
                 int score = user.getScore();
 
+                // Progress Bar
+                int nv = 0;
+                float currentPercent = 0;
+                ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBar2);
+                simpleProgressBar.setMax(100);
+                TextView min = (TextView) findViewById(R.id.nbrMin);
+                TextView max = (TextView) findViewById(R.id.nbrMax);
+                simpleProgressBar.getProgressDrawable().setColorFilter(
+                        Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+
+                // Score
                 TextView affPoint = (TextView) findViewById(R.id.point);
                 affPoint.setText(String.valueOf(score));
-                if (score <= 100){
+                if (score < 100){
                     //touriste
                     TextView touriste = (TextView) findViewById(R.id.titre);
                     touriste.setText(R.string.touriste);
                     imageView.setImageResource(R.drawable.jake1);
                     imageViewMedal.setImageResource(R.drawable.medal_bronze);
-                }if (score >= 100){
+                    currentPercent = score/100f;
+                    min.setText("0");
+                    max.setText("100");
+                } else if (score < 400) {
                     //voyageur
                     TextView voyageur = (TextView) findViewById(R.id.titre);
                     voyageur.setText(R.string.voyageur);
                     imageView.setImageResource(R.drawable.jake2);
                     imageViewMedal.setImageResource(R.drawable.medal_silver);
-                }if (score >= 400){
+                    nv = 1;
+                    currentPercent = (score-100f)/(400f-100f);
+                    min.setText("100");
+                    max.setText("400");
+                } else if (score < 1000) {
                     //conquerant
                     TextView conquerant = (TextView) findViewById(R.id.titre);
                     conquerant.setText(R.string.conquerant);
                     imageView.setImageResource(R.drawable.jake3);
                     imageViewMedal.setImageResource(R.drawable.medal_gold);
-                }if (score >= 1000){
+                    nv = 2;
+                    currentPercent = (score-400f)/(1000f-400f);
+                    min.setText("400");
+                    max.setText("1000");
+                } else {
                     //dominateur du monde
                     TextView dominateur = (TextView) findViewById(R.id.titre);
                     dominateur.setText(R.string.dominateur);
                     imageView.setImageResource(R.drawable.jake4);
                     imageViewMedal.setImageResource(R.drawable.medal_gold2);
+                    nv = 3;
+                    currentPercent = 1f;
+                    min.setText("1000");
+                    max.setText("Infinit");
                 }
-                FirebaseDatabase ref = FirebaseDatabase.getInstance();
-                DatabaseReference refQuest = ref.getReference().child("Quest").child(mUser_quest);
-                refQuest.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Quest quest = dataSnapshot.getValue(Quest.class);
-                        String mQuest_name = quest.getQuest_name();
-                        TextView titreQueste = (TextView) findViewById(R.id.name_quest);
-                        titreQueste.setText(mQuest_name);
 
-                        FirebaseDatabase ref = FirebaseDatabase.getInstance();
-                        DatabaseReference refChallenge = ref.getReference().child("Challenge").child(mUser_quest).child(mUser_challenge);
-                        refChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                Challenge challenge = dataSnapshot.getValue(Challenge.class);
-                                String  mChallenge_name = challenge.getChallenge_name();
-                                TextView titreChallenge = (TextView) findViewById(R.id.challenge_name);
-                                titreChallenge.setText(mChallenge_name);
-                            }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                            }
-                        });
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+                simpleProgressBar.setProgress(Math.round(currentPercent*100));
+
+                if ((mUser_quest.equals("Pas de qûete pour l'instant")) || (mUser_challenge.equals("Pas de défi pour l'instant"))) {
+                    TextView titreQueste = (TextView) findViewById(R.id.name_quest);
+                    titreQueste.setText(mUser_quest);
+                    TextView titreChallenge = (TextView) findViewById(R.id.challenge_name);
+                    titreChallenge.setText(mUser_challenge);
+                } else {
+                    FirebaseDatabase ref = FirebaseDatabase.getInstance();
+                    DatabaseReference refQuest = ref.getReference().child("Quest").child(mUser_quest);
+                    refQuest.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Quest quest = dataSnapshot.getValue(Quest.class);
+                            String mQuest_name = quest.getQuest_name();
+                            TextView titreQueste = (TextView) findViewById(R.id.name_quest);
+                            titreQueste.setText(mQuest_name);
+
+                            FirebaseDatabase ref = FirebaseDatabase.getInstance();
+                            DatabaseReference refChallenge = ref.getReference().child("Challenge").child(mUser_quest).child(mUser_challenge);
+                            refChallenge.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Challenge challenge = dataSnapshot.getValue(Challenge.class);
+                                    String  mChallenge_name = challenge.getChallenge_name();
+                                    TextView titreChallenge = (TextView) findViewById(R.id.challenge_name);
+                                    titreChallenge.setText(mChallenge_name);
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

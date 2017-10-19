@@ -78,22 +78,6 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
             }
         });
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
-        rootRef.child(mUserId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild("aValider")) {
-                    Menu nav_Menu = navigationView.getMenu();
-                    nav_Menu.findItem(R.id.nav_manage).setVisible(true);
-                } else {
-                    Menu nav_Menu = navigationView.getMenu();
-                    nav_Menu.findItem(R.id.nav_manage).setVisible(false);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
 
         // Bottom Navigation bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation_validate);

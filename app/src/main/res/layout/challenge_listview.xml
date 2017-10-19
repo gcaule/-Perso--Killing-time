@@ -22,7 +22,7 @@
         app:layout_constraintLeft_toLeftOf="parent" />
     <TextView
         android:id="@+id/listViewChallengeName"
-        style="@style/YellowTitle"
+        style="@style/Title"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         tools:text="NOM DEFI"
@@ -31,7 +31,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/listViewLabel" />
     <TextView
         android:id="@+id/listViewChallengeDifficulty"
-        style="@style/YellowTitle"
+        style="@style/Title"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         app:layout_goneMarginRight="10dp"

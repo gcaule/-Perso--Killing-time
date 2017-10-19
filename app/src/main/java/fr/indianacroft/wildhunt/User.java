@@ -20,10 +20,11 @@ public class User {
         // Needed for firebase
     }
 
-    public User(String user_name, String user_password, String user_quest, int score) {
+    public User(String user_name, String user_password, String user_quest, String user_challenge, int score) {
         this.user_name = user_name;
         this.user_password = user_password;
         this.user_quest = user_quest;
+        this.user_challenge = user_challenge;
         this.score = score;
     }
 

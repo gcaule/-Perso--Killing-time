@@ -131,11 +131,13 @@ public class ConnexionActivity extends AppCompatActivity {
 
                             // Utilisateur nouveau : le compte n'existe pas, on le créer !
                             String questContent = "Pas de qûete pour l'instant";
-                            User user = new User(userNameContent, userPasswordContent, questContent, score);
+                            String challengeContent = "Pas de défi pour l'instant";
+                            User user = new User(userNameContent, userPasswordContent, questContent, challengeContent, score);
                             user.setUser_name(userNameContent);
                             user.setUser_password(mEncrypt(userPasswordContent, "AES"));
                             user.setUser_quest(questContent);
                             user.setUser_indice("false");
+                            user.setUser_challenge(challengeContent);
                             user.setUser_createdquestID("null");
                             user.setScore(0);
                             String userId = refUser.push().getKey();

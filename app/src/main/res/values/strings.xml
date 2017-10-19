@@ -147,5 +147,6 @@
     <string name="accept">Accepter</string>
     <string name="solution">Solution</string>
     <string name="defi">Défi %1$d :</string>
+    <string name="nom_du_joueur">Nom du joueur :</string>
 
 </resources>

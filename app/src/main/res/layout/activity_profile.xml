@@ -69,14 +69,14 @@
 
             <ImageView
                 android:id="@+id/imageViewAvatar2"
-                android:layout_width="198dp"
-                android:layout_height="166dp"
+                android:layout_width="165dp"
+                android:layout_height="181dp"
                 app:srcCompat="@drawable/jake5"
                 android:clickable="true"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintBottom_toTopOf="@+id/score"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintRight_toLeftOf="@+id/titre_challenge"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 style="@style/Title"
@@ -85,10 +85,10 @@
                 android:text="@string/votre_pseudo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/score"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                app:layout_constraintRight_toLeftOf="@+id/textViewProfileDatas" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/imageViewAvatar2"
+                app:layout_constraintBottom_toTopOf="@+id/textViewProfileDatas"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <TextView
                 android:textColor="@color/colorBlue"
@@ -97,21 +97,10 @@
                 tools:text="@string/pseudo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/point"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                app:layout_constraintRight_toLeftOf="@+id/imageView"
-                app:layout_constraintLeft_toRightOf="@+id/textViewProfileDatas2" />
-
-            <TextView
-                style="@style/ButtonYellow"
-                android:id="@+id/textView2"
-                android:layout_width="0dp"
-                android:layout_height="49dp"
-                android:text="@string/personnalisez_votre_avatar"
-                app:layout_constraintBottom_toTopOf="@+id/imageViewAvatar2"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toRightOf="@+id/imageViewAvatar2"
+                app:layout_constraintBottom_toTopOf="@+id/titre_queste"
+                app:layout_constraintTop_toBottomOf="@+id/textViewProfileDatas2" />
 
             <TextView
                 style="@style/ButtonYellow"
@@ -119,53 +108,54 @@
                 android:layout_width="0dp"
                 android:layout_height="46dp"
                 android:text="@string/vos_donn_es_personnelles"
-                app:layout_constraintBottom_toTopOf="@+id/textViewProfileDatas"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar2"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/imageViewAvatar2"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 style="@style/Title"
                 android:id="@+id/score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="163dp"
+                android:layout_height="26dp"
                 android:text="@string/scores"
-                app:layout_constraintBottom_toTopOf="@+id/titretitle"
-                app:layout_constraintTop_toBottomOf="@+id/textViewProfileDatas2"
-                app:layout_constraintRight_toLeftOf="@+id/point"
+                app:layout_constraintBottom_toTopOf="@+id/point"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar2"
+                app:layout_constraintRight_toLeftOf="@+id/imageView"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/point"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="156dp"
+                android:layout_height="19dp"
                 tools:text="POINT"
+                android:gravity="center"
                 android:textColor="@color/colorBlue"
                 app:layout_constraintBottom_toTopOf="@+id/titretitle"
-                app:layout_constraintTop_toBottomOf="@+id/textViewProfileDatas"
+                app:layout_constraintTop_toBottomOf="@+id/score"
                 app:layout_constraintRight_toLeftOf="@+id/imageView"
-                app:layout_constraintLeft_toRightOf="@+id/score" />
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 style="@style/Title"
                 android:id="@+id/titretitle"
                 android:gravity="center"
                 android:text="@string/vous_avez_atteint_le_grade_de"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_width="178dp"
+                android:layout_height="44dp"
                 app:layout_constraintBottom_toTopOf="@+id/titre"
-                app:layout_constraintTop_toBottomOf="@+id/score"
-                app:layout_constraintRight_toLeftOf="@+id/imageView" />
+                app:layout_constraintTop_toBottomOf="@+id/point"
+                app:layout_constraintRight_toLeftOf="@+id/imageView"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/titre"
                 tools:text="GRADE"
                 android:textColor="@color/colorBlue"
                 android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="21dp"
-                app:layout_constraintBottom_toTopOf="@+id/titre_queste"
+                android:layout_width="148dp"
+                android:layout_height="27dp"
+                app:layout_constraintBottom_toTopOf="@+id/nbrMax"
                 app:layout_constraintTop_toBottomOf="@+id/titretitle"
                 app:layout_constraintRight_toLeftOf="@+id/imageView"
                 app:layout_constraintLeft_toLeftOf="parent" />
@@ -173,25 +163,28 @@
             <TextView
                 style="@style/Title"
                 android:id="@+id/titre_challenge"
-                android:layout_width="200dp"
-                android:layout_height="18dp"
+                android:layout_width="198dp"
+                android:layout_height="36dp"
                 android:text="@string/d_fi_en_cours"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/challenge_name"
-                app:layout_constraintTop_toBottomOf="@+id/name_quest"
-                app:layout_constraintRight_toLeftOf="@+id/imageView" />
+                app:layout_constraintBottom_toTopOf="@+id/imageViewAvatar2"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar2"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/imageViewAvatar2"
+                app:layout_constraintVertical_bias="0.407"
+                tools:layout_editor_absoluteX="164dp" />
 
             <TextView
                 android:id="@+id/challenge_name"
-                android:layout_width="195dp"
-                android:layout_height="22dp"
+                android:layout_width="198dp"
+                android:layout_height="36dp"
                 android:textColor="@color/colorBlue"
                 android:gravity="center"
                 tools:text="DEFI"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/titre_challenge"
-                app:layout_constraintRight_toLeftOf="@+id/imageView" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/imageViewAvatar2"
+                app:layout_constraintHorizontal_bias="0.438" />
 
             <TextView
                 style="@style/Title"
@@ -199,10 +192,10 @@
                 android:layout_width="195dp"
                 android:layout_height="20dp"
                 android:text="@string/partie_en_cours"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/name_quest"
-                app:layout_constraintTop_toBottomOf="@+id/titre"
-                app:layout_constraintRight_toLeftOf="@+id/imageView" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewProfileDatas"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/imageViewAvatar2" />
 
             <TextView
                 android:id="@+id/name_quest"
@@ -211,35 +204,73 @@
                 tools:text="QUEST"
                 android:textColor="@color/colorBlue"
                 android:gravity="center"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/titre_challenge"
                 app:layout_constraintTop_toBottomOf="@+id/titre_queste"
-                app:layout_constraintRight_toLeftOf="@+id/imageView" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/imageViewAvatar2" />
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="137dp"
-                android:layout_height="201dp"
+                android:layout_width="170dp"
+                android:layout_height="232dp"
                 app:srcCompat="@drawable/jake1"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                app:layout_constraintLeft_toRightOf="@+id/challenge_name" />
+                app:layout_constraintTop_toBottomOf="@+id/challenge_name"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/progressBar2" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="72dp"
                 android:layout_height="61dp"
                 app:srcCompat="@drawable/medal_bronze"
-                app:layout_constraintTop_toTopOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintRight_toRightOf="@+id/textView3"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="@+id/textView3"
+                app:layout_constraintHorizontal_bias="0.029"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewAvatar2"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/textView3"
-                app:layout_constraintVertical_bias="0.0"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="272dp"
-                app:layout_constraintRight_toRightOf="@+id/textView2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintHorizontal_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="166dp"
+                android:layout_height="41dp"
+                android:max="100"
+                app:layout_constraintBottom_toTopOf="@id/nbrMax"
+                app:layout_constraintTop_toBottomOf="@+id/titre"
+                app:layout_constraintRight_toLeftOf="@+id/imageView"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:id="@+id/nbrMax"
+                android:textColor="@color/colorBlue"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                tools:text="100"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar2"
+                app:layout_constraintRight_toLeftOf="@+id/imageView"
+                app:layout_constraintLeft_toRightOf="@+id/nbrMin" />
+
+            <TextView
+                android:id="@+id/nbrMin"
+                android:textColor="@color/colorBlue"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                tools:text="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar2"
+                app:layout_constraintRight_toLeftOf="@+id/nbrMax"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
