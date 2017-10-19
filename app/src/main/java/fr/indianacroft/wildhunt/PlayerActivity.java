@@ -253,7 +253,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         builder.setTitle("Supprimer la partie")
                                 .setMessage("Etes vous sur de vouloir abandonner la partie")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
                                         public void onClick(DialogInterface dialog, int which) {
                                             DatabaseReference refUserQuest = FirebaseDatabase.getInstance()
                                                     .getReference().child("User")

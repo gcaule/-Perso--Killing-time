@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    tools:layout_editor_absoluteY="25dp"
+    tools:layout_editor_absoluteX="0dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="@string/defi"
+        android:textSize="18dp"
+        style="@style/MainTitle"
+        android:id="@+id/listViewLabel"
+        tools:layout_editor_absoluteY="0dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+    <TextView
+        android:id="@+id/listViewChallengeName"
+        style="@style/YellowTitle"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        tools:text="NOM DEFI"
+        app:layout_constraintLeft_toRightOf="@+id/listViewLabel"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/listViewLabel" />
+    <TextView
+        android:id="@+id/listViewChallengeDifficulty"
+        style="@style/YellowTitle"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_goneMarginRight="10dp"
+        tools:text="DIFFICULTY"
+        app:layout_constraintLeft_toRightOf="@+id/listViewChallengeName"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.932"
+        app:layout_constraintBaseline_toBaselineOf="@+id/listViewChallengeName" />
+
+</android.support.constraint.ConstraintLayout>

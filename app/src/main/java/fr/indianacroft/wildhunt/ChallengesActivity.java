@@ -14,6 +14,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -26,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -178,7 +181,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 //
 //        final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Challenge, ChallengeViewHolder>(
 //                Challenge.class,
-//                R.layout.challenge_recyclerview,
+//                R.layout.challenge_listview,
 //                ChallengeViewHolder.class,
 //                refChallenge) {
 //            @Override
@@ -187,7 +190,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 //                holder.setChallenge_difficulty(challenge.getChallenge_difficulty());
 //            }
 //        };
-//
+
 //        // Set the adapter avec les données et la ligne de separation
 //        recyclerViewGamesCreated.setAdapter(mAdapter);
 
