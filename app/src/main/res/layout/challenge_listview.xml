@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="8dp"
         android:text="@string/defi"
         android:textSize="18dp"
         style="@style/MainTitle"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         tools:text="NOM DEFI"
         app:layout_constraintLeft_toRightOf="@+id/listViewLabel"
-        android:layout_marginLeft="32dp"
+        android:layout_marginLeft="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/listViewLabel" />
     <TextView
         android:id="@+id/listViewChallengeDifficulty"
