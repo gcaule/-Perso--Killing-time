@@ -16,10 +16,9 @@
         android:layout_height="wrap_content"
         tools:text="Challenge Name"
         android:textSize="18dp"
-        app:layout_constraintRight_toLeftOf="@+id/userToValidate"
+        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/userToValidate" />
     <TextView
         android:id="@+id/userToValidate"
         style="@style/Title"
@@ -28,9 +27,11 @@
         tools:text="USER"
         android:textSize="18dp"
         app:layout_constraintRight_toLeftOf="@+id/see"
+        android:layout_marginRight="7dp"
         app:layout_constraintLeft_toRightOf="@+id/challengeToValidate"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintBaseline_toBaselineOf="@+id/see" />
 
     <Button
         android:id="@+id/see"
@@ -40,11 +41,10 @@
         android:elevation="8dp"
         android:text="@string/validate_see"
         android:textColor="#FFFFFF"
-        app:layout_constraintLeft_toRightOf="@+id/userToValidate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         android:layout_marginRight="8dp"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
