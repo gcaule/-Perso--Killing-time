@@ -71,7 +71,7 @@
                 android:gravity="center"
                 style="@style/Title"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.87"
                 android:layout_height="match_parent"
                 android:background="@drawable/layout_colors2"
                 android:text="@string/challenge"/>
@@ -81,10 +81,20 @@
                 android:layout_width="0dp"
                 android:gravity="center"
                 style="@style/Title"
-                android:layout_weight="1"
+                android:layout_weight="1.16"
                 android:layout_height="match_parent"
                 android:background="@drawable/layout_colors2"
                 android:text="@string/nom_du_joueur" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:gravity="center"
+                style="@style/Title"
+                android:layout_weight="0.64"
+                android:layout_height="match_parent"
+                android:background="@drawable/layout_colors2"
+                android:text="" />
 
         </LinearLayout>
         <android.support.constraint.ConstraintLayout
