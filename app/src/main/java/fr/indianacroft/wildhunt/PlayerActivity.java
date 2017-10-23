@@ -42,28 +42,10 @@ import static fr.indianacroft.wildhunt.R.id.nav_manage;
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ImageView imageViewAvatar;
-    // Bottom Navigation Bar
-    BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_validate:
-                    return true;
-                case R.id.navigation_hint:
-                    return true;
-                case R.id.navigation_leave:
-                    return true;
-            }
-            return false;
-        }
-    };
     private String mUserId, mUser_quest, mUser_name, mQuest_description, mQuest_name, mUser_indice,
             mName_challenge, mDiff_challenge, mHint_challenge, mKey_challenge, mCreatorId, mQuestId,
             mUser_challenge;
     private int mNbrePoints, mUser_score;
-    // Share via other apps
-    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -503,4 +485,24 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         });
 
     }
+
+    // Bottom Navigation Bar
+    BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_validate:
+                    return true;
+                case R.id.navigation_hint:
+                    return true;
+                case R.id.navigation_leave:
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
 }
