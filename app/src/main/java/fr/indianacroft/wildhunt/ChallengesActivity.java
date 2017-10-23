@@ -89,6 +89,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
             }
         });
+        // Cannot access to "Gerer ma partie" if no validation pending
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
         rootRef.child(mUserId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -99,6 +100,24 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 } else {
                     Menu nav_Menu = navigationView.getMenu();
                     nav_Menu.findItem(R.id.nav_manage).setVisible(false);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        // Cannot access to "Ma partie" if not playing to a quest
+        DatabaseReference db = rootRef.child(mUserId).child("user_quest");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String questOrNot = dataSnapshot.getValue(String.class);
+                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(false);
+                } else {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(true);
                 }
             }
             @Override

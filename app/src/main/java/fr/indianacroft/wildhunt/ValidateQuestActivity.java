@@ -68,7 +68,7 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         View headerview = navigationView.getHeaderView(0);
@@ -76,6 +76,25 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
+            }
+        });
+        // Cannot access to "Ma partie" if not playing to a quest
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
+        DatabaseReference db = rootRef.child(mUserId).child("user_quest");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String questOrNot = dataSnapshot.getValue(String.class);
+                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(false);
+                } else {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(true);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
 
