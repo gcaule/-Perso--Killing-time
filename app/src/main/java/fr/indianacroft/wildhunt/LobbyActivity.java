@@ -105,7 +105,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String questOrNot = dataSnapshot.getValue(String.class);
-                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                if (questOrNot.equals(R.string.noQuest)) {
                     Menu nav_Menu = navigationView.getMenu();
                     nav_Menu.findItem(R.id.nav_play).setVisible(false);
                 } else {
@@ -401,7 +401,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                     if (challenge.getChallenge_questId().equals(mUser_quest)) {
                         mKey_challenge = dsp.getKey();
                         mName_challenge = challenge.getChallenge_name();
-                        Log.d(mName_challenge, "tag");
                         mHint_challenge = challenge.getHint_challenge();
                         mDiff_challenge = challenge.getChallenge_difficulty();
                         return;

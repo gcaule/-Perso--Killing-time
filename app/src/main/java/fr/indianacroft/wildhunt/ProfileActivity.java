@@ -97,7 +97,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String questOrNot = dataSnapshot.getValue(String.class);
-                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                if (questOrNot.equals(R.string.noQuest)) {
                     Menu nav_Menu = navigationView.getMenu();
                     nav_Menu.findItem(R.id.nav_play).setVisible(false);
                 } else {
@@ -199,7 +199,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
                 simpleProgressBar.setProgress(Math.round(currentPercent*100));
 
-                if ((mUser_quest.equals("Pas de qûete pour l'instant")) || (mUser_challenge.equals("Pas de défi pour l'instant"))) {
+                if ((mUser_quest.equals(R.string.noQuest)) || (mUser_challenge.equals(R.string.noChallenge))) {
                     TextView titreQueste = findViewById(R.id.name_quest);
                     titreQueste.setText(mUser_quest);
                     TextView titreChallenge = findViewById(R.id.challenge_name);

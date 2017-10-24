@@ -100,7 +100,7 @@ public class ProfileActivity_PopUp extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             pd.dismiss();
-                            Toast.makeText(ProfileActivity_PopUp.this, "Upload successful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileActivity_PopUp.this, R.string.toast_upload_success, Toast.LENGTH_SHORT).show();
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 public void run() {
@@ -113,7 +113,7 @@ public class ProfileActivity_PopUp extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             pd.dismiss();
-                            Toast.makeText(ProfileActivity_PopUp.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileActivity_PopUp.this, R.string.toast_error_upload, Toast.LENGTH_SHORT).show();
                         }
                     });
                 } // REQUEST IMAGE CAPTURE = lien vers appareil photo
@@ -136,13 +136,13 @@ public class ProfileActivity_PopUp extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             pd.dismiss();
-                            Toast.makeText(ProfileActivity_PopUp.this, "Picture upload failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ProfileActivity_PopUp.this, R.string.toast_error_upload, Toast.LENGTH_LONG).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             pd.dismiss();
-                            Toast.makeText(ProfileActivity_PopUp.this, "Picture uploaded", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ProfileActivity_PopUp.this, R.string.toast_upload_success, Toast.LENGTH_LONG).show();
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 public void run() {

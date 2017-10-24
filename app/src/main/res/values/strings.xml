@@ -21,7 +21,7 @@
     <string name="share_text">Viens tester la nouvelle application Wild Hunt !</string>
 
     // Page Profil
-    <string name="profil">PROFIL</string>
+    <string name="profil">Profil</string>
     <string name="upload_ta_photo">UPLOAD\nPHOTO</string>
     <string name="prendre_nouvelle_photo">NOUVELLE\nPHOTO</string>
     <string name="envoi_photo">ENVOI\nPHOTO</string>
@@ -29,7 +29,7 @@
     <string name="toast_error_upload">Echec de l\'upload</string>
     <string name="toast_upload_success">Upload réussi !</string>
     <string name="progressdialog_upload">Uploading ...</string>
-    <string name="sauvergarder_les_modifications">Sauvergarder les modifications</string>
+    <string name="sauvegarder_les_modifications">Sauvegarder les modifications</string>
     <string name="vos_donn_es_personnelles">Vos données personnelles :</string>
     <string name="personnalisez_votre_avatar">Personnalisez votre avatar :</string>
     <string name="scores">Votre score :</string>
@@ -102,7 +102,7 @@
     <string name="life_duration_quest_title">Durée de vie</string>
     <string name="create_quest_button">Créer la partie</string>
     <string name="add_new_challenge">Ajouter des défis à votre partie</string>
-    <string name="create_challenge_button">Créer un challenge</string>
+    <string name="create_challenge_button">Créer un défi</string>
     <string name="challenge">Défi :</string>
     <string name="create_quest">Créer ma partie</string>
     <string name="toast_challenge2">Veuillez remplir tous les champs et ajouter des défis pour pouvoir créer votre partie</string>
@@ -163,5 +163,20 @@
         Copyright : Jake and the Never Land Pirates\n\n
         Developed by Pierre , Valentin, Laurent et Guillaume
         </string>
+
+
+
+
+    <string name="noQuest">Pas de qûete pour l\'instant</string>
+    <string name="title_alertdialog_refuse">REFUSER cette solution</string>
+    <string name="alertdialog_refuse">Es-tu sûr de vouloir REFUSER cette solution ?</string>
+    <string name="alertdialog_solutionrefused">Solution refusée!</string>
+    <string name="title_alertdialog_accept">Valider cette solution</string>
+    <string name="alertdialog_accept">Es-tu sûr de vouloir VALIDER cette solution ?</string>
+    <string name="alertdialog_solutionaccepted">Solution validée !</string>
+    <string name="noChallenge">Pas de défi pour l\'instant</string>
+    <string name="title_alertdialog_abort">Abandonner?</string>
+    <string name="alertdialog_abort">Es-tu sûr de vouloir abandonner?</string>
+    <string name="toast_finish">Tu as terminé tout les défis !\\n Bravo !</string>
 
 </resources>

@@ -90,7 +90,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String questOrNot = dataSnapshot.getValue(String.class);
-                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                if (questOrNot.equals(R.string.noQuest)) {
                     Menu nav_Menu = navigationView.getMenu();
                     nav_Menu.findItem(R.id.nav_play).setVisible(false);
                 } else {
@@ -200,8 +200,6 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ChallengeToValidateActivity.this, "Vous n'avez crée aucune partie", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(),ChallengesActivity.class));
             }
         });
     }
@@ -256,12 +254,12 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                         } else {
                             builder = new AlertDialog.Builder(ChallengeToValidateActivity.this);
                         }
-                        builder.setTitle("REFUSER cette solution")
-                                .setMessage("Etes vous sur de vouloir REFUSER cette solution ?")
+                        builder.setTitle(R.string.title_alertdialog_refuse)
+                                .setMessage(R.string.alertdialog_refuse)
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Toast.makeText(ChallengeToValidateActivity.this, "Défi refusé!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ChallengeToValidateActivity.this, R.string.alertdialog_solutionrefused, Toast.LENGTH_SHORT).show();
                                         // Modifier le champ dans le user Creator pour le mettre en true !
                                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                                         ref.child("User").child(mUserId).child("aValider").child(createdQuest)
@@ -297,12 +295,12 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                         } else {
                             builder = new AlertDialog.Builder(ChallengeToValidateActivity.this);
                         }
-                        builder.setTitle("Valider ce défi")
-                                .setMessage("Etes vous sur de vouloir VALIDER ce défi ?")
+                        builder.setTitle(R.string.title_alertdialog_accept)
+                                .setMessage(R.string.alertdialog_accept)
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Toast.makeText(ChallengeToValidateActivity.this, "Défi validé!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ChallengeToValidateActivity.this, R.string.alertdialog_solutionaccepted, Toast.LENGTH_SHORT).show();
                                         // Modifier le champ dans le user Creator pour le mettre en true (maintenant ca se supprime) !
                                         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                                         ref.child("User").child(mUserId).child("aValider")

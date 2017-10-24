@@ -105,7 +105,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String questOrNot = dataSnapshot.getValue(String.class);
-                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                if (questOrNot.equals(R.string.noQuest)) {
                     Menu nav_Menu = navigationView.getMenu();
                     nav_Menu.findItem(R.id.nav_play).setVisible(false);
                 } else {
@@ -139,7 +139,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         navigation_validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mUser_quest.equals("Pas de qûete pour l'instant")) {
+                if (!mUser_quest.equals(R.string.noQuest)) {
                     Intent intent = new Intent(getApplicationContext(), PlayerActivity_PopUp.class);
                     intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
                     intent.putExtra("mCreatorId", mCreatorId);
@@ -251,15 +251,15 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         } else {
                             builder = new AlertDialog.Builder(PlayerActivity.this);
                         }
-                        AlertDialog show = builder.setTitle("Abandonner?")
-                                .setMessage("Etes vous sur de vouloir abandonner?")
+                        AlertDialog show = builder.setTitle(R.string.title_alertdialog_abort)
+                                .setMessage(R.string.alertdialog_abort)
                                 .setPositiveButton(R.string.abandonpartie, new DialogInterface.OnClickListener() {
 
                                     public void onClick(DialogInterface dialog, int which) {
                                         DatabaseReference refUserQuest = FirebaseDatabase.getInstance()
                                                 .getReference().child("User")
                                                 .child(mUserId).child("user_quest");
-                                        refUserQuest.setValue("Pas de qûete pour l'instant");
+                                        refUserQuest.setValue(R.string.noQuest);
                                         startActivity(new Intent(getApplicationContext(), LobbyActivity.class));
                                     }
                                 })
@@ -383,8 +383,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 
                                         } else {
                                             // Tous les défis ont été faits !!!
-                                            refUser.child("User").child(mUserId).child("user_challenge").setValue("Pas de défi pour l'instant");
-                                            refUser.child("User").child(mUserId).child("user_quest").setValue("Pas de qûete pour l'instant");
+                                            refUser.child("User").child(mUserId).child("user_challenge").setValue(R.string.noChallenge);
+                                            refUser.child("User").child(mUserId).child("user_quest").setValue(R.string.noQuest);
                                             // Modifier le champ dans le user Player pour mettre le challenge en done !
                                             refUser.child("User").child(mUserId).child("quest_done").child(mUser_quest).child("state").setValue("true");
 
@@ -394,7 +394,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                                 mRefUser.removeEventListener(mListener);
                                                 startActivity(new Intent (getApplicationContext(), LobbyActivity.class));
                                                 Toast.makeText(PlayerActivity.this,
-                                                        "Vous avez terminé tout les défis !\n" + "Redirection en cours", Toast.LENGTH_SHORT).show();
+                                                        R.string.toast_finish, Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     }
@@ -416,7 +416,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 
                                         mKey_challenge = dataSnapshot.getKey();
                                         mName_challenge = challenge.getChallenge_name();
-                                        Log.d(mName_challenge, "tag");
                                         mHint_challenge = challenge.getHint_challenge();
                                         mDiff_challenge = challenge.getChallenge_difficulty();
                                         mCreatorId = challenge.getChallenge_creatorID();
