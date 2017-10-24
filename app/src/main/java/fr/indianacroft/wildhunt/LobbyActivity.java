@@ -82,6 +82,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
             }
         });
+        // Cannot access to "Gerer ma partie" if no validation pending
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
         rootRef.child(mUserId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,6 +93,24 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 } else {
                     Menu nav_Menu = navigationView.getMenu();
                     nav_Menu.findItem(R.id.nav_manage).setVisible(false);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        // Cannot access to "Ma partie" if not playing to a quest
+        DatabaseReference db = rootRef.child(mUserId).child("user_quest");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String questOrNot = dataSnapshot.getValue(String.class);
+                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(false);
+                } else {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(true);
                 }
             }
             @Override
@@ -273,6 +292,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
         // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
         if (id == R.id.nav_rules) {
@@ -295,6 +315,8 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
+        } else if (id == R.id.nav_credits) {
+            startActivity(new Intent(getApplicationContext(), CreditsActivity.class));
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
@@ -354,7 +376,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                         mQuest_name = quest.getQuest_name();
                         Log.d(mQuest_name, "quest");
                         mQuest_description = quest.getQuest_description();
-                        mLife_duration = quest.getLife_duration();
+//                        mLife_duration = quest.getLife_duration();
                         searcChallenges();
                         return;
                     }
@@ -366,10 +388,8 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         });
     }
 
-
     // METHODE POUR TROUVER CHALLENGE
     private void searcChallenges() {
-
         // On recupere les données des challenges
         DatabaseReference refUserChallenge = FirebaseDatabase.getInstance().getReference().child("Challenge").child(mUser_quest);
         refUserChallenge.addListenerForSingleValueEvent(new ValueEventListener() {

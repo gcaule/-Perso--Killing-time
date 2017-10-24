@@ -78,6 +78,25 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
             }
         });
+        // Cannot access to "Ma partie" if not playing to a quest
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
+        DatabaseReference db = rootRef.child(mUserId).child("user_quest");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String questOrNot = dataSnapshot.getValue(String.class);
+                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(false);
+                } else {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(true);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         // Bottom Navigation bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation_validate);
@@ -117,7 +136,9 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
+        // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
         if (id == R.id.nav_rules) {
             Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
@@ -132,6 +153,14 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
+        }  else if (id == R.id.nav_share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+        } else if (id == R.id.nav_credits) {
+            startActivity(new Intent(getApplicationContext(), CreditsActivity.class));
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }

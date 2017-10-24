@@ -94,10 +94,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:background="@drawable/button_shape2"
-                android:layout_below="@+id/playerActivityNameQuestTitle"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/life_duration_quest_title"
+                app:layout_constraintBottom_toTopOf="@+id/description_quest"
                 app:layout_constraintTop_toBottomOf="@+id/quest_title" />
 
             <EditText
@@ -115,35 +114,35 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/button_create_quest"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_challenge" />
-
-            <TextView
-                android:id="@+id/life_duration_quest_title"
-                android:layout_width="200dp"
-                android:layout_height="23dp"
-                android:text="@string/life_duration_quest_title"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/name_quest"
-                android:layout_toEndOf="@+id/name_quest"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/spinner_challenge"
-                app:layout_constraintBottom_toTopOf="@+id/description_quest"
                 app:layout_constraintTop_toBottomOf="@+id/name_quest" />
 
-            <Spinner
-                android:id="@+id/spinner_challenge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/name_quest"
-                android:layout_below="@+id/life_duration_quest_title"
-                android:layout_alignBottom="@+id/name_quest"
-                android:layout_toRightOf="@+id/name_quest"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/life_duration_quest_title"
-                app:layout_constraintBottom_toTopOf="@+id/description_quest"
-                app:layout_constraintTop_toBottomOf="@+id/name_quest" />
+            <!--<TextView-->
+                <!--android:id="@+id/life_duration_quest_title"-->
+                <!--android:layout_width="200dp"-->
+                <!--android:layout_height="23dp"-->
+                <!--android:text="@string/life_duration_quest_title"-->
+                <!--android:textStyle="bold"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_toRightOf="@+id/name_quest"-->
+                <!--android:layout_toEndOf="@+id/name_quest"-->
+                <!--app:layout_constraintLeft_toLeftOf="parent"-->
+                <!--app:layout_constraintRight_toLeftOf="@+id/spinner_challenge"-->
+                <!--app:layout_constraintBottom_toTopOf="@+id/description_quest"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/name_quest" />-->
+
+            <!--<Spinner-->
+                <!--android:id="@+id/spinner_challenge"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toEndOf="@+id/name_quest"-->
+                <!--android:layout_below="@+id/life_duration_quest_title"-->
+                <!--android:layout_alignBottom="@+id/name_quest"-->
+                <!--android:layout_toRightOf="@+id/name_quest"-->
+                <!--app:layout_constraintRight_toRightOf="parent"-->
+                <!--app:layout_constraintLeft_toRightOf="@+id/life_duration_quest_title"-->
+                <!--app:layout_constraintBottom_toTopOf="@+id/description_quest"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/name_quest" />-->
 
             <Button
                 android:id="@+id/button_create_quest"

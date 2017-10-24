@@ -15,6 +15,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 
 public class PlayerActivity_PopUp extends AppCompatActivity {
     int PICK_IMAGE_REQUEST = 111;
@@ -44,6 +46,17 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
     private String mCreatorId;
     private String mQuestId;
     private String mUser_indice;
+
+    ////////////////////////////////////////////////////////////////////////////////////
+//    private final String TAG = "MainActivity";
+//    EditText editTextTitle, editTextContent, editTextSubText;
+//
+//    // The Keys
+//    private String TITLE = "Title";
+//    private String CONTENT = "Content";
+//    private String SUBTEXT = "SubText";
+    ////////////////////////////////////////////////////////////////////////////////////
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,36 +144,40 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Modifier le champ dans le user Player pour mettre le challenge en done !
-               refUser.child("challenge_done").child(mChallengeId).child("state").setValue("true");
+            // Modifier le champ dans le user Player pour mettre le challenge en done !
+           refUser.child("challenge_done").child(mChallengeId).child("state").setValue("true");
 
-
-
-
-
-                // TEST DE NOTIFS
-
+                ////////////////////////////////////////////////////////////////////////////////////
+//                // TEST DE NOTIFS
+//                // Start Service
+//                Intent serviceIntent = new Intent(getApplicationContext(), NotificationService.class);
+//                startService(serviceIntent);
+//
+//                // Get the Database
 //                FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                final DatabaseReference refCreatorId = database.getReference("Quest");
-//                refCreatorId.child(mUserQuest).addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                // Get the Notification Reference
+//                final DatabaseReference notificationRef = database.getReference("Notification");
+//                // Keep the Database sync in case of loosing connexion
+//                notificationRef.keepSynced(true);
 //
-//                        Quest quest = dataSnapshot.getValue(Quest.class);
-//                        String user_creatorId = quest.getQuest_creatorId();
+//                // Send Notification on Send Click
+//                // Get Edit Text
+////                editTextTitle = (EditText) findViewById(R.id.editTextTitle);
+////                editTextContent = (EditText) findViewById(R.id.editTextContent);
+////                editTextSubText = (EditText) findViewById(R.id.editTextSubText);
 //
-//                        // Test Notifs
-//                        Utilities.sendNotification(
-//                                user_creatorId, //receiver_id, /*who the notification is meant for*/
-//                                "Chat message from John Duff", /*Message to be displayed on the notification*/
-//                                "New chat message", /*Message title*/
-//                                "chat_view" /*Notification type, You can use this to determine what activities to stack when the receiver clicks on the notification item*/
-//                        );
-//                    }
-//                    @Override
-//                    public void onCancelled(DatabaseError error) {
-//                    }
-//                });
+//                // Get Text
+////                String title = editTextTitle.getText().toString();
+////                String content = editTextContent.getText().toString();
+////                String subtext = editTextSubText.getText().toString();
+//                // Store in a map
+//                HashMap<String, String> notification = new HashMap<String, String>();
+//                notification.put(TITLE, mUserId);
+//                notification.put(CONTENT, mQuestId);
+//                notification.put(SUBTEXT, mChallengeId);
+//                // Send the map
+//                notificationRef.setValue(notification);
+                ////////////////////////////////////////////////////////////////////////////////////
 
             // Upload photos on Firebase
             if (filePath != null) {

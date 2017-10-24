@@ -42,28 +42,10 @@ import static fr.indianacroft.wildhunt.R.id.nav_manage;
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ImageView imageViewAvatar;
-    // Bottom Navigation Bar
-    BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_validate:
-                    return true;
-                case R.id.navigation_hint:
-                    return true;
-                case R.id.navigation_leave:
-                    return true;
-            }
-            return false;
-        }
-    };
     private String mUserId, mUser_quest, mUser_name, mQuest_description, mQuest_name, mUser_indice,
             mName_challenge, mDiff_challenge, mHint_challenge, mKey_challenge, mCreatorId, mQuestId,
             mUser_challenge;
     private int mNbrePoints, mUser_score;
-    // Share via other apps
-    private ShareActionProvider mShareActionProvider;
     ValueEventListener mListener = null;
     DatabaseReference mRefUser = null;
     String mIndice = "false";
@@ -80,10 +62,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
-
-
-
-
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -106,6 +84,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
             }
         });
+        // Cannot access to "Gerer ma partie" if no validation pending
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
         rootRef.child(mUserId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -118,7 +97,24 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     nav_Menu.findItem(R.id.nav_manage).setVisible(false);
                 }
             }
-
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        // Cannot access to "Ma partie" if not playing to a quest
+        DatabaseReference db = rootRef.child(mUserId).child("user_quest");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String questOrNot = dataSnapshot.getValue(String.class);
+                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(false);
+                } else {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(true);
+                }
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -153,30 +149,13 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     intent.putExtra("mUser_indice", mIndice);
                     startActivity(intent);
                     mRefUser.removeEventListener(mListener);
-
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.error_noquest, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-//        Button buttonSendSolution = (Button) findViewById(R.id.buttonHomeJoueurSendSolution);
-//        buttonSendSolution.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(!mUser_quest.equals("Pas de qûete pour l'instant")) {
-//                    Intent intent = new Intent(getApplicationContext(), HomeJoueur_PlayerPopUp.class);
-//                    intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
-//                    startActivity(intent);
-//                }
-//                else{
-//                    Toast.makeText(getApplicationContext(), R.string.error_noquest, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
     }
-
-
 
     // Drawer Menu
     @Override
@@ -194,10 +173,10 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
         // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
         if (id == R.id.nav_rules) {
@@ -211,15 +190,17 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             startActivity(intent);
         } else if (id == R.id.nav_create) {
             startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
-        } else if (id == nav_manage) {
+        } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_share) {
+        }  else if (id == R.id.nav_share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
+        } else if (id == R.id.nav_credits) {
+            startActivity(new Intent(getApplicationContext(), CreditsActivity.class));
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
@@ -258,9 +239,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                 mUser_score = user.getScore();                  // on recupere son score
 
                 Log.d("indice", mUser_indice);
-
-
-
 
                 searchQuest();
 
@@ -420,16 +398,9 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                                 Toast.makeText(PlayerActivity.this,
                                                         "Vous avez terminé tout les défis !\n" + "Redirection en cours", Toast.LENGTH_SHORT).show();
                                             }
-
-
-
-
-
                                         }
-
                                     }
                                 }
-
 
                                 // On set le challenge sur la page
                                 final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
@@ -520,8 +491,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                             public void onCancelled(DatabaseError databaseError) {
                             }
                         });
-
-
                     }
                 }
             }
@@ -532,4 +501,24 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         });
 
     }
+
+    // Bottom Navigation Bar
+    BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_validate:
+                    return true;
+                case R.id.navigation_hint:
+                    return true;
+                case R.id.navigation_leave:
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
 }
