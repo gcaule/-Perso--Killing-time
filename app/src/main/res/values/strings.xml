@@ -93,7 +93,7 @@
     <string name="send_photo">Envoyer</string>
     <string name="error_noquest">Veuillez rejoindre d\'abord une partie</string>
     <string name="titlePopUp">Envoyer votre solution (Selfie !)</string>
-    <string name="hint_no_need">Votre indice a été utilisé !</string>
+    <!--<string name="hint_no_need">Votre indice a été utilisé !</string>-->
     <string name="hint_need">Trouve cette photo !\nEnvoie nous ton selfie au plus vite\npour gagner ce défi !\n
     N\'oublie pas que tu peux utiliser un indice !</string>
 
