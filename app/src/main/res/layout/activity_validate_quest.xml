@@ -76,7 +76,7 @@
                 android:text="@string/challenge"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp"
-                style="@style/Title"/>
+                style="@style/Title" />
 
             <TextView
                 android:id="@+id/textView9"

@@ -251,8 +251,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         } else {
                             builder = new AlertDialog.Builder(PlayerActivity.this);
                         }
-                        AlertDialog show = builder.setTitle("Abandonner?")
-                                .setMessage("Etes vous sur de vouloir abandonner?")
+                        AlertDialog show = builder.setTitle(R.string.title_alertdialog_abort)
+                                .setMessage(R.string.alertdialog_abort)
                                 .setPositiveButton(R.string.abandonpartie, new DialogInterface.OnClickListener() {
 
                                     public void onClick(DialogInterface dialog, int which) {
@@ -394,7 +394,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                                 mRefUser.removeEventListener(mListener);
                                                 startActivity(new Intent (getApplicationContext(), LobbyActivity.class));
                                                 Toast.makeText(PlayerActivity.this,
-                                                        "Vous avez terminé tout les défis !\n" + "Redirection en cours", Toast.LENGTH_SHORT).show();
+                                                        R.string.toast_finish, Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     }
@@ -416,7 +416,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 
                                         mKey_challenge = dataSnapshot.getKey();
                                         mName_challenge = challenge.getChallenge_name();
-                                        Log.d(mName_challenge, "tag");
                                         mHint_challenge = challenge.getHint_challenge();
                                         mDiff_challenge = challenge.getChallenge_difficulty();
                                         mCreatorId = challenge.getChallenge_creatorID();

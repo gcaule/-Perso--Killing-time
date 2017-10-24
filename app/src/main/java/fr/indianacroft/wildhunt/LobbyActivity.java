@@ -401,7 +401,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                     if (challenge.getChallenge_questId().equals(mUser_quest)) {
                         mKey_challenge = dsp.getKey();
                         mName_challenge = challenge.getChallenge_name();
-                        Log.d(mName_challenge, "tag");
                         mHint_challenge = challenge.getHint_challenge();
                         mDiff_challenge = challenge.getChallenge_difficulty();
                         return;
