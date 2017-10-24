@@ -147,7 +147,6 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         quest_title = findViewById(R.id.quest_title);
         description_title = findViewById(R.id.description_title);
 //        life_duration_quest_title = (TextView) findViewById(R.id.life_duration_quest_title);
-        imageViewPirate = findViewById(R.id.imageViewPirate);
         name_quest = findViewById(R.id.name_quest);
         description_quest = findViewById(R.id.description_quest);
         listView = findViewById(R.id.listViewChallengeCreated);
@@ -223,7 +222,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     butAddNewChallenge.setVisibility(View.VISIBLE);
                     quest_title.setVisibility(View.GONE);
                     description_title.setVisibility(View.GONE);
-                    imageViewPirate.setVisibility(View.VISIBLE);
+
                     name_quest.setVisibility(View.GONE);
                     description_quest.setVisibility(View.GONE);
                     listView.setEmptyView(findViewById(R.id.empty));
