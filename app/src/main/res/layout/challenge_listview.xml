@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="@string/defi"
-        android:textColor="@color/buttonTextColor"
+        android:textColor="#FFFFFF"
         android:textSize="18dp"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_editor_absoluteY="0dp" />
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
-        android:textColor="@color/buttonTextColor"
+        android:textColor="#FFFFFF"
         app:layout_constraintBaseline_toBaselineOf="@+id/listViewLabel"
         app:layout_constraintLeft_toRightOf="@+id/listViewLabel"
         tools:text="NOM DEFI" />
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:textColor="@color/buttonTextColor"
+        android:textColor="#FFFFFF"
         app:layout_constraintBaseline_toBaselineOf="@+id/listViewChallengeName"
         app:layout_constraintHorizontal_bias="0.932"
         app:layout_constraintLeft_toRightOf="@+id/listViewChallengeName"

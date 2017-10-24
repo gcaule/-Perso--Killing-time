@@ -45,7 +45,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="@string/mes_d_fis_valider"
-                    android:textColor="@color/newcolor3"
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
                 android:background="@drawable/button_shape2"
                 android:gravity="center"
                 android:text="@string/challenge"
-                android:textColor="@color/buttonTextColor" />
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -86,7 +86,7 @@
                 android:gravity="center"
                 android:text="@string/nom_du_joueur"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/buttonTextColor" />
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
         <android.support.constraint.ConstraintLayout

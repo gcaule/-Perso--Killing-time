@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/titlePopUp"
-        android:textColor="@color/buttonTextColor"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/butLoad"
         app:layout_constraintLeft_toLeftOf="parent"

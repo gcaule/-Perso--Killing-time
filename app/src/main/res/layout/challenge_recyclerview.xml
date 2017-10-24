@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/buttonTextColor"
+        android:textColor="#FFFFFF"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="NOM PARTIE" />
@@ -30,7 +30,7 @@
         android:layout_marginLeft="114dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/buttonTextColor"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.947"
         app:layout_constraintLeft_toRightOf="@+id/challengeName"
