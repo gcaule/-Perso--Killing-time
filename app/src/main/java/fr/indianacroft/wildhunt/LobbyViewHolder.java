@@ -32,16 +32,16 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(itemView.getContext());
         mUserId = preferences.getString("mUserId", "");
 
-        mNamePartyLobby = (TextView) itemView.findViewById(R.id.lobbyName);
+        mNamePartyLobby = itemView.findViewById(R.id.lobbyName);
 
-        mDescriptionPartyLobby = (TextView) itemView.findViewById(R.id.textViewLobbyDescription);
+        mDescriptionPartyLobby = itemView.findViewById(R.id.textViewLobbyDescription);
         mDescriptionPartyLobby.setVisibility(View.GONE);
 
-        mJoinPartyLobby = (Button) itemView.findViewById(R.id.buttonLobbyJoin);
+        mJoinPartyLobby = itemView.findViewById(R.id.buttonLobbyJoin);
         mJoinPartyLobby.setVisibility(View.GONE);
 
         // Discover quest details
-        mDiscoverPartyLobby = (Button) itemView.findViewById(R.id.buttonLobbyDetails);
+        mDiscoverPartyLobby = itemView.findViewById(R.id.buttonLobbyDetails);
         mDiscoverPartyLobby.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -194,7 +194,7 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
 
     //Interface to send callbacks...
     public interface ClickListener{
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     public static void setOnClickListener(LobbyViewHolder.ClickListener clickListener){

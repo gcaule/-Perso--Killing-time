@@ -24,8 +24,8 @@ public class ChallengeViewHolder extends RecyclerView.ViewHolder {
         mUserId = preferences.getString("mUserId", "");
         /////////////////////////////////////////////////////////////////
 
-        mChallengeName = (TextView) itemView.findViewById(R.id.listViewChallengeName);
-        mChallengeDiff = (TextView) itemView.findViewById(R.id.listViewChallengeDifficulty);
+        mChallengeName = itemView.findViewById(R.id.listViewChallengeName);
+        mChallengeDiff = itemView.findViewById(R.id.listViewChallengeDifficulty);
 
     }
 

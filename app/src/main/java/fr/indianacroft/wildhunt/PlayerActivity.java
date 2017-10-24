@@ -37,18 +37,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import static fr.indianacroft.wildhunt.R.id.nav_manage;
-
 public class PlayerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ImageView imageViewAvatar;
+    private ImageView imageViewAvatar;
     private String mUserId, mUser_quest, mUser_name, mQuest_description, mQuest_name, mUser_indice,
             mName_challenge, mDiff_challenge, mHint_challenge, mKey_challenge, mCreatorId, mQuestId,
             mUser_challenge;
     private int mNbrePoints, mUser_score;
-    ValueEventListener mListener = null;
-    DatabaseReference mRefUser = null;
-    String mIndice = "false";
+    private ValueEventListener mListener = null;
+    private DatabaseReference mRefUser = null;
+    private String mIndice = "false";
 
 
     @Override
@@ -56,7 +54,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-        final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
+        final TextView textViewPlayerActivityHint = findViewById(R.id.textViewPlayerActivityHint);
 
         // To find User Key and link it to a quest
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -64,17 +62,17 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         Log.d("key", mUserId);
 
         // Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Drawer Menu
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         View headerview = navigationView.getHeaderView(0);
@@ -121,12 +119,12 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         });
 
         // Bottom Navigation bar
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setAnimation(null);
         bottomNavigationView.setSelectedItemId(R.id.navigation_validate);
 
         // Avatar
-        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        imageViewAvatar = findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,7 +158,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     // Drawer Menu
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -204,7 +202,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -313,7 +311,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     mQuest_name = quest.getQuest_name();
                     Log.d(mQuest_name, "quest");
                     mQuest_description = quest.getQuest_description();
-                    final TextView playerActivityQuestName = (TextView) findViewById(R.id.playerActivityNameQuestTitle);
+                    final TextView playerActivityQuestName = findViewById(R.id.playerActivityNameQuestTitle);
                     playerActivityQuestName.setText(mQuest_name);
                     searchChallenges();
                 }
@@ -403,8 +401,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                 }
 
                                 // On set le challenge sur la page
-                                final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
-                                final Button playerActivityNumChallenge = (Button) findViewById(R.id.playerActivityNumChallenge);
+                                final TextView textViewPlayerActivityHint = findViewById(R.id.textViewPlayerActivityHint);
+                                final Button playerActivityNumChallenge = findViewById(R.id.playerActivityNumChallenge);
 
                                 // On recupere les données des challenges
 
@@ -429,8 +427,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         // Reference to an image file in Firebase Storage
                                         StorageReference storageReference = FirebaseStorage.getInstance().getReference("Quest").child(mUser_quest).child(mKey_challenge);
                                         // ImageView in your Activity
-                                        final ImageView imageViewPhotoChallenge = (ImageView) findViewById(R.id.imageViewHomeJoueurToFind);
-                                        final TextView playerActivityDuration = (TextView) findViewById(R.id.textViewDifficulty);
+                                        final ImageView imageViewPhotoChallenge = findViewById(R.id.imageViewHomeJoueurToFind);
+                                        final TextView playerActivityDuration = findViewById(R.id.textViewDifficulty);
 
                                         // Load the image using Glide
                                         Glide.with(getApplicationContext())
@@ -443,8 +441,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         playerActivityNumChallenge.setText(mName_challenge);
                                         playerActivityDuration.setText(mDiff_challenge);
 
-                                        final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
-                                        final TextView textViewPlayerActivityHint2 = (TextView) findViewById(R.id.textViewPlayerActivityHint2);
+                                        final TextView textViewPlayerActivityHint = findViewById(R.id.textViewPlayerActivityHint);
+                                        final TextView textViewPlayerActivityHint2 = findViewById(R.id.textViewPlayerActivityHint2);
 
                                         // Indice a montrer si indice déja utilisé c'est a dire True dans la bdd
                                         if (mUser_indice.equalsIgnoreCase("true")) {

@@ -123,7 +123,7 @@ public class ValidateAdapter extends BaseAdapter {
                 });
 
 
-                Button see = (Button) finalConvertView.findViewById(R.id.see);
+                Button see = finalConvertView.findViewById(R.id.see);
 
                 see.setOnClickListener(new View.OnClickListener() {
                     @Override

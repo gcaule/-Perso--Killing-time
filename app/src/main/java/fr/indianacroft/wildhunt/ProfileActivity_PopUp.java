@@ -49,10 +49,10 @@ public class ProfileActivity_PopUp extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.8),(int)(height*.75));
 
-        takePhoto = (Button) findViewById(R.id.takePhoto);
-        chooseImg = (Button)findViewById(R.id.chooseImg);
-        buttonOK = (Button)findViewById(R.id.buttonOK);
-        imageView = (ImageView)findViewById(R.id.imgView);
+        takePhoto = findViewById(R.id.takePhoto);
+        chooseImg = findViewById(R.id.chooseImg);
+        buttonOK = findViewById(R.id.buttonOK);
+        imageView = findViewById(R.id.imgView);
 
         // User Id
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -63,7 +63,7 @@ public class ProfileActivity_PopUp extends AppCompatActivity {
         pd = new ProgressDialog(this);
         pd.setMessage("Uploading....");
 
-        takePhoto = (Button) findViewById(R.id.takePhoto);
+        takePhoto = findViewById(R.id.takePhoto);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -58,17 +58,17 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
         Log.d("key", mUserId);
 
         // Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Drawer Menu
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         View headerview = navigationView.getHeaderView(0);
@@ -98,7 +98,7 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
             }
         });
 
-        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        imageViewAvatar = findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,7 +161,7 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                                                     mapChallengeToValidate.add(pair);
 
                                                     final ValidateAdapter myAdapter = new ValidateAdapter(getApplicationContext(), mapChallengeToValidate);
-                                                    ListView listview = (ListView) findViewById(R.id.listView);
+                                                    ListView listview = findViewById(R.id.listView);
                                                     listview.setAdapter(myAdapter);
                                                 }
                                                 @Override
@@ -201,7 +201,7 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
     // Drawer Menu
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -239,7 +239,7 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

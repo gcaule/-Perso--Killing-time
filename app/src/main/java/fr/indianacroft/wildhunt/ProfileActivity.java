@@ -49,22 +49,22 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedpreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
-        textView6 = (TextView) findViewById(R.id.textViewProfileDatas);
+        textView6 = findViewById(R.id.textViewProfileDatas);
         String sharedPrefUserName = sharedpreferences.getString(userName, "");
         textView6.setText(sharedPrefUserName);
 
         // Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Drawer Menu
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         View headerview = navigationView.getHeaderView(0);
@@ -111,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         });
 
         // Avatar
-        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        imageViewAvatar = findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +120,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         });
 
         // Lien PopUp
-        imageViewAvatar2 = (ImageView) findViewById(R.id.imageViewAvatar2);
+        imageViewAvatar2 = findViewById(R.id.imageViewAvatar2);
         imageViewAvatar2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,8 +130,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         });
 
         // Pour afficher le score et le grade personnalisé
-        imageView = (ImageView) findViewById(R.id.imageView);
-        imageViewMedal = (ImageView) findViewById(R.id.imageView2);
+        imageView = findViewById(R.id.imageView);
+        imageViewMedal = findViewById(R.id.imageView2);
         FirebaseDatabase ref = FirebaseDatabase.getInstance();
         DatabaseReference refScore = ref.getReference("User").child(mUserId);
         refScore.addValueEventListener(new ValueEventListener() {
@@ -145,20 +145,20 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 // Progress Bar
                 int nv = 0;
                 float currentPercent = 0;
-                ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBar2);
+                ProgressBar simpleProgressBar = findViewById(R.id.progressBar2);
                 simpleProgressBar.setMax(100);
-                TextView min = (TextView) findViewById(R.id.nbrMin);
-                TextView max = (TextView) findViewById(R.id.nbrMax);
+                TextView min = findViewById(R.id.nbrMin);
+                TextView max = findViewById(R.id.nbrMax);
                 simpleProgressBar.getProgressDrawable().setColorFilter(
                         Color.BLUE, android.graphics.PorterDuff.Mode.SRC_IN);
                 simpleProgressBar.setScaleY(3f);
 
                 // Score
-                TextView affPoint = (TextView) findViewById(R.id.point);
+                TextView affPoint = findViewById(R.id.point);
                 affPoint.setText(String.valueOf(score));
                 if (score < 100){
                     //touriste
-                    TextView touriste = (TextView) findViewById(R.id.titre);
+                    TextView touriste = findViewById(R.id.titre);
                     touriste.setText(R.string.touriste);
                     imageView.setImageResource(R.drawable.jake1);
                     imageViewMedal.setImageResource(R.drawable.medal_bronze);
@@ -167,7 +167,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     max.setText("100");
                 } else if (score < 400) {
                     //voyageur
-                    TextView voyageur = (TextView) findViewById(R.id.titre);
+                    TextView voyageur = findViewById(R.id.titre);
                     voyageur.setText(R.string.voyageur);
                     imageView.setImageResource(R.drawable.jake2);
                     imageViewMedal.setImageResource(R.drawable.medal_silver);
@@ -177,7 +177,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     max.setText("400");
                 } else if (score < 1000) {
                     //conquerant
-                    TextView conquerant = (TextView) findViewById(R.id.titre);
+                    TextView conquerant = findViewById(R.id.titre);
                     conquerant.setText(R.string.conquerant);
                     imageView.setImageResource(R.drawable.jake3);
                     imageViewMedal.setImageResource(R.drawable.medal_gold);
@@ -187,7 +187,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     max.setText("1000");
                 } else {
                     //dominateur du monde
-                    TextView dominateur = (TextView) findViewById(R.id.titre);
+                    TextView dominateur = findViewById(R.id.titre);
                     dominateur.setText(R.string.dominateur);
                     imageView.setImageResource(R.drawable.jake4);
                     imageViewMedal.setImageResource(R.drawable.medal_gold2);
@@ -200,9 +200,9 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 simpleProgressBar.setProgress(Math.round(currentPercent*100));
 
                 if ((mUser_quest.equals("Pas de qûete pour l'instant")) || (mUser_challenge.equals("Pas de défi pour l'instant"))) {
-                    TextView titreQueste = (TextView) findViewById(R.id.name_quest);
+                    TextView titreQueste = findViewById(R.id.name_quest);
                     titreQueste.setText(mUser_quest);
-                    TextView titreChallenge = (TextView) findViewById(R.id.challenge_name);
+                    TextView titreChallenge = findViewById(R.id.challenge_name);
                     titreChallenge.setText(mUser_challenge);
                 } else {
                     FirebaseDatabase ref = FirebaseDatabase.getInstance();
@@ -212,7 +212,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Quest quest = dataSnapshot.getValue(Quest.class);
                             String mQuest_name = quest.getQuest_name();
-                            TextView titreQueste = (TextView) findViewById(R.id.name_quest);
+                            TextView titreQueste = findViewById(R.id.name_quest);
                             titreQueste.setText(mQuest_name);
 
                             FirebaseDatabase ref = FirebaseDatabase.getInstance();
@@ -222,7 +222,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     Challenge challenge = dataSnapshot.getValue(Challenge.class);
                                     String  mChallenge_name = challenge.getChallenge_name();
-                                    TextView titreChallenge = (TextView) findViewById(R.id.challenge_name);
+                                    TextView titreChallenge = findViewById(R.id.challenge_name);
                                     titreChallenge.setText(mChallenge_name);
                                 }
                                 @Override
@@ -258,7 +258,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     // Drawer Menu
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -301,7 +301,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

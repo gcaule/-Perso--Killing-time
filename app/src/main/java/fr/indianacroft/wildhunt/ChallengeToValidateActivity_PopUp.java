@@ -23,7 +23,7 @@ public class ChallengeToValidateActivity_PopUp extends AppCompatActivity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int) (width * 1), (int) (height * .5));
+        getWindow().setLayout(width * 1, (int) (height * .5));
 
 
         String mCreatedQuestId = getIntent().getStringExtra("Quest");
@@ -33,7 +33,7 @@ public class ChallengeToValidateActivity_PopUp extends AppCompatActivity {
         StorageReference storageReference =
                 FirebaseStorage.getInstance().getReference().child("Quest").child(mCreatedQuestId).child(challengeId);
 
-        ImageView imageSolution = (ImageView) findViewById(R.id.imageSolution);
+        ImageView imageSolution = findViewById(R.id.imageSolution);
 
         Glide.with(getApplicationContext())
                 .using(new FirebaseImageLoader())

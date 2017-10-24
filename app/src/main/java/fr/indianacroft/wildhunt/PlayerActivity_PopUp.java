@@ -62,7 +62,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_popup);
 
-        final ImageView imageViewSendPhoto = (ImageView) findViewById(R.id.imageViewSendPhoto);
+        final ImageView imageViewSendPhoto = findViewById(R.id.imageViewSendPhoto);
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -83,14 +83,14 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
         getWindow().setLayout((int) (width * .8), (int) (height * .75));
 
         // Load & Take photo
-        Button butLoad = (Button) findViewById(R.id.butLoad);
+        Button butLoad = findViewById(R.id.butLoad);
         butLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
             }
         });
-        Button butUpload = (Button) findViewById(R.id.butUpload);
+        Button butUpload = findViewById(R.id.butUpload);
         butUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,10 +107,10 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
 
         // Link to Firebase Database
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        final StorageReference storageRef = storage.getInstance().getReference();
+        final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
         // Database
-        Button butSend = (Button) findViewById(R.id.butSend);
+        Button butSend = findViewById(R.id.butSend);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
         // On recupere la quete crée par l'user actuel pour link challenge a la quête
@@ -256,7 +256,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ImageView imageViewSendPhoto = (ImageView) findViewById(R.id.imageViewSendPhoto);
+        ImageView imageViewSendPhoto = findViewById(R.id.imageViewSendPhoto);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
