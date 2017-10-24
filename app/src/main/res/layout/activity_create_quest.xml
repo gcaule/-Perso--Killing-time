@@ -91,7 +91,7 @@
                 android:maxLength="30"
                 android:inputType="textLongMessage"
                 android:gravity="center"
-                android:hint="@string/hint_quest_name"
+                android:hint="Ajoute ici le nom de ta partie"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:background="@drawable/button_shape2"
@@ -108,7 +108,7 @@
                 android:background="@drawable/button_shape2"
                 android:inputType="textLongMessage"
                 android:gravity="center"
-                android:hint="@string/hint_quest_description"
+                android:hint="Décris ta partie\n(200 caractères max)"
                 android:maxLength="200"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -149,14 +149,15 @@
                 android:id="@+id/button_create_quest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/create_quest_button"
                 android:layout_below="@+id/butAddNewChallenge"
                 android:layout_centerHorizontal="true"
-                android:textColor="#FFFFFF"
                 android:background="@drawable/button_shape"
+                android:fontFamily="sans-serif"
+                android:text="@string/create_quest_button"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/butAddNewChallenge"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/butAddNewChallenge"
                 app:layout_constraintTop_toBottomOf="@+id/description_quest" />
 
             <Button
@@ -167,13 +168,13 @@
                 android:layout_alignParentStart="true"
                 android:background="@drawable/button_shape"
                 android:fontFamily="sans-serif"
-                android:text="@string/add_new_challenge"
+                android:text="Ajoute des défis à ta partie"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toTopOf="@+id/listViewChallengeCreated"
+                app:layout_constraintHorizontal_bias="0.523"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_create_quest"
-                app:layout_constraintHorizontal_bias="0.523" />
+                app:layout_constraintTop_toBottomOf="@+id/button_create_quest" />
 
             <ListView
                 android:background="@drawable/button_shape2"

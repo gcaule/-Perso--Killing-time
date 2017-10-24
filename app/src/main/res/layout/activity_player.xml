@@ -45,6 +45,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="@string/home_player"
+                    android:text="Ma partie"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -68,7 +69,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:background="@color/newcolor"
-                tools:text="Party Name" />
+                tools:text="Nom de partie" />
 
         </android.support.design.widget.AppBarLayout>
 
