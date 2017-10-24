@@ -11,4 +11,8 @@
     <color name="colorBackground">#DFF2FF</color>
     <color name="colorTransparent">#f8ffffff</color>
     <color name="colorPopUpValidate">#DFF2FF</color>
+    <color name="newcolor">#3A291A</color>
+    <color name="newcolor2">#877565</color>
+    <color name="newcolor3">#C58B58</color>
+
 </resources>

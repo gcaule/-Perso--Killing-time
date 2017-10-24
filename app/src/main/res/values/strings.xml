@@ -50,7 +50,7 @@
     <string name="nouvelle_photo">Nouvelle\nPhoto</string>
 
     // Page Défi
-    <string name="challenge_creation">CREATION DE\nDEFIS</string>
+    <string name="challenge_creation">Creation de defis</string>
     <string-array name="challenge_difficulty">
         <item>Facile</item>
         <item>Normal</item>

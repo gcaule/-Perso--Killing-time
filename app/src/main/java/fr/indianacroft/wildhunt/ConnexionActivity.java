@@ -31,7 +31,7 @@ public class ConnexionActivity extends AppCompatActivity {
     final String userName = "NameKey";
     final String userPassword = "PasswordKey";
     // Sound
-    MediaPlayer mMediaPlayer;
+    // MediaPlayer mMediaPlayer;
     private boolean auth = false;
     private String mUserId = "UserKey";
     private String mEncrypt = "encrypt";
@@ -221,10 +221,10 @@ public class ConnexionActivity extends AppCompatActivity {
 //        mMediaPlayer.stop();
 //        mMediaPlayer.release();
 //    }
-   @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        mMediaPlayer.stop();
-        mMediaPlayer.release();
-    }
+//   @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        mMediaPlayer.stop();
+//        mMediaPlayer.release();
+//    }
 }
