@@ -13,7 +13,7 @@
     <string name="nav_lobby">Rejoindre une partie</string>
     <string name="nav_rules">Règles du jeu</string>
     <string name="nav_create">Créer ma partie</string>
-    <string name="nav_manage">Gérer ma partie</string>
+    <string name="nav_manage">Valider mes défis</string>
     <string name="nav_play">Jouer</string>
     <string name="share">Partager</string>
     <string name="nav_credits">Crédits</string>
