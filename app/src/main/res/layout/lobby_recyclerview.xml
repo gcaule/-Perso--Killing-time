@@ -12,10 +12,9 @@
 
     <TextView
         android:id="@+id/textViewLobbyDescription"
-        android:layout_width="328dp"
-        android:layout_height="71dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:gravity="center_horizontal"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
@@ -35,6 +34,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="NOM PARTIE" />
@@ -61,6 +61,7 @@
         android:background="@drawable/button_shape"
         android:elevation="8dp"
         android:text="@string/lobby_join_party"
+        android:textSize="18sp"
         android:textColor="#FFFFFF"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
