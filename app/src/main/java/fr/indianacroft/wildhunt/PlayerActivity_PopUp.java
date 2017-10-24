@@ -47,13 +47,13 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
     private String mQuestId;
 
     ////////////////////////////////////////////////////////////////////////////////////
-    private final String TAG = "MainActivity";
-    EditText editTextTitle, editTextContent, editTextSubText;
-
-    // The Keys
-    private String TITLE = "Title";
-    private String CONTENT = "Content";
-    private String SUBTEXT = "SubText";
+//    private final String TAG = "MainActivity";
+//    EditText editTextTitle, editTextContent, editTextSubText;
+//
+//    // The Keys
+//    private String TITLE = "Title";
+//    private String CONTENT = "Content";
+//    private String SUBTEXT = "SubText";
     ////////////////////////////////////////////////////////////////////////////////////
 
     @Override
@@ -145,35 +145,35 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
            refUser.child("challenge_done").child(mChallengeId).child("state").setValue("true");
 
                 ////////////////////////////////////////////////////////////////////////////////////
-                // TEST DE NOTIFS
-                // Start Service
-                Intent serviceIntent = new Intent(getApplicationContext(), NotificationService.class);
-                startService(serviceIntent);
-
-                // Get the Database
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                // Get the Notification Reference
-                final DatabaseReference notificationRef = database.getReference("Notification");
-                // Keep the Database sync in case of loosing connexion
-                notificationRef.keepSynced(true);
-
-                // Send Notification on Send Click
-                // Get Edit Text
-//                editTextTitle = (EditText) findViewById(R.id.editTextTitle);
-//                editTextContent = (EditText) findViewById(R.id.editTextContent);
-//                editTextSubText = (EditText) findViewById(R.id.editTextSubText);
-
-                // Get Text
-//                String title = editTextTitle.getText().toString();
-//                String content = editTextContent.getText().toString();
-//                String subtext = editTextSubText.getText().toString();
-                // Store in a map
-                HashMap<String, String> notification = new HashMap<String, String>();
-                notification.put(TITLE, mUserId);
-                notification.put(CONTENT, mQuestId);
-                notification.put(SUBTEXT, mChallengeId);
-                // Send the map
-                notificationRef.setValue(notification);
+//                // TEST DE NOTIFS
+//                // Start Service
+//                Intent serviceIntent = new Intent(getApplicationContext(), NotificationService.class);
+//                startService(serviceIntent);
+//
+//                // Get the Database
+//                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                // Get the Notification Reference
+//                final DatabaseReference notificationRef = database.getReference("Notification");
+//                // Keep the Database sync in case of loosing connexion
+//                notificationRef.keepSynced(true);
+//
+//                // Send Notification on Send Click
+//                // Get Edit Text
+////                editTextTitle = (EditText) findViewById(R.id.editTextTitle);
+////                editTextContent = (EditText) findViewById(R.id.editTextContent);
+////                editTextSubText = (EditText) findViewById(R.id.editTextSubText);
+//
+//                // Get Text
+////                String title = editTextTitle.getText().toString();
+////                String content = editTextContent.getText().toString();
+////                String subtext = editTextSubText.getText().toString();
+//                // Store in a map
+//                HashMap<String, String> notification = new HashMap<String, String>();
+//                notification.put(TITLE, mUserId);
+//                notification.put(CONTENT, mQuestId);
+//                notification.put(SUBTEXT, mChallengeId);
+//                // Send the map
+//                notificationRef.setValue(notification);
                 ////////////////////////////////////////////////////////////////////////////////////
 
             // Upload photos on Firebase

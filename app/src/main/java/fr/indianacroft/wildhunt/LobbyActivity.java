@@ -333,7 +333,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                         mQuest_name = quest.getQuest_name();
                         Log.d(mQuest_name, "quest");
                         mQuest_description = quest.getQuest_description();
-                        mLife_duration = quest.getLife_duration();
+//                        mLife_duration = quest.getLife_duration();
                         searcChallenges();
                         return;
                     }

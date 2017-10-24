@@ -8,7 +8,7 @@ public class Quest {
 
     private String quest_name;
     private String quest_description;
-    private String life_duration;
+//    private String life_duration;
     private String quest_creatorId;
 
     //
@@ -17,10 +17,10 @@ public class Quest {
     }
 
     // Contructor
-    public Quest(String quest_name, String quest_description, String life_duration) {
+    public Quest(String quest_name, String quest_description) {
         this.quest_name = quest_name;
         this.quest_description = quest_description;
-        this.life_duration = life_duration;
+//        this.life_duration = life_duration;
     }
 
     public String getQuest_creatorId() {
@@ -48,13 +48,13 @@ public class Quest {
         this.quest_description = quest_description;
     }
 
-    public String getLife_duration() {
-        return life_duration;
-    }
-
-    public void setLife_duration(String life_duration) {
-        this.life_duration = life_duration;
-    }
+//    public String getLife_duration() {
+//        return life_duration;
+//    }
+//
+//    public void setLife_duration(String life_duration) {
+//        this.life_duration = life_duration;
+//    }
 
 
 }

@@ -42,16 +42,17 @@ public class ConnexionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
 
-        // Start Service
-        Intent serviceIntent = new Intent(getApplicationContext(), NotificationService.class);
-        startService(serviceIntent);
-
-        // Get the Database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        // Get the Notification Reference
-        final DatabaseReference notificationRef = database.getReference("Notification");
-        // Keep the Database sync in case of loosing connexion
-        notificationRef.keepSynced(true);
+        // Notiications en commentaires suite manque de temps
+//        // Start Service
+//        Intent serviceIntent = new Intent(getApplicationContext(), NotificationService.class);
+//        startService(serviceIntent);
+//
+//        // Get the Database
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        // Get the Notification Reference
+//        final DatabaseReference notificationRef = database.getReference("Notification");
+//        // Keep the Database sync in case of loosing connexion
+//        notificationRef.keepSynced(true);
 
         // Musique
 //        mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.suspense_music);

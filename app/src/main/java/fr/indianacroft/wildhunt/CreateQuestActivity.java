@@ -40,10 +40,10 @@ import com.google.firebase.storage.StorageReference;
 public class CreateQuestActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button butAddNewChallenge, button_create_quest;
-    TextView quest_title, life_duration_quest_title;
+    TextView quest_title;
     EditText name_quest, description_quest;
     ImageView imageViewAvatar;
-    Spinner spinner_quest;
+//    Spinner spinner_quest;
     ListView listView;
     DatabaseReference childRef;
     private String mUserId, mUserName;
@@ -130,11 +130,11 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         });
 
         // Spinner
-        spinner_quest = (Spinner) findViewById(R.id.spinner_challenge);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.life_duration, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_quest.setAdapter(adapter);
+//        spinner_quest = (Spinner) findViewById(R.id.spinner_challenge);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+//                R.array.life_duration, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner_quest.setAdapter(adapter);
 
         // Database
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -145,7 +145,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         button_create_quest = (Button) findViewById(R.id.button_create_quest);
         butAddNewChallenge = (Button) findViewById(R.id.butAddNewChallenge);
         quest_title = (TextView) findViewById(R.id.quest_title);
-        life_duration_quest_title = (TextView) findViewById(R.id.life_duration_quest_title);
+//        life_duration_quest_title = (TextView) findViewById(R.id.life_duration_quest_title);
         name_quest = (EditText) findViewById(R.id.name_quest);
         description_quest = (EditText) findViewById(R.id.description_quest);
         listView = (ListView) findViewById(R.id.listViewChallengeCreated);
@@ -158,18 +158,18 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     button_create_quest.setVisibility(View.VISIBLE);
                     butAddNewChallenge.setVisibility(View.GONE);
                     quest_title.setVisibility(View.VISIBLE);
-                    life_duration_quest_title.setVisibility(View.VISIBLE);
+//                    life_duration_quest_title.setVisibility(View.VISIBLE);
                     name_quest.setVisibility(View.VISIBLE);
                     description_quest.setVisibility(View.VISIBLE);
                     listView.setVisibility(View.GONE);
-                    spinner_quest.setVisibility(View.VISIBLE);
+//                    spinner_quest.setVisibility(View.VISIBLE);
 
                     button_create_quest.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             String nameContent = name_quest.getText().toString().trim();
                             String descriptionContent = description_quest.getText().toString().trim();
-                            String spinnerContent = spinner_quest.getSelectedItem().toString();
+//                            String spinnerContent = spinner_quest.getSelectedItem().toString();
                             // Impossible to create if nothing is written
                             if ((nameContent.equals("")) || (descriptionContent.equals(""))) {
                                 Toast.makeText(getApplicationContext(), R.string.toast_challenge2, Toast.LENGTH_LONG).show();
@@ -192,11 +192,11 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                                     }
                                 });
 
-                                Quest quest = new Quest(nameContent, descriptionContent, spinnerContent);
+                                Quest quest = new Quest(nameContent, descriptionContent);
 
                                 quest.setQuest_name(nameContent);
                                 quest.setQuest_description(descriptionContent);
-                                quest.setLife_duration(spinnerContent);
+//                                quest.setLife_duration(spinnerContent);
 
                                 ref.child("Quest").child(questid).setValue(quest);
                                 ref.child("Quest").child(questid).child("quest_creatorId").setValue(mUserId);
@@ -218,11 +218,11 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     button_create_quest.setVisibility(View.GONE);
                     butAddNewChallenge.setVisibility(View.VISIBLE);
                     quest_title.setVisibility(View.GONE);
-                    life_duration_quest_title.setVisibility(View.GONE);
+//                    life_duration_quest_title.setVisibility(View.GONE);
                     name_quest.setVisibility(View.GONE);
                     description_quest.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
-                    spinner_quest.setVisibility(View.GONE);
+//                    spinner_quest.setVisibility(View.GONE);
 
                     // Go to Challenge Activity on click
                     butAddNewChallenge.setOnClickListener(new View.OnClickListener() {
