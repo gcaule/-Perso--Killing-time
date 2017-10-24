@@ -16,6 +16,7 @@
     <string name="nav_manage">Gérer ma partie</string>
     <string name="nav_play">Jouer</string>
     <string name="share">Partager</string>
+    <string name="nav_credits">Crédits</string>
     <string name="nav_delete">Deconnexion</string>
     <string name="share_text">Viens tester la nouvelle application Wild Hunt !</string>
 
@@ -150,5 +151,15 @@
     <string name="nom_du_joueur">Nom du joueur :</string>
     <string name="abandonpartie">Abandonner la partie ?</string>
     <string name="abandondefi">Abandonner le defi ?</string>
+
+    // Page Credits
+    <string name="title_credits_rules">Crédits</string>
+    <string name="credits">Crédits :\n\n
+    Tous les icones de cette application sont issus de FlatIcon.\n\n
+        Copyright : Icons made by Freepik from www.flaticon.com \n\n
+        Copyright : Icons from www.flaticon.com \n\n
+        Copyright : Jake and the Never Land Pirates\n\n
+        Developed by Pierre , Valentin, Laurent et Guillaume
+        </string>
 
 </resources>

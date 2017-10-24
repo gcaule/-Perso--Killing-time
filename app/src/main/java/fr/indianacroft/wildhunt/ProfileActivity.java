@@ -273,6 +273,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
         // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
         if (id == R.id.nav_rules) {
@@ -295,6 +296,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
+        } else if (id == R.id.nav_credits) {
+            startActivity(new Intent(getApplicationContext(), CreditsActivity.class));
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }

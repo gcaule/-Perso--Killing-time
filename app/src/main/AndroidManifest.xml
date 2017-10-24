@@ -18,7 +18,8 @@
         <service
             android:name=".NotificationService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
+
         <activity
             android:name=".ConnexionActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -73,6 +74,10 @@
         <activity
             android:name=".ChallengeToValidateActivity_PopUp"
             android:theme="@style/AppTheme.PopUp" />
+        <activity
+            android:name=".CreditsActivity"
+            android:label="Lobby"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

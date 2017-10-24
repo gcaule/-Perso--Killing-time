@@ -278,6 +278,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        // TODO : remplacer les toasts par des liens ET faire en sorte qu'on arrive sur les pages de fragments
         if (id == R.id.nav_rules) {
             Intent intent = new Intent(getApplicationContext(), RulesActivity.class);
             startActivity(intent);
@@ -292,12 +293,14 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_share) {
+        }  else if (id == R.id.nav_share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
+        } else if (id == R.id.nav_credits) {
+            startActivity(new Intent(getApplicationContext(), CreditsActivity.class));
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }

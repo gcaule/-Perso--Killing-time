@@ -10,39 +10,29 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.widget.ShareActionProvider;
-import android.text.method.ScrollingMovementMethod;
-import android.view.Menu;
-import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-public class RulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CreditsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private String mUserId;
-    private Button buttonPlay;
     private ImageView imageViewAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rules);
+        setContentView(R.layout.activity_credits);
 
         // Pour recuperer la key d'un user (pour le lier a une quête)
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -110,42 +100,8 @@ public class RulesActivity extends AppCompatActivity implements NavigationView.O
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RulesActivity.this, ProfileActivity.class);
+                Intent intent = new Intent(CreditsActivity.this, ProfileActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        // If user is new, can create quest, if no, can't
-        DatabaseReference db1 = FirebaseDatabase.getInstance().getReference("User");
-        DatabaseReference db2 = db1.child(mUserId).child("user_quest");
-        db2.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String questOrNot = dataSnapshot.getValue(String.class);
-                if (questOrNot.equals("Pas de qûete pour l'instant")) {
-                    // Button Play to Lobby if user is new
-                    buttonPlay = findViewById(R.id.buttonPlay);
-                    buttonPlay.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                } else {
-                    // Button Play to My Quest if User is known
-                    buttonPlay = findViewById(R.id.buttonPlay);
-                    buttonPlay.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
