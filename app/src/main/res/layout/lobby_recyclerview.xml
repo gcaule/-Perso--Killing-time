@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:orientation="horizontal"
+    android:background="@color/newcolor2"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
 
@@ -13,44 +14,45 @@
         android:id="@+id/textViewLobbyDescription"
         android:layout_width="328dp"
         android:layout_height="71dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:textColor="@color/colorBlue"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
-        tools:text="Ce texte doit expliquer en quoi consiste la partie, le nombre de challenges, les quartiers etc, etc etc, une description quoi"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLobbyJoin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLobbyJoin"
-        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/lobbyName"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Ce texte doit expliquer en quoi consiste la partie, le nombre de challenges, les quartiers etc, etc etc, une description quoi" />
 
     <TextView
         android:id="@+id/lobbyName"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        tools:text="NOM PARTIE"
-        android:gravity="center"
-        android:textColor="#33495E"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="16dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="NOM PARTIE" />
 
     <Button
         android:id="@+id/buttonLobbyDetails"
         android:layout_width="36dp"
         android:layout_height="35dp"
-        android:background="@drawable/down_arrow"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="16dp"
-        app:layout_constraintLeft_toRightOf="@+id/lobbyName"
         android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="1.0" />
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:textAllCaps="false"
+        android:background="@drawable/checked1"
+        app:layout_constraintHorizontal_bias="0.977"
+        app:layout_constraintLeft_toRightOf="@+id/lobbyName"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonLobbyJoin"

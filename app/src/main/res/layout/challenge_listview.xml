@@ -7,40 +7,46 @@
     android:layout_weight="1"
     android:orientation="horizontal"
     tools:layout_editor_absoluteY="25dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    android:background="@color/newcolor2">
 
 
     <TextView
+        android:id="@+id/listViewLabel"
+        style="@style/MainTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="16dp"
         android:text="@string/defi"
+        android:textColor="#FFFFFF"
         android:textSize="18dp"
-        style="@style/MainTitle"
-        android:id="@+id/listViewLabel"
-        tools:layout_editor_absoluteY="0dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="0dp" />
+
     <TextView
         android:id="@+id/listViewChallengeName"
         style="@style/Title"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        tools:text="NOM DEFI"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBaseline_toBaselineOf="@+id/listViewLabel"
         app:layout_constraintLeft_toRightOf="@+id/listViewLabel"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/listViewLabel" />
+        tools:text="NOM DEFI" />
+
     <TextView
         android:id="@+id/listViewChallengeDifficulty"
         style="@style/Title"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        app:layout_goneMarginRight="10dp"
-        tools:text="DIFFICULTY"
-        app:layout_constraintLeft_toRightOf="@+id/listViewChallengeName"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBaseline_toBaselineOf="@+id/listViewChallengeName"
         app:layout_constraintHorizontal_bias="0.932"
-        app:layout_constraintBaseline_toBaselineOf="@+id/listViewChallengeName" />
+        app:layout_constraintLeft_toRightOf="@+id/listViewChallengeName"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_goneMarginRight="10dp"
+        tools:text="DIFFICULTY" />
 
 </android.support.constraint.ConstraintLayout>

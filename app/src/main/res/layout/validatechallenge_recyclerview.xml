@@ -7,31 +7,34 @@
     android:layout_weight="1"
     android:orientation="horizontal"
     tools:layout_editor_absoluteY="25dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    android:background="@color/newcolor2">
 
     <TextView
         android:id="@+id/challengeToValidate"
         style="@style/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Challenge Name"
+        android:textColor="#FFFFFF"
         android:textSize="18dp"
-        android:layout_margin="7dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@+id/userToValidate" />
+        app:layout_constraintRight_toLeftOf="@+id/userToValidate"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Challenge Name" />
+
     <TextView
         android:id="@+id/userToValidate"
         style="@style/Title"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        tools:text="USER"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:textSize="18dp"
-        app:layout_constraintRight_toLeftOf="@+id/see"
-
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/challengeToValidate"
-        android:layout_margin="7dp"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintBaseline_toBaselineOf="@+id/see" />
+        app:layout_constraintRight_toLeftOf="@+id/see"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="USER" />
 
     <Button
         android:id="@+id/see"
@@ -41,11 +44,11 @@
         android:elevation="8dp"
         android:text="@string/validate_see"
         android:textColor="#FFFFFF"
+        app:layout_constraintLeft_toRightOf="@+id/userToValidate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
-        android:layout_margin="7dp"
         app:layout_constraintVertical_bias="0.0"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

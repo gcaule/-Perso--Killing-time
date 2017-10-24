@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    android:background="@drawable/backgroundtest2">
+    android:background="@color/newcolor2">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,7 +34,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                android:background="@android:color/transparent">
+                android:background="@color/newcolor">
 
                 <TextView
                     android:id="@+id/textView16"
@@ -42,12 +42,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="@string/home_player"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/imageViewAvatar"
@@ -60,14 +60,15 @@
             </android.support.v7.widget.Toolbar>
 
             <TextView
-            android:id="@+id/playerActivityNameQuestTitle"
-            tools:text="Party Name"
-            android:layout_height="40sp"
-            android:layout_width="match_parent"
-            android:textColor="@color/colorBlue2"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:textAllCaps="true" />
+                android:id="@+id/playerActivityNameQuestTitle"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:background="@color/newcolor"
+                tools:text="Party Name" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -92,23 +93,27 @@
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
+                    android:textColor="#FFFFFF"
                     android:layout_height="match_parent"
-                    android:background="@drawable/layout_colors2"
+                    android:background="@drawable/button_shape2"
                     android:text="@string/challenge"/>
 
                 <Button
+                    android:id="@+id/playerActivityNumChallenge"
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/layout_colors2"
-                    android:id="@+id/playerActivityNumChallenge"
-                    tools:text="Challenge N°"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/button_shape2"
+                    android:textAllCaps="false"
+                    tools:text="Challenge N°" />
 
                 <TextView
+                    android:textColor="#FFFFFF"
                     android:id="@+id/textViewDifficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@drawable/layout_colors2"
+                    android:background="@drawable/button_shape2"
                     android:text="difficulté" />
 
             </LinearLayout>
@@ -126,25 +131,27 @@
                 android:layout_weight="0.26" />
 
             <TextView
-                style="@style/Title"
-                android:padding="10dp"
                 android:id="@+id/textViewPlayerActivityHint"
-                tools:text="Ici l'indice apparaitra"
-                tools:layout_editor_absoluteY="426dp"
-                tools:layout_editor_absoluteX="0dp"
+                style="@style/Title"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:padding="10dp"
+                android:textColor="#FFFFFF"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="426dp"
+                tools:text="Ici l'indice apparaitra" />
 
             <TextView
-                style="@style/Title"
-                android:padding="10dp"
                 android:id="@+id/textViewPlayerActivityHint2"
-                android:background="@drawable/layout_colors2"
-                android:text="@string/hint_need"
-                tools:layout_editor_absoluteY="426dp"
-                tools:layout_editor_absoluteX="0dp"
+                style="@style/Title"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:background="@drawable/button_shape2"
+                android:padding="10dp"
+                android:text="@string/hint_need"
+                android:textColor="#FFFFFF"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="426dp" />
 
             <!--<Button-->
                 <!--style="@style/ButtonBlue"-->
@@ -201,7 +208,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_gravity="bottom"
-            android:background="@drawable/bars_colors"
+            android:background="@color/newcolor"
             app:menu="@menu/navigation"
             app:itemIconTint="#FFFFFF"
             app:itemTextColor="#FFFFFF"/>

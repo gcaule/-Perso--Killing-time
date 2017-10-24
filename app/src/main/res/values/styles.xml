@@ -4,8 +4,8 @@
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your description here. -->
         <item name="colorPrimary">#FFD05C</item>
-        <item name="colorPrimaryDark">#33495E</item>
-        <item name="colorAccent">#84DBFF</item>
+        <item name="colorPrimaryDark">@color/newcolor</item>
+        <item name="colorAccent">#FFD05C</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
@@ -13,9 +13,11 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="MyDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
     </style>
+
     <style name="AppTheme.PopUp">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -23,6 +25,7 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowBackground">@color/colorTransparent</item>
     </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
@@ -42,16 +45,15 @@
         <item name="android:textColorHint">#33495E</item>
         <item name="android:background">@drawable/button_shape3</item>
     </style>
-    
     <style name="ButtonYellow">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">15dp</item>
         <item name="android:textColorHint">#33495E</item>
-        <item name="android:background">@drawable/button_shape2</item>
+        <item name="android:background">@drawable/button_shape</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorBlue</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
     <style name="ButtonBlue">
         <item name="android:textColor">#FFFFFF</item>
@@ -64,5 +66,14 @@
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorBlue</item>
+    </style>
+    <!--<style name="myImageView">-->
+        <!--<item name="android:padding">5dp</item>-->
+        <!--<item name="android:background">@drawable/layout_colors2</item>-->
+        <!--<item name="android:scaleType">fitCenter</item>-->
+    <!--</style>-->
+
+    <style name="spinner">
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>
