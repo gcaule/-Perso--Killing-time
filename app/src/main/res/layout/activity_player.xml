@@ -123,7 +123,7 @@
                 android:layout_width="345dp"
                 android:layout_height="262dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/camera"
+                app:srcCompat="@drawable/photoapp"
                 tools:layout_editor_absoluteY="106dp"
                 tools:layout_editor_absoluteX="8dp"
                 android:layout_marginTop="10dp"

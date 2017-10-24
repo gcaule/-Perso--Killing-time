@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:maxLength="30"
-                android:inputType="textPersonName"
+                android:inputType="textLongMessage"
                 android:gravity="center"
                 android:hint="@string/hint_quest_name"
                 android:layout_alignParentLeft="true"

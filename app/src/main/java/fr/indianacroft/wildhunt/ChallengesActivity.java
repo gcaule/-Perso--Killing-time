@@ -69,17 +69,17 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         Log.d("key", mUserId);
 
         // Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Drawer Menu
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         View headerview = navigationView.getHeaderView(0);
@@ -126,7 +126,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         });
 
 
-        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        imageViewAvatar = findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,7 +136,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         });
 
         // Spinner
-        spinner_challenge = (Spinner) findViewById(R.id.spinner_challenge);
+        spinner_challenge = findViewById(R.id.spinner_challenge);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.challenge_difficulty, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -160,14 +160,14 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 
 
         // Load & Take photo
-        butLoad = (Button) findViewById(R.id.butLoad);
+        butLoad = findViewById(R.id.butLoad);
         butLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
             }
         });
-        butUpload = (Button) findViewById(R.id.butUpload);
+        butUpload = findViewById(R.id.butUpload);
         butUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,12 +184,12 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
 
         // Link to Firebase Database
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        final StorageReference storageRef = storage.getInstance().getReference();
+        final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
         // Database
-        name_challenge = (EditText) findViewById(R.id.challenge_name);
-        hint_challenge = (EditText) findViewById(R.id.hint_challenge);
-        butCreateChallenge = (Button) findViewById(R.id.butCreateChallenge);
+        name_challenge = findViewById(R.id.challenge_name);
+        hint_challenge = findViewById(R.id.hint_challenge);
+        butCreateChallenge = findViewById(R.id.butCreateChallenge);
 
         ref = FirebaseDatabase.getInstance();
         childRef = ref.getReference("Challenge");
@@ -295,7 +295,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
     // Drawer Menu
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -342,7 +342,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -358,7 +358,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        imageViewInscriptionLogo = (ImageView) findViewById(R.id.imageViewInscriptionLogo);
+        imageViewInscriptionLogo = findViewById(R.id.imageViewInscriptionLogo);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {

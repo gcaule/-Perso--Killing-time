@@ -68,24 +68,38 @@
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_shape2"
                 android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="0.87"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_shape2"
                 android:text="@string/challenge"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                style="@style/Title"/>
 
             <TextView
                 android:id="@+id/textView9"
                 style="@style/Title"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.16"
                 android:background="@drawable/button_shape2"
                 android:gravity="center"
+                android:textSize="18dp"
                 android:text="@string/nom_du_joueur"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:gravity="center"
+                style="@style/Title"
+                android:layout_weight="0.64"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_shape2"
+                android:text=""
                 android:textColor="#FFFFFF" />
 
         </LinearLayout>

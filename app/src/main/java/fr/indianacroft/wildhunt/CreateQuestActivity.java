@@ -58,22 +58,22 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
 
-        name_quest = (EditText) findViewById(R.id.name_quest);
-        description_quest = (EditText) findViewById(R.id.description_quest);
-        button_create_quest = (Button) findViewById(R.id.button_create_quest);
+        name_quest = findViewById(R.id.name_quest);
+        description_quest = findViewById(R.id.description_quest);
+        button_create_quest = findViewById(R.id.button_create_quest);
 
         // Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Drawer Menu
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         View headerview = navigationView.getHeaderView(0);
@@ -120,7 +120,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         });
 
         // Avatar
-        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
+        imageViewAvatar = findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,13 +142,13 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         final String questid = ref.child("Quest").push().getKey();
 
         // If user is new, can create quest, if no, can't
-        button_create_quest = (Button) findViewById(R.id.button_create_quest);
-        butAddNewChallenge = (Button) findViewById(R.id.butAddNewChallenge);
-        quest_title = (TextView) findViewById(R.id.quest_title);
+        button_create_quest = findViewById(R.id.button_create_quest);
+        butAddNewChallenge = findViewById(R.id.butAddNewChallenge);
+        quest_title = findViewById(R.id.quest_title);
 //        life_duration_quest_title = (TextView) findViewById(R.id.life_duration_quest_title);
-        name_quest = (EditText) findViewById(R.id.name_quest);
-        description_quest = (EditText) findViewById(R.id.description_quest);
-        listView = (ListView) findViewById(R.id.listViewChallengeCreated);
+        name_quest = findViewById(R.id.name_quest);
+        description_quest = findViewById(R.id.description_quest);
+        listView = findViewById(R.id.listViewChallengeCreated);
         DatabaseReference db2 = ref.child("User").child(mUserId).child("user_createdquestID");
         db2.addValueEventListener(new ValueEventListener() {
             @Override
@@ -266,7 +266,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
     // Drawer Menu
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -304,7 +304,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.nav_delete) {
             startActivity(new Intent(getApplicationContext(), ConnexionActivity.class));
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

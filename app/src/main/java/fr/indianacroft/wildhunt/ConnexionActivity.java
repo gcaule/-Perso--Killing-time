@@ -61,16 +61,16 @@ public class ConnexionActivity extends AppCompatActivity {
 //        mMediaPlayer.start();
 
 
-        final EditText editTextUserName = (EditText) findViewById(R.id.connexionUserName);
-        final EditText editTextUserPassword = (EditText) findViewById(R.id.connexionUserPassword);
-        Button buttonSend = (Button) findViewById(R.id.buttonConnexionSend);
+        final EditText editTextUserName = findViewById(R.id.connexionUserName);
+        final EditText editTextUserPassword = findViewById(R.id.connexionUserPassword);
+        Button buttonSend = findViewById(R.id.buttonConnexionSend);
 
         // On recupere les Shared  Preferences
         final SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final String sharedPrefUserName = sharedpreferences.getString(userName, "");
         final String sharedPrefUserPassword = sharedpreferences.getString(userPassword, "");
         final String sharedPrefUserKey = sharedpreferences.getString(mUserId, "");
-        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        final ProgressBar simpleProgressBar = findViewById(R.id.simpleProgressBar);
 
         //On rempli les editText avec les sharedPreferences si c'est pas notre premiere connexion
         if (!sharedPrefUserName.isEmpty() && !sharedPrefUserPassword.isEmpty()) {
