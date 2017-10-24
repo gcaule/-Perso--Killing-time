@@ -95,7 +95,8 @@
     <string name="error_noquest">Veuillez rejoindre d\'abord une partie</string>
     <string name="titlePopUp">Envoyer votre solution (Selfie !)</string>
     <string name="hint_no_need">Votre indice a été utilisé !</string>
-    <string name="hint_need">Besoin d\'un indice ?</string>
+    <string name="hint_need">Trouve cette photo !\nEnvoie nous ton selfie au plus vite\npour gagner ce défi !\n
+    N\'oublie pas que tu peux utiliser un indice !</string>
 
     // Page Créer ma partie
     <string name="life_duration_quest_title">Durée de vie</string>
@@ -156,7 +157,7 @@
     // Page Credits
     <string name="title_credits_rules">Crédits</string>
     <string name="credits">Crédits :\n\n
-    Tous les icones de cette application sont issus de FlatIcon.\n\n
+    Tous les icones de cette application sont issues de FlatIcon.\n\n
         Copyright : Icons made by Freepik from www.flaticon.com \n\n
         Copyright : Icons from www.flaticon.com \n\n
         Copyright : Jake and the Never Land Pirates\n\n
