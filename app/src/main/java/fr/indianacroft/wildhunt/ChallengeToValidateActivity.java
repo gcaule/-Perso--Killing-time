@@ -57,6 +57,11 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge_to_validate);
 
+        // Pour recuperer la key d'un user (pour le lier a une quête)
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mUserId = sharedPreferences.getString("mUserId", mUserId);
+        Log.d("key", mUserId);
+
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
