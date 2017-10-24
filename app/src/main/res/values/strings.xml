@@ -87,7 +87,7 @@
     <string name="home_game_master_tab2">Défis à valider</string>
 
     // Page Ma Partie
-    <string name="home_player">MA PARTIE</string>
+    <string name="home_player">Ma partie</string>
     <string name="quest_title">Nom de partie : </string>
     <string name="hint_quest_name">Ajoutez ici le nom\nde votre partie</string>
     <string name="hint_quest_description">Décrivez ici votre partie\n(200 caractères max)</string>
@@ -104,7 +104,7 @@
     <string name="add_new_challenge">Ajouter des défis à votre partie</string>
     <string name="create_challenge_button">Créer un challenge</string>
     <string name="challenge">Défi :</string>
-    <string name="create_quest">CREER MA PARTIE</string>
+    <string name="create_quest">Créer ma partie</string>
     <string name="toast_challenge2">Veuillez remplir tous les champs et ajouter des défis pour pouvoir créer votre partie</string>
     <string name="toast_createdquest">Partie créée avec succès ! Ajoute des défis maintenant !</string>
 

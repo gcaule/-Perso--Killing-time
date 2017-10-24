@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:text="@string/credits"
-                    android:textColor="@color/colorBlue"
+                    android:textColor="@color/newcolor"
                     android:gravity="center" />
 
             </ScrollView>
