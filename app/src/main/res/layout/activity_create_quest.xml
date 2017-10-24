@@ -169,20 +169,20 @@
                 android:background="@drawable/button_shape"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/imageViewPirate"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description_quest" />
 
-            <ImageView
-                android:id="@+id/imageViewPirate"
-                android:layout_width="217dp"
-                android:layout_height="179dp"
-                app:srcCompat="@drawable/pirate3"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/butAddNewChallenge"
-                app:layout_constraintTop_toBottomOf="@+id/button_create_quest"
-                tools:layout_editor_absoluteY="148dp"
-                app:layout_constraintHorizontal_bias="0.501" />
+            <!--<ImageView-->
+                <!--android:id="@+id/imageViewPirate"-->
+                <!--android:layout_width="217dp"-->
+                <!--android:layout_height="179dp"-->
+                <!--app:srcCompat="@drawable/pirate3"-->
+                <!--app:layout_constraintRight_toRightOf="parent"-->
+                <!--app:layout_constraintLeft_toLeftOf="parent"-->
+                <!--app:layout_constraintBottom_toTopOf="@+id/butAddNewChallenge"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/button_create_quest"-->
+                <!--tools:layout_editor_absoluteY="148dp"-->
+                <!--app:layout_constraintHorizontal_bias="0.501" />-->
 
             <Button
                 android:id="@+id/butAddNewChallenge"
@@ -197,7 +197,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/listViewChallengeCreated"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewPirate" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ListView
                 android:background="@drawable/button_shape2"

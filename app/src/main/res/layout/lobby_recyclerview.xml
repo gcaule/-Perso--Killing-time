@@ -61,7 +61,6 @@
         android:background="@drawable/button_shape"
         android:elevation="8dp"
         android:text="@string/lobby_join_party"
-        android:textSize="18sp"
         android:textColor="#FFFFFF"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

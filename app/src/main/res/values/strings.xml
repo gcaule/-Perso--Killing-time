@@ -22,8 +22,8 @@
 
     // Page Profil
     <string name="profil">Profil</string>
-    <string name="upload_ta_photo">UPLOAD\nPHOTO</string>
-    <string name="prendre_nouvelle_photo">NOUVELLE\nPHOTO</string>
+    <string name="upload_ta_photo">GALLERIE\nPHOTO</string>
+    <string name="prendre_nouvelle_photo">APPAREIL\nPHOTO</string>
     <string name="envoi_photo">ENVOI\nPHOTO</string>
     <string name="toast_error_profile">Tu es déjà sur la page Profil</string>
     <string name="toast_error_upload">Echec de l\'upload</string>
@@ -46,8 +46,8 @@
 
     // Page Profil PopUp
     <string name="valider">Valider et continuer</string>
-    <string name="choisir_depuis_nla_gallerie">Gallerie Photo</string>
-    <string name="nouvelle_photo">Appareil Photo</string>
+    <string name="choisir_depuis_nla_gallerie">GALLERIE\nPHOTO</string>
+    <string name="nouvelle_photo">APPAREIL\nPHOTO</string>
 
     // Page Défi
     <string name="challenge_creation">Création de défis</string>
@@ -95,15 +95,15 @@
     <string name="error_noquest">Rejoin d\'abord une partie</string>
     <string name="titlePopUp">Envoie ta solution (selfie !)</string>
     <string name="hint_no_need">L\'indice a été utilisé !</string>
-    <string name="hint_need">Trouve cette photo !\nEnvoie ton selfie au plus vite\npour gagner ce défi !\n
+    <string name="hint_need">Trouve ce lieu et envoie ton selfie au plus vite\npour gagner ce défi !\n
     N\'oublie pas que tu peux utiliser un indice !</string>
 
     // Page Créer ma partie
     <string name="description_title">Décris ta partie : </string>
     <string name="life_duration_quest_title">Durée de vie</string>
     <string name="create_quest_button">Crée la partie</string>
-    <string name="add_new_challenge">Ajoute des défis à votre partie</string>
-    <string name="create_challenge_button">Crée un défi</string>
+    <string name="add_new_challenge">Ajouter des défis à ta partie</string>
+    <string name="create_challenge_button">Créer un défi</string>
     <string name="challenge">Défi :</string>
     <string name="create_quest">Créer ma partie</string>
     <string name="toast_challenge2">Tu dois remplir tous les champs et ajouter des défis pour pouvoir créer ta partie</string>
@@ -163,7 +163,7 @@
         Copyright : Icons made by Freepik from www.flaticon.com \n\n
         Copyright : Icons from www.flaticon.com \n\n
         Copyright : Jake and the Never Land Pirates\n\n
-        Developed by Pierre , Valentin, Laurent et Guillaume
+        Développé par Pierre , Valentin, Laurent et Guillaume
         </string>
 
 
