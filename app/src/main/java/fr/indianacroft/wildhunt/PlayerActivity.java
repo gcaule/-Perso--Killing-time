@@ -369,7 +369,6 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                 for (int h = 0; h < mapChallengesDone.length; h++) {
                                     if (mapChallenges[finalJ].equals(mapChallengesDone[h])) {
                                         final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference();
-                                        //TODO rajouter une boucle ou condition pq ca ajoute les points en continue
                                         // Le défi est bon, on passe au suivant !!
 
                                         // Si le challenge actuel correspond a un challenge done
