@@ -15,6 +15,10 @@
         android:roundIcon="@drawable/pirate_ship"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".NotificationService"
+            android:enabled="true"
+            android:exported="true"/>
         <activity
             android:name=".ConnexionActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -38,10 +42,6 @@
             android:label="@string/title_activity_profile_"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".HomeJoueurActivity"
-            android:label="Home Joueur"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".RulesActivity"
             android:label="Rules"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -62,10 +62,6 @@
             android:label="Create Party"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ChallengesActivity_PopUp"
-            android:label="ChallengePopUp"
-            android:theme="@style/AppTheme.PopUp" />
         <activity
             android:name=".ValidateQuestActivity"
             android:label="Validate"
