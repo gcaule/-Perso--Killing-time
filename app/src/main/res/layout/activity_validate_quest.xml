@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    android:background="@drawable/backgroundtest2">
+    android:background="@color/newcolor2">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,7 +34,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                android:background="@android:color/transparent">
+                android:background="@color/newcolor">
 
                 <TextView
                     android:id="@+id/textView16"
@@ -42,12 +42,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="@string/mes_d_fis_valider"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/newcolor3"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/imageViewAvatar"
@@ -68,23 +68,25 @@
 
             <TextView
                 android:id="@+id/textView8"
-                android:gravity="center"
-                style="@style/Title"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:background="@drawable/layout_colors2"
-                android:text="@string/challenge"/>
+                android:layout_weight="1"
+                android:background="@drawable/button_shape2"
+                android:gravity="center"
+                android:text="@string/challenge"
+                android:textColor="@color/buttonTextColor" />
 
             <TextView
                 android:id="@+id/textView9"
-                android:layout_width="0dp"
-                android:gravity="center"
                 style="@style/Title"
-                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/layout_colors2"
-                android:text="@string/nom_du_joueur" />
+                android:layout_weight="1"
+                android:background="@drawable/button_shape2"
+                android:gravity="center"
+                android:text="@string/nom_du_joueur"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/buttonTextColor" />
 
         </LinearLayout>
         <android.support.constraint.ConstraintLayout

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/layout_colors2"
+    android:background="@color/newcolor2"
     android:theme="@style/AppTheme.PopUp"
     tools:context="fr.indianacroft.wildhunt.ProfileActivity_PopUp"
     tools:layout_editor_absoluteY="0dp"
@@ -15,11 +15,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/titlePopUp"
-        android:textColor="@color/colorBlue"
+        android:textColor="@color/buttonTextColor"
         android:textSize="20sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/butLoad"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -38,7 +38,7 @@
         android:id="@+id/butUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/choisir_depuis_nla_gallerie"
+        android:text="Gallerie\nphoto"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/butLoad"
         app:layout_constraintBottom_toTopOf="@+id/imageViewSendPhoto"

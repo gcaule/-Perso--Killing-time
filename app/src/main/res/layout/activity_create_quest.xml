@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    android:background="@drawable/backgroundtest2">
+    android:background="@color/newcolor2">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,7 +34,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                android:background="@android:color/transparent">
+                android:background="@color/newcolor">
 
                 <TextView
                     android:id="@+id/textView16"
@@ -42,10 +42,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="@string/create_quest"
-                    android:textColor="#FFFFFF"
+                    android:text="Creer ma partie"
+                    android:textColor="@color/newcolor3"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -72,6 +72,7 @@
                 android:layout_width="344dp"
                 android:layout_height="23dp"
                 android:text="@string/quest_title"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_alignParentTop="true"
@@ -122,6 +123,7 @@
                 android:layout_width="200dp"
                 android:layout_height="23dp"
                 android:text="@string/life_duration_quest_title"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_alignParentTop="true"
@@ -165,13 +167,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:background="@drawable/button_shape"
+                android:fontFamily="sans-serif"
                 android:text="@string/add_new_challenge"
                 android:textColor="#FFFFFF"
-                android:background="@drawable/button_shape"
+                app:layout_constraintBottom_toTopOf="@+id/listViewChallengeCreated"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/listViewChallengeCreated"
-                app:layout_constraintTop_toBottomOf="@+id/button_create_quest" />
+                app:layout_constraintTop_toBottomOf="@+id/button_create_quest"
+                app:layout_constraintHorizontal_bias="0.523" />
 
             <ListView
                 android:background="@drawable/button_shape2"

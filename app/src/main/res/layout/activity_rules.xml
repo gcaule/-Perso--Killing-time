@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    android:background="@drawable/backgroundtest2">
+    android:background="@color/newcolor2">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,9 +32,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:background="@color/newcolor"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                android:background="@android:color/transparent">
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <TextView
                     android:id="@+id/textView16"
@@ -42,20 +42,20 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="@string/title_activity_rules"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/newcolor3"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/imageViewAvatar"
                     android:layout_width="66dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/pirate_head"
                     android:layout_gravity="end"
-                    android:padding="5dp"/>
+                    android:padding="5dp"
+                    android:src="@drawable/pirate_head" />
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
@@ -85,7 +85,6 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:text="@string/rules"
-                    android:textColor="@color/colorBlue"
                     android:gravity="center" />
 
             </ScrollView>

@@ -4,8 +4,8 @@
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your description here. -->
         <item name="colorPrimary">#FFD05C</item>
-        <item name="colorPrimaryDark">#33495E</item>
-        <item name="colorAccent">#84DBFF</item>
+        <item name="colorPrimaryDark">@color/newcolor</item>
+        <item name="colorAccent">#FFD05C</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
@@ -51,9 +51,9 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">15dp</item>
         <item name="android:textColorHint">#33495E</item>
-        <item name="android:background">@drawable/button_shape2</item>
+        <item name="android:background">@drawable/button_shape</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorBlue</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
     <style name="ButtonBlue">
         <item name="android:textColor">#FFFFFF</item>
@@ -72,4 +72,8 @@
         <!--<item name="android:background">@drawable/layout_colors2</item>-->
         <!--<item name="android:scaleType">fitCenter</item>-->
     <!--</style>-->
+
+    <style name="spinner">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 </resources>
