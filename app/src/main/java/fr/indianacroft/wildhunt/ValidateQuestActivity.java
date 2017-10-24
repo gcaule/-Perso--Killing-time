@@ -123,7 +123,7 @@ public class ValidateQuestActivity extends AppCompatActivity implements Navigati
                                     final String challengeName = challenge.getChallenge_name();
                                     int i = 0;
                                     // On verifie les users dans ce challenge
-                                    for (DataSnapshot dsp2 : dsp.getChildren()) {
+                                    for (DataSnapshot dsp2 : dsp.child("User").getChildren()) {
                                         // On verifie si un user doit etre validé (false)
                                         if ((boolean) dsp2.getValue() == false) {
 

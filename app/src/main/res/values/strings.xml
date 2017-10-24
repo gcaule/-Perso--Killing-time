@@ -150,5 +150,6 @@
     <string name="nom_du_joueur">Nom du joueur :</string>
     <string name="abandonpartie">Abandonner la partie ?</string>
     <string name="abandondefi">Abandonner le defi ?</string>
+    <string name="toast_error_party2">Vous avez déjà terminé cette partie :)</string>
 
 </resources>

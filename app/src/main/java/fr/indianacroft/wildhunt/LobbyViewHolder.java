@@ -48,6 +48,43 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                 itemView.callOnClick();
                 final String quest_name = mNamePartyLobby.getText().toString();
 
+
+// On cherche si la quete qu'on cherche a joindre n'est pas dans les quetes faites
+                final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference();
+                refUser.child("User").child(mUserId).child("quest_done").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (final DataSnapshot dsp : dataSnapshot.getChildren()) {
+
+                            if (dsp.exists()){
+                                refUser.child("Quest").child(dsp.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        Quest quest = dataSnapshot.getValue(Quest.class);
+                                        String questname = quest.getQuest_name();
+                                        if (questname.equals(mNamePartyLobby.getText().toString())){
+                                            mJoinPartyLobby.setVisibility(View.GONE);
+                                            mDescriptionPartyLobby.setText(R.string.impossible_lobby);
+                                            mDescriptionPartyLobby.setVisibility(View.GONE);
+                                            Toast.makeText(itemView.getContext(), R.string.toast_error_party2, Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
                 // Get name of created quest
                 DatabaseReference data1 = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference data2 = data1.child("User").child(mUserId).child("user_createdquestName");

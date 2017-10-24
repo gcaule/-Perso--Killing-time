@@ -230,8 +230,10 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                                         Toast.makeText(ChallengeToValidateActivity.this, "Défi refusé!", Toast.LENGTH_SHORT).show();
                                         // Modifier le champ dans le user Creator pour le mettre en true !
                                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                        ref.child("User").child(mUserId).child("aValider").child(createdQuest).child(challengeId).child(userId).setValue(null);
-
+                                        ref.child("User").child(mUserId).child("aValider").child(createdQuest)
+                                                .child(challengeId).child("User").child(userId).setValue(null);
+                                        ref.child("User").child(mUserId).child("aValider").child(createdQuest)
+                                                .child(challengeId).child("Indice").child(userId).setValue(null);
                                         startActivity(new Intent(getApplicationContext(), ValidateQuestActivity.class));
                                     }
                                 })
@@ -267,22 +269,37 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
 
                                     public void onClick(DialogInterface dialog, int which) {
                                         Toast.makeText(ChallengeToValidateActivity.this, "Défi validé!", Toast.LENGTH_SHORT).show();
-                                        // Modifier le champ dans le user Creator pour le mettre en true !
-                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                        ref.child("User").child(mUserId).child("aValider").child(createdQuest).child(challengeId).child(userId).setValue(true);
+                                        // Modifier le champ dans le user Creator pour le mettre en true (maintenant ca se supprime) !
+                                        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                        ref.child("User").child(mUserId).child("aValider")
+                                                .child(createdQuest).child(challengeId)
+                                                .child("User").child(userId).setValue(null);
 
-                                        // Modifier le champ dans le user Player pour mettre le challenge en done !
-                                        //ref.child("User").child(userId).child("challenge_done").child(challengeId).child("state").setValue("true");
+                                            // On update son score !!
+                                        ref.child("User").child(mUserId).child("aValider")
+                                                .child(createdQuest).child(challengeId).child("Indice").child(userId)
+                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                String indice = dataSnapshot.getValue(String.class);
 
-                                        // On update son score !!
-                                        if (mUser_indice.equals("true")) {
-                                            mNbrePoints = mNbrePoints / 2;
-                                        }
-                                        mNbrePoints = mUser_score + mNbrePoints;
-                                        ref.child("User").child(userId).child("score").setValue(mNbrePoints);
+                                                if (indice.equals("true")) {
+                                                    mNbrePoints = mNbrePoints / 2;
+                                                }
+                                                mNbrePoints = mUser_score + mNbrePoints;
+                                                ref.child("User").child(userId).child("score").setValue(mNbrePoints);
 
-                                        // On retourne a la page de correction
-                                        startActivity(new Intent(getApplicationContext(), ValidateQuestActivity.class));
+                                                // On retourne a la page de correction
+                                                startActivity(new Intent(getApplicationContext(), ValidateQuestActivity.class));
+                                                ref.child("User").child(mUserId).child("aValider")
+                                                        .child(createdQuest).child(challengeId).child("Indice").child(userId).setValue(null);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
 
                                     }
                                 })

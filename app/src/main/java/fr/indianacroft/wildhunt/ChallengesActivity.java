@@ -110,18 +110,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             }
         });
 
-        // Avatar
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-//        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
-//        // Load the image using Glide
-//        if (storageReference.getDownloadUrl().isSuccessful()){
-//            Glide.with(getApplicationContext())
-//                    .using(new FirebaseImageLoader())
-//                    .load(storageReference)
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .into(imageViewAvatar);
-//        }
+
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,16 +148,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             }
         });
 
-        // Lien PopUp
-//        imageViewInscriptionLogo = (ImageView) findViewById(R.id.imageViewInscriptionLogo);
-//        imageViewInscriptionLogo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ChallengesActivity.this, ChallengesActivity_PopUp.class);
-//                intent.putExtra("mCreatedQuest", mCreatedQuestId);
-//                startActivity(intent);
-//            }
-//        });
+
 
         // Load & Take photo
         butLoad = (Button) findViewById(R.id.butLoad);
@@ -189,28 +169,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             }
         });
 
-//TODO RECYCLER VIEW
-//        // Pour remplir la liste des challenges avec les challenges créees!!!
-//        final RecyclerView recyclerViewGamesCreated = (RecyclerView) findViewById(R.id.recyclerViewChallengeCreated);
-//        recyclerViewGamesCreated.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//
-//        DatabaseReference refChallenge = FirebaseDatabase.getInstance().getReference("Challenge").child(mCreatedQuestId);
-//
-//
-//        final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Challenge, ChallengeViewHolder>(
-//                Challenge.class,
-//                R.layout.challenge_listview,
-//                ChallengeViewHolder.class,
-//                refChallenge) {
-//            @Override
-//            public void populateViewHolder(ChallengeViewHolder holder, Challenge challenge, int position) {
-//                holder.setChallenge_name(challenge.getChallenge_name());
-//                holder.setChallenge_difficulty(challenge.getChallenge_difficulty());
-//            }
-//        };
 
-//        // Set the adapter avec les données et la ligne de separation
-//        recyclerViewGamesCreated.setAdapter(mAdapter);
 
         // ProgressDialog
         progressDialog = new ProgressDialog(this);

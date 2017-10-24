@@ -115,7 +115,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         final RecyclerView recyclerViewLobby = (RecyclerView) findViewById(R.id.recyclerViewHomeJoueurLobby);
         recyclerViewLobby.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Quest");
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Quest");
 
         final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Quest, LobbyViewHolder>(
                 Quest.class,
@@ -154,10 +154,50 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         LobbyViewHolder.setOnClickListener(new LobbyViewHolder.ClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                TextView textViewLobbyDescription = (TextView) view.findViewById(R.id.textViewLobbyDescription);
-                Button buttonLobbyJoin = (Button) view.findViewById(R.id.buttonLobbyJoin);
-                TextView namePartyLobby = (TextView) view.findViewById(R.id.lobbyName);
+                final TextView textViewLobbyDescription = (TextView) view.findViewById(R.id.textViewLobbyDescription);
+                final Button buttonLobbyJoin = (Button) view.findViewById(R.id.buttonLobbyJoin);
+                final TextView namePartyLobby = (TextView) view.findViewById(R.id.lobbyName);
                 final String quest_name = namePartyLobby.getText().toString();
+
+                // On cherche si la quete qu'on cherche a joindre n'est pas dans les quetes faites
+               final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference();
+                refUser.child("User").child(mUserId).child("quest_done").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                       for (final DataSnapshot dsp : dataSnapshot.getChildren()) {
+                           if (dsp.exists()){
+                               refUser.child("Quest").child(dsp.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                   @Override
+                                   public void onDataChange(DataSnapshot dataSnapshot) {
+                                       Quest quest = dataSnapshot.getValue(Quest.class);
+                                       String questname = quest.getQuest_name();
+                                       if (questname.equals(namePartyLobby.getText().toString())){
+                                           buttonLobbyJoin.setVisibility(View.GONE);
+                                           textViewLobbyDescription.setVisibility(View.GONE);
+                                           textViewLobbyDescription.setText(R.string.impossible_lobby);
+                                           Toast.makeText(getApplicationContext(), R.string.toast_error_party2, Toast.LENGTH_LONG).show();
+                                       }
+                                   }
+
+                                   @Override
+                                   public void onCancelled(DatabaseError databaseError) {
+
+                                   }
+                               });
+
+                           }
+                       }
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
 
 
                 if (quest_name.equals(mUser_CreatedQuestName)) {

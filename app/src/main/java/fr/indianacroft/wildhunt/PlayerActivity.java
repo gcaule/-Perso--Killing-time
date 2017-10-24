@@ -64,6 +64,10 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
     private int mNbrePoints, mUser_score;
     // Share via other apps
     private ShareActionProvider mShareActionProvider;
+    ValueEventListener mListener = null;
+    DatabaseReference mRefUser = null;
+    String mIndice = "false";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,10 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mUserId = sharedPreferences.getString("mUserId", mUserId);
         Log.d("key", mUserId);
+
+
+
+
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -142,7 +150,10 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
                     intent.putExtra("mCreatorId", mCreatorId);
                     intent.putExtra("mQuestId", mQuestId);
+                    intent.putExtra("mUser_indice", mIndice);
                     startActivity(intent);
+                    mRefUser.removeEventListener(mListener);
+
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.error_noquest, Toast.LENGTH_SHORT).show();
                 }
@@ -164,6 +175,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 //            }
 //        });
     }
+
+
 
     // Drawer Menu
     @Override
@@ -230,13 +243,11 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 
     // METHODE POUR TROUVER USER
     private void searchUser() {
-        final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
-        final TextView textViewPlayerActivityHint2 = (TextView) findViewById(R.id.textViewPlayerActivityHint2);
+
 
         // On recupere toutes les données de l'user actuel
-        final DatabaseReference refUser =
-                FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
-        refUser.addValueEventListener(new ValueEventListener() {
+        mRefUser = FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
+        mListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -248,14 +259,9 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 
                 Log.d("indice", mUser_indice);
 
-                // Indice a montrer si indice déja utilisé c'est a dire True dans la bdd
-                if (mUser_indice.equalsIgnoreCase("true")) {
-                    textViewPlayerActivityHint.setVisibility(View.VISIBLE);
-                    textViewPlayerActivityHint2.setText(R.string.hint_no_need);
-                } else {
-                    textViewPlayerActivityHint.setVisibility(View.GONE);
-                    textViewPlayerActivityHint2.setText(R.string.hint_need);
-                }
+
+
+
                 searchQuest();
 
                 View navigation_leave = findViewById(R.id.navigation_leave);
@@ -288,10 +294,13 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                     public void onClick(DialogInterface dialog, int which) {
                                         DatabaseReference abandonDefi = FirebaseDatabase.getInstance().getReference().child("User")
                                                 .child(mUserId).child("user_challenge");
-                                        abandonDefi.setValue("Pas de défi pour l'instant");
+                                        //abandonDefi.setValue("Pas de défi pour l'instant"); CA FAIT BUGGUER
                                         // Modifier le champ dans le user Player pour mettre le challenge en done !
-                                        refUser.child("challenge_done")
+                                        mRefUser.child("challenge_done")
                                                 .child(mUser_challenge).child("state").setValue("true");
+                                        mRefUser.child("user_indice").setValue("false");
+                                        startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
+
 
                                     }
                                 })
@@ -300,35 +309,16 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                     }
                 });
 
-                // Indice au clic
-                // TODO enlever les points au clic de l'indice
-                View navigation_hint = findViewById(R.id.navigation_hint);
-                navigation_hint.setOnClickListener(new View.OnClickListener() {
-                    boolean isClicked = false;
 
-                    @Override
-                    public void onClick(View v) {
-                        //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
-                        if (mUser_indice.equalsIgnoreCase("false")) {
-                            if (!isClicked) {
-                                isClicked = true;
-                                Toast.makeText(getApplicationContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
-                            } else if (isClicked) {
-                                textViewPlayerActivityHint.setVisibility(View.VISIBLE);
-                                textViewPlayerActivityHint2.setVisibility(View.VISIBLE);
-//
-                                refUser.child("user_indice").setValue("true");
-                            }
-                        }
-                    }
-                });
 
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
-        });
+        };
+
+        mRefUser.addListenerForSingleValueEvent(mListener);
     }
 
     // METHODE POUR TROUVER QUETE
@@ -383,7 +373,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                         // On verifie si ce challenge n'est pas dans le tableau des dones
                         final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("User").child(mUserId);
                         final int finalJ = j;
-                        refUser.child("challenge_done").addValueEventListener(new ValueEventListener() {
+                        refUser.child("challenge_done").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 // Tableau des challenges dones
@@ -405,42 +395,44 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference();
                                         //TODO rajouter une boucle ou condition pq ca ajoute les points en continue
                                         // Le défi est bon, on passe au suivant !!
-                                        // On update son score !!
 
-//                                        if (mUser_indice.equals("true")) {
-//                                            mNbrePoints = mNbrePoints / 2;
-//                                        }
-//
-//                                        mNbrePoints = mUser_score + mNbrePoints;
-//
-//                                        refUser.child("User").child(mUserId).child("score").setValue(mNbrePoints);
                                         // Si le challenge actuel correspond a un challenge done
                                         // on passe au challenge d'indice suivant
                                         if (finalJ + 1 < mapChallenges.length) {
                                             mUser_challenge = mapChallenges[finalJ + 1];
-//                                            Toast.makeText(PlayerActivity.this, "Votre défi a été validé, vous passez au suivant ! :)", Toast.LENGTH_SHORT).show();
 
                                             // On assigne l'ID du challenge au joueur
-
-
                                             refUser.child("User").child(mUserId).child("user_challenge").setValue(mUser_challenge);
                                             refUser.child("User").child(mUserId).child("user_indice").setValue("false");
-                                            return;
+
                                         } else {
-                                            // Toast.makeText(PlayerActivity.this, "Bravo vous avez terminé tout les défis ! Redirection en cours", Toast.LENGTH_SHORT).show();
+                                            // Tous les défis ont été faits !!!
                                             refUser.child("User").child(mUserId).child("user_challenge").setValue("Pas de défi pour l'instant");
                                             refUser.child("User").child(mUserId).child("user_quest").setValue("Pas de qûete pour l'instant");
+                                            // Modifier le champ dans le user Player pour mettre le challenge en done !
+                                            refUser.child("User").child(mUserId).child("quest_done").child(mUser_quest).child("state").setValue("true");
+
                                             startActivity(new Intent(getApplicationContext(), LobbyActivity.class));
-                                            return;
+                                            if (mRefUser!=null && mListener!=null){
+
+                                                mRefUser.removeEventListener(mListener);
+                                                startActivity(new Intent (getApplicationContext(), LobbyActivity.class));
+                                                Toast.makeText(PlayerActivity.this,
+                                                        "Vous avez terminé tout les défis !\n" + "Redirection en cours", Toast.LENGTH_SHORT).show();
+                                            }
+
+
+
+
 
                                         }
 
                                     }
                                 }
 
+
                                 // On set le challenge sur la page
                                 final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
-
                                 final Button playerActivityNumChallenge = (Button) findViewById(R.id.playerActivityNumChallenge);
 
                                 // On recupere les données des challenges
@@ -479,7 +471,42 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         textViewPlayerActivityHint.setText(mHint_challenge);
                                         playerActivityNumChallenge.setText(mName_challenge);
                                         playerActivityDuration.setText(mDiff_challenge);
-                                        return;
+
+                                        final TextView textViewPlayerActivityHint = (TextView) findViewById(R.id.textViewPlayerActivityHint);
+                                        final TextView textViewPlayerActivityHint2 = (TextView) findViewById(R.id.textViewPlayerActivityHint2);
+
+                                        // Indice a montrer si indice déja utilisé c'est a dire True dans la bdd
+                                        if (mUser_indice.equalsIgnoreCase("true")) {
+                                            textViewPlayerActivityHint.setVisibility(View.VISIBLE);
+                                            textViewPlayerActivityHint2.setText(R.string.hint_no_need);
+                                        } else {
+                                            textViewPlayerActivityHint.setVisibility(View.GONE);
+                                            textViewPlayerActivityHint2.setText(R.string.hint_need);
+                                        }
+
+                                        // Indice au clic
+                                        View navigation_hint = findViewById(R.id.navigation_hint);
+                                        navigation_hint.setOnClickListener(new View.OnClickListener() {
+                                            boolean isClicked = false;
+
+                                            @Override
+                                            public void onClick(View v) {
+                                                //si l'indice est déclaré false dans la bdd cest qu'il n'a jamais été utilisé
+                                                if (mUser_indice.equalsIgnoreCase("false")) {
+                                                    if (!isClicked) {
+                                                        isClicked = true;
+                                                        Toast.makeText(getApplicationContext(), R.string.warning_hint, Toast.LENGTH_SHORT).show();
+                                                    } else if (isClicked) {
+                                                        textViewPlayerActivityHint.setVisibility(View.VISIBLE);
+                                                        textViewPlayerActivityHint2.setVisibility(View.VISIBLE);
+//
+                                                        mRefUser.child("user_indice").setValue("true");
+                                                        mIndice = "true";
+                                                    }
+                                                }
+                                            }
+                                        });
+
                                     }
 
                                     @Override
@@ -493,6 +520,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                             public void onCancelled(DatabaseError databaseError) {
                             }
                         });
+
+
                     }
                 }
             }

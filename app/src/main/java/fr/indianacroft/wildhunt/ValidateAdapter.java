@@ -70,8 +70,8 @@ public class ValidateAdapter extends BaseAdapter {
                     null);
         }
 
-        final String challengeName = map.get(position).first.toString();
-        final String userName = map.get(position).second.toString();
+        final String challengeKey = map.get(position).first.toString();
+        final String userKey = map.get(position).second.toString();
 
         DatabaseReference refUser =
                 FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
@@ -86,7 +86,7 @@ public class ValidateAdapter extends BaseAdapter {
                 final String mQuestId = user.getUser_createdquestID();
 
                 // On recupere le nom du challenge
-                DatabaseReference refChallenge = FirebaseDatabase.getInstance().getReference("Challenge").child(mQuestId).child(challengeName);
+                DatabaseReference refChallenge = FirebaseDatabase.getInstance().getReference("Challenge").child(mQuestId).child(challengeKey);
                 refChallenge.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -105,7 +105,7 @@ public class ValidateAdapter extends BaseAdapter {
                 });
 
                 // On recupere le user a valider
-                DatabaseReference refUserToValidate = FirebaseDatabase.getInstance().getReference("User").child(userName);
+                DatabaseReference refUserToValidate = FirebaseDatabase.getInstance().getReference("User").child(userKey);
                 refUserToValidate.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -129,8 +129,8 @@ public class ValidateAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(context, ChallengeToValidateActivity.class);
-                        intent.putExtra("ToValidate", challengeName);
-                        intent.putExtra("UserToValidate", userName);
+                        intent.putExtra("ToValidate", challengeKey);
+                        intent.putExtra("UserToValidate", userKey);
                         intent.putExtra("CreatedQuestId", mQuestId);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);

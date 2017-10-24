@@ -43,7 +43,7 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
     private String mChallengeId;
     private String mCreatorId;
     private String mQuestId;
-
+    private String mUser_indice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +59,8 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
         mChallengeId = getIntent().getStringExtra("mChallengeKey");
         mCreatorId = getIntent().getStringExtra("mCreatorId");
         mQuestId = getIntent().getStringExtra("mQuestId");
+        mUser_indice = getIntent().getStringExtra("mUser_indice");
+
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -171,7 +173,9 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                        ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
+                        ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child("User").child(mUserId).setValue(false);
+                        ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child("Indice").child(mUserId).setValue(mUser_indice);
+                        ref.child("User").child(mUserId).child("user_indice").setValue("false");
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             public void run() {
@@ -208,7 +212,9 @@ public class PlayerActivity_PopUp extends AppCompatActivity {
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                        ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child(mUserId).setValue(false);
+                        ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child("User").child(mUserId).setValue(false);
+                        ref.child("User").child(mCreatorId).child("aValider").child(mQuestId).child(mChallengeId).child("Indice").child(mUserId).setValue(mUser_indice);
+                        ref.child("User").child(mUserId).child("user_indice").setValue("false");
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             public void run() {
