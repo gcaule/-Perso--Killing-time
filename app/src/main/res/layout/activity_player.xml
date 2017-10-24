@@ -68,7 +68,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:background="@color/newcolor"
-                tools:text="Nom de partie" />
+                tools:text="Party Name" />
 
         </android.support.design.widget.AppBarLayout>
 
