@@ -44,8 +44,7 @@
                     android:layout_weight="1"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="@string/home_player"
-                    android:text="Ma partie"
+                    android:text="@string/title_player"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />

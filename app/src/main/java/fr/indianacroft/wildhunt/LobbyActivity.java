@@ -105,7 +105,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String questOrNot = dataSnapshot.getValue(String.class);
-                if (questOrNot.equals(R.string.noQuest)) {
+                if (questOrNot.equals("Pas de qûete pour l'instant")) {
                     Menu nav_Menu = navigationView.getMenu();
                     nav_Menu.findItem(R.id.nav_play).setVisible(false);
                 } else {

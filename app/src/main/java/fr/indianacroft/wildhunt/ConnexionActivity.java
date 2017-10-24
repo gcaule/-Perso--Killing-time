@@ -140,7 +140,7 @@ public class ConnexionActivity extends AppCompatActivity {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
                                                 String questOrNot = dataSnapshot.getValue(String.class);
-                                                if (questOrNot.equals(R.string.noQuest)) {
+                                                if (questOrNot.equals("Pas de qûete pour l'instant")) {
                                                     // Direct to Lobby if user is known & does not have quest
                                                     Intent intent = new Intent(getApplicationContext(), LobbyActivity.class);
                                                     startActivity(intent);
@@ -164,8 +164,8 @@ public class ConnexionActivity extends AppCompatActivity {
                             }
 
                             // Utilisateur nouveau : le compte n'existe pas, on le créer !
-                            String questContent = getResources().getString(R.string.noQuest);
-                            String challengeContent = getResources().getString(R.string.noChallenge);
+                            String questContent = "Pas de qûete pour l'instant";
+                            String challengeContent = "Pas de défi pour l'instant";
                             User user = new User(userNameContent, userPasswordContent, questContent, challengeContent, score);
                             user.setUser_name(userNameContent);
                             user.setUser_password(mEncrypt(userPasswordContent, "AES"));

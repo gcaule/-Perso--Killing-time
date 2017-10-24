@@ -56,10 +56,10 @@
         <item>Normal</item>
         <item>Dur</item>
     </string-array>
-    <string name="hint_name">Ajoutez ici un indice\npour aider le joueur à résoudre le défi !</string>
+    <string name="hint_name">Ajoute ici un indice pour aider \nle joueur à résoudre le défi</string>
     <string name="challenge_name">Nom du défi : </string>
-    <string name="hint_challenge_name">Ajoutez ici le nom de votre défi</string>
-    <string name="difficulty">Choisissez votre difficulté : </string>
+    <string name="hint_challenge_name">Ajoute ici le nom de ton défi</string>
+    <string name="difficulty">Choisis ta difficulté :</string>
     <string name="hint">Ecrivez ici votre indice</string>
     <string name="create_challenge">Créer le défi</string>
     <string name="toast_challenge">Merci de remplir tous les champs et de choisir une photo</string>
@@ -87,7 +87,7 @@
     <string name="home_game_master_tab2">Défis à valider</string>
 
     // Page Ma Partie
-    <string name="home_player">Ma partie</string>
+    <string name="title_player">Ma partie</string>
     <string name="quest_title">Nom de partie : </string>
     <string name="hint_quest_name">Ajoutez ici le nom\nde votre partie</string>
     <string name="hint_quest_description">Décrivez ici votre partie\n(200 caractères max)</string>
@@ -167,14 +167,13 @@
 
 
 
-    <string name="noQuest">Pas de qûete pour l\'instant</string>
+
     <string name="title_alertdialog_refuse">REFUSER cette solution</string>
     <string name="alertdialog_refuse">Es-tu sûr de vouloir REFUSER cette solution ?</string>
     <string name="alertdialog_solutionrefused">Solution refusée!</string>
     <string name="title_alertdialog_accept">Valider cette solution</string>
     <string name="alertdialog_accept">Es-tu sûr de vouloir VALIDER cette solution ?</string>
     <string name="alertdialog_solutionaccepted">Solution validée !</string>
-    <string name="noChallenge">Pas de défi pour l\'instant</string>
     <string name="title_alertdialog_abort">Abandonner?</string>
     <string name="alertdialog_abort">Es-tu sûr de vouloir abandonner?</string>
     <string name="toast_finish">Tu as terminé tout les défis !\\n Bravo !</string>

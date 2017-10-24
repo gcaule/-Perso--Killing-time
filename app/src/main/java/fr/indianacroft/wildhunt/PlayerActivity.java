@@ -105,7 +105,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String questOrNot = dataSnapshot.getValue(String.class);
-                if (questOrNot.equals(R.string.noQuest)) {
+                if (questOrNot.equals("Pas de qûete pour l'instant")) {
                     Menu nav_Menu = navigationView.getMenu();
                     nav_Menu.findItem(R.id.nav_play).setVisible(false);
                 } else {
@@ -139,7 +139,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
         navigation_validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mUser_quest.equals(R.string.noQuest)) {
+                if (!mUser_quest.equals("Pas de qûete pour l'instant")) {
                     Intent intent = new Intent(getApplicationContext(), PlayerActivity_PopUp.class);
                     intent.putExtra("mChallengeKey", mKey_challenge); //On envoie l'ID du challenge
                     intent.putExtra("mCreatorId", mCreatorId);
@@ -259,7 +259,7 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                         DatabaseReference refUserQuest = FirebaseDatabase.getInstance()
                                                 .getReference().child("User")
                                                 .child(mUserId).child("user_quest");
-                                        refUserQuest.setValue(R.string.noQuest);
+                                        refUserQuest.setValue("Pas de qûete pour l'instant");
                                         startActivity(new Intent(getApplicationContext(), LobbyActivity.class));
                                     }
                                 })
@@ -383,8 +383,8 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
 
                                         } else {
                                             // Tous les défis ont été faits !!!
-                                            refUser.child("User").child(mUserId).child("user_challenge").setValue(R.string.noChallenge);
-                                            refUser.child("User").child(mUserId).child("user_quest").setValue(R.string.noQuest);
+                                            refUser.child("User").child(mUserId).child("user_challenge").setValue("Pas de défi pour l'instant");
+                                            refUser.child("User").child(mUserId).child("user_quest").setValue("Pas de qûete pour l'instant");
                                             // Modifier le champ dans le user Player pour mettre le challenge en done !
                                             refUser.child("User").child(mUserId).child("quest_done").child(mUser_quest).child("state").setValue("true");
 
