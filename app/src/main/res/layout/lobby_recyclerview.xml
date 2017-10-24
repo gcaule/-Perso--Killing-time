@@ -48,7 +48,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:textAllCaps="false"
-        android:background="@drawable/checked1"
+        android:background="@drawable/down_arrow3"
         app:layout_constraintHorizontal_bias="0.977"
         app:layout_constraintLeft_toRightOf="@+id/lobbyName"
         app:layout_constraintRight_toRightOf="parent"

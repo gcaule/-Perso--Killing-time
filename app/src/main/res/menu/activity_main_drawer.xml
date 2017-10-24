@@ -4,36 +4,36 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_rules"
-            android:icon="@drawable/book2"
+            android:icon="@drawable/book3"
             android:title="@string/nav_rules" />
         <item
             android:id="@+id/nav_play"
-            android:icon="@drawable/play2"
+            android:icon="@drawable/play3"
             android:title="@string/nav_play" />
         <item
             android:id="@+id/nav_lobby"
-            android:icon="@drawable/map2"
+            android:icon="@drawable/map3"
             android:title="@string/nav_lobby" />
         <item
             android:id="@+id/nav_create"
-            android:icon="@drawable/plus"
+            android:icon="@drawable/plus3"
             android:title="@string/nav_create" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/settings2"
+            android:icon="@drawable/settings3"
             android:title="@string/nav_manage" />
         <item
             android:id="@+id/nav_share"
-            android:icon="@drawable/share"
+            android:icon="@drawable/share3"
             android:title="@string/share"
             android:actionProviderClass="android.widget.ShareActionProvider"/>
         <item
             android:id="@+id/nav_credits"
-            android:icon="@drawable/copyright"
+            android:icon="@drawable/copyright3"
             android:title="@string/nav_credits" />
         <item
             android:id="@+id/nav_delete"
-            android:icon="@drawable/delete9"
+            android:icon="@drawable/delete3"
             android:title="@string/nav_delete" />
     </group>
 

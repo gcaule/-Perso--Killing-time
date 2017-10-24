@@ -24,6 +24,8 @@
     <EditText
         style="@style/Connexion"
         android:id="@+id/connexionUserName"
+        android:textColorHint="@color/newcolor"
+        android:textColor="@color/newcolor"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:maxLength="15"
@@ -39,6 +41,8 @@
     <EditText
         style="@style/Connexion"
         android:id="@+id/connexionUserPassword"
+        android:textColorHint="@color/newcolor"
+        android:textColor="@color/newcolor"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:maxLength="15"
@@ -67,6 +71,7 @@
 
     <Button
         style="@style/ButtonYellow"
+        android:textColor="#FFFFFF"
         android:id="@+id/buttonConnexionSend"
         android:text="@string/connexion"
         android:layout_height="wrap_content"
