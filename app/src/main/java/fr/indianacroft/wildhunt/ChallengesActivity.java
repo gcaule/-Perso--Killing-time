@@ -14,8 +14,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -29,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -71,7 +68,6 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         mCreatedQuestId = sharedPreferences.getString("mCreatedQuest", "");
         Log.d("key", mUserId);
 
-
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -93,6 +89,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
             }
         });
+        // Cannot access to "Gerer ma partie" if no validation pending
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
         rootRef.child(mUserId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -109,19 +106,25 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+        // Cannot access to "Ma partie" if not playing to a quest
+        DatabaseReference db = rootRef.child(mUserId).child("user_quest");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String questOrNot = dataSnapshot.getValue(String.class);
+                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(false);
+                } else {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(true);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
-        // Avatar
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("Avatar").child(mUserId);
-//        imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
-//        // Load the image using Glide
-//        if (storageReference.getDownloadUrl().isSuccessful()){
-//            Glide.with(getApplicationContext())
-//                    .using(new FirebaseImageLoader())
-//                    .load(storageReference)
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .into(imageViewAvatar);
-//        }
         imageViewAvatar = (ImageView) findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,38 +140,21 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 R.array.challenge_difficulty, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_challenge.setAdapter(adapter);
-
         spinner_challenge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
                     nbrePoints = easy;
-
                 } if (i == 1) {
                     nbrePoints = normal;
-
                 } if (i == 2) {
                     nbrePoints = hard;
-
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
-
-        // Lien PopUp
-//        imageViewInscriptionLogo = (ImageView) findViewById(R.id.imageViewInscriptionLogo);
-//        imageViewInscriptionLogo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ChallengesActivity.this, ChallengesActivity_PopUp.class);
-//                intent.putExtra("mCreatedQuest", mCreatedQuestId);
-//                startActivity(intent);
-//            }
-//        });
 
         // Load & Take photo
         butLoad = (Button) findViewById(R.id.butLoad);
@@ -220,7 +206,6 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         FirebaseStorage storage = FirebaseStorage.getInstance();
         final StorageReference storageRef = storage.getInstance().getReference();
 
-
         // Database
         name_challenge = (EditText) findViewById(R.id.challenge_name);
         hint_challenge = (EditText) findViewById(R.id.hint_challenge);
@@ -238,18 +223,13 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 mCreatedQuestId = user.getUser_createdquestID();
                 mUserName = user.getUser_name();
 
-
-
                 //StorageReference strRef = FirebaseStorage.getInstance().getReference("Quest").child(mCreatedQuestId).child(challengeId);
 
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
 
         //ON CLICK
         butCreateChallenge.setOnClickListener(new View.OnClickListener() {
@@ -260,35 +240,25 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                 String spinnerContent = spinner_challenge.getSelectedItem().toString();
                 String idquest = "test";//TODO a modifier
 
-
                 // Impossible to create if nothing is written
-                if ((nameContent.equals("")) || (hintContent.equals(""))) {
+                if ((nameContent.equals("")) || (hintContent.equals("")) || (filePath == null && imageViewInscriptionLogo == null)) {
                     Toast.makeText(getApplicationContext(), R.string.toast_challenge, Toast.LENGTH_LONG).show();
-                } else {
+                }
+                else {
                     // childRef.push().getKey() is used to generate the different key
                     final String challengeId = ref.getReference("Challenge").child(mCreatedQuestId).push().getKey();
-
-
                     final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
                     // Upload photos on Firebase
+                    // PICK IMAGE REQUEST = photo de la gallery
                     if (filePath != null) {
                         progressDialog.show();
-
                         StorageReference childRef = storageRef.child("Quest").child(mCreatedQuestId).child(challengeId);
                         UploadTask uploadTask = childRef.putFile(filePath);
                         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 progressDialog.dismiss();
-//                                    Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_SHORT).show();
-//                                    Handler handler = new Handler();
-//                                    handler.postDelayed(new Runnable() {
-//                                        public void run() {
-//                                            Intent intent = new Intent(ChallengesActivity.this, CreateQuestActivity.class);
-//                                            startActivity(intent);
-//                                        }
-//                                    }, 1500);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -297,7 +267,9 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                                 Toast.makeText(getApplicationContext(), getString(R.string.toast_error_upload) + e, Toast.LENGTH_SHORT).show();
                             }
                         });
-                    } else {
+                    }
+                    if (imageViewInscriptionLogo != null) {
+                        // REQUEST IMAGE CAPTURE = lien vers appareil photo
                         progressDialog.show();
                         imageViewInscriptionLogo.setDrawingCacheEnabled(true);
                         imageViewInscriptionLogo.buildDrawingCache();
@@ -317,31 +289,11 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(), getString(R.string.created), Toast.LENGTH_LONG).show();
-//                                    Handler handler = new Handler();
-//                                    handler.postDelayed(new Runnable() {
-//                                        public void run() {
-//                                            Intent intent = new Intent(ChallengesActivity.this, CreateQuestActivity.class);
-//                                            startActivity(intent);
-//                                        }
-//                                    }, 1500);
                             }
                         });
                     }
-                    // Load the image using Glide
-//                    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-//                    StorageReference strRef = firebaseStorage.getReference("Quest");
-//                    StorageReference pathReference = strRef.child(mCreatedQuestId).child(challengeId);
-//                    Glide.with(getApplicationContext())
-//                            .using(new FirebaseImageLoader())
-//                            .load(pathReference)
-//                            .error(R.drawable.camera)
-//                            .skipMemoryCache(true)
-//                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                            .into(imageViewInscriptionLogo);
-
 
                     // Creation du nouveau challenge
-
                     Challenge challenge = new Challenge(nameContent, hintContent, spinnerContent, idquest, mUserId, nbrePoints);
                     challenge.setChallenge_name(nameContent);
                     challenge.setHint_challenge(hintContent);
@@ -354,9 +306,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
                     childRef.child(mCreatedQuestId).child(challengeId).child("challenge_nbrePoints").setValue(nbrePoints);
                     name_challenge.setText("");
                     hint_challenge.setText("");
-                    startActivity(new Intent(getApplicationContext(), ChallengesActivity.class));
-
-
+                    startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
                 }
             }
         });
@@ -440,5 +390,4 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
             imageViewInscriptionLogo.setImageBitmap(imageBitmap);
         }
     }
-
 }

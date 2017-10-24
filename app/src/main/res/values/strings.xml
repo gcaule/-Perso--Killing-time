@@ -61,7 +61,7 @@
     <string name="difficulty">Choisissez votre difficulté : </string>
     <string name="hint">Ecrivez ici votre indice</string>
     <string name="create_challenge">Créer le défi</string>
-    <string name="toast_challenge">Merci de remplir tous les champs</string>
+    <string name="toast_challenge">Merci de remplir tous les champs et de choisir une photo</string>
     <string name="created">Creation du défi réussi!</string>
 
     // Page Salon
@@ -101,7 +101,7 @@
     <string name="create_quest_button">Créer la partie</string>
     <string name="add_new_challenge">Ajouter des défis à votre partie</string>
     <string name="create_challenge_button">Créer un challenge</string>
-    <string name="challenge">Challenge :</string>
+    <string name="challenge">Défi :</string>
     <string name="create_quest">CREER MA PARTIE</string>
     <string name="toast_challenge2">Veuillez remplir tous les champs et ajouter des défis pour pouvoir créer votre partie</string>
     <string name="toast_createdquest">Partie créée avec succès ! Ajoute des défis maintenant !</string>
@@ -123,8 +123,8 @@
     <string name="password">PASSWORD</string>
 
     // Page Règles du jeu
-    <string name="rules">La 1ère règle du jeu c’est de lire les règles du jeux !\n \n
-    La 2ème règle du jeu c’est de comprendre les règles du jeux !\n \n
+    <string name="rules">La 1ère règle du jeu c’est de lire les règles du jeu !\n \n
+    La 2ème règle du jeu c’est de comprendre les règles du jeu !\n \n
     La 3ème règle du jeu est de réaliser l’ensemble des défis d’une partie !\n \n
     Pour chaque défi, tu consulteras une photo mystérieuse. Ensuite, tu devras retrouver l’endroit où la photo a été prise,
         te prendre en photo sur ce lieu (#selfie !) et l’envoyer via l’appli pour validation !\n \n
@@ -133,8 +133,8 @@
     Pour chaque défi un indice est proposé. Si tu réalises le défi sans consulter l’indice tu gagnes la totalité des points.
         Sinon tu en perd un peu !\n
     Tu peux choisir n’importe quel défi mais tu ne peux te lancer que dans un seul défi à la fois !\n
-    Tu peux jouer seul ou avec des amis. Le joueur ou l’équipe qui a le plus de points à la fin de la partie est déclarée vainqueur !\n \n
-    BONUS : Cette appli te donne la possibilité de créer toi-même tes parties en tant que maître du jeu et d’y inviter tes amis comme joueur.\n \n
+    Tu peux jouer seul ou avec des amis. Le joueur ou l’équipe qui a le plus de points à la fin de la partie est déclaré vainqueur !\n \n
+    BONUS : Cette appli te donne la possibilité de créer toi-même tes parties et d’y inviter tes amis.\n \n
     Mais attention, tu ne peux pas créer et jouer sur la même partie 😉\n \n
     A toi de jouer !</string>
     <string name="title_activity_rules">Règles du Jeu</string>

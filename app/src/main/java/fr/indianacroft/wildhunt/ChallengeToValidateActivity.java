@@ -78,6 +78,25 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
             }
         });
+        // Cannot access to "Ma partie" if not playing to a quest
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("User");
+        DatabaseReference db = rootRef.child(mUserId).child("user_quest");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String questOrNot = dataSnapshot.getValue(String.class);
+                if (questOrNot.equals("Pas de qûete pour l'instant")) {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(false);
+                } else {
+                    Menu nav_Menu = navigationView.getMenu();
+                    nav_Menu.findItem(R.id.nav_play).setVisible(true);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         // Bottom Navigation bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation_validate);
@@ -94,7 +113,7 @@ public class ChallengeToValidateActivity extends AppCompatActivity implements Na
             }
         });
 
-        // On appele les methodes declarées plus bas (pour chercher l'user, les challenges)
+
         // On appele les methodes declarées plus bas (pour chercher l'user et le challenge)
         searchUser();
     }
