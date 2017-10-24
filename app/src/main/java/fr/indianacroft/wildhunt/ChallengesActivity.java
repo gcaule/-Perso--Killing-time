@@ -138,7 +138,7 @@ public class ChallengesActivity extends AppCompatActivity implements NavigationV
         // Spinner
         spinner_challenge = findViewById(R.id.spinner_challenge);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.challenge_difficulty, android.R.layout.simple_spinner_item);
+                R.array.challenge_difficulty, R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_challenge.setAdapter(adapter);
         spinner_challenge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

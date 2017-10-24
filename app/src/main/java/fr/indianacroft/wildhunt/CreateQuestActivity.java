@@ -40,9 +40,9 @@ import com.google.firebase.storage.StorageReference;
 public class CreateQuestActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button butAddNewChallenge, button_create_quest;
-    TextView quest_title;
+    TextView quest_title, empty, description_title;
     EditText name_quest, description_quest;
-    ImageView imageViewAvatar;
+    ImageView imageViewAvatar, imageViewPirate;
 //    Spinner spinner_quest;
     ListView listView;
     DatabaseReference childRef;
@@ -145,10 +145,13 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         button_create_quest = findViewById(R.id.button_create_quest);
         butAddNewChallenge = findViewById(R.id.butAddNewChallenge);
         quest_title = findViewById(R.id.quest_title);
+        description_title = findViewById(R.id.description_title);
 //        life_duration_quest_title = (TextView) findViewById(R.id.life_duration_quest_title);
+        imageViewPirate = findViewById(R.id.imageViewPirate);
         name_quest = findViewById(R.id.name_quest);
         description_quest = findViewById(R.id.description_quest);
         listView = findViewById(R.id.listViewChallengeCreated);
+        empty = findViewById(R.id.empty);
         DatabaseReference db2 = ref.child("User").child(mUserId).child("user_createdquestID");
         db2.addValueEventListener(new ValueEventListener() {
             @Override
@@ -158,11 +161,12 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     button_create_quest.setVisibility(View.VISIBLE);
                     butAddNewChallenge.setVisibility(View.GONE);
                     quest_title.setVisibility(View.VISIBLE);
-//                    life_duration_quest_title.setVisibility(View.VISIBLE);
+                    description_title.setVisibility(View.VISIBLE);
+                    imageViewPirate.setVisibility(View.GONE);
                     name_quest.setVisibility(View.VISIBLE);
                     description_quest.setVisibility(View.VISIBLE);
                     listView.setVisibility(View.GONE);
-//                    spinner_quest.setVisibility(View.VISIBLE);
+                    empty.setVisibility(View.GONE);
 
                     button_create_quest.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -218,11 +222,11 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     button_create_quest.setVisibility(View.GONE);
                     butAddNewChallenge.setVisibility(View.VISIBLE);
                     quest_title.setVisibility(View.GONE);
-//                    life_duration_quest_title.setVisibility(View.GONE);
+                    description_title.setVisibility(View.GONE);
+                    imageViewPirate.setVisibility(View.VISIBLE);
                     name_quest.setVisibility(View.GONE);
                     description_quest.setVisibility(View.GONE);
-                    listView.setVisibility(View.VISIBLE);
-//                    spinner_quest.setVisibility(View.GONE);
+                    listView.setEmptyView(findViewById(R.id.empty));
 
                     // Go to Challenge Activity on click
                     butAddNewChallenge.setOnClickListener(new View.OnClickListener() {

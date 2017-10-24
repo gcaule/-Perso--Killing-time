@@ -25,13 +25,13 @@
     <string name="upload_ta_photo">UPLOAD\nPHOTO</string>
     <string name="prendre_nouvelle_photo">NOUVELLE\nPHOTO</string>
     <string name="envoi_photo">ENVOI\nPHOTO</string>
-    <string name="toast_error_profile">Vous êtes déjà sur la page Profil</string>
+    <string name="toast_error_profile">Tu es déjà sur la page Profil</string>
     <string name="toast_error_upload">Echec de l\'upload</string>
     <string name="toast_upload_success">Upload réussi !</string>
     <string name="progressdialog_upload">Uploading ...</string>
     <string name="sauvergarder_les_modifications">Sauvergarder les modifications</string>
     <string name="vos_donn_es_personnelles">Vos données personnelles :</string>
-    <string name="personnalisez_votre_avatar">Personnalisez votre avatar :</string>
+    <string name="personnalisez_votre_avatar">Personnalise ton avatar :</string>
     <string name="scores">Votre score :</string>
     <string name="point">Point</string>
     <string name="titre">Titre</string>
@@ -50,7 +50,7 @@
     <string name="nouvelle_photo">Nouvelle\nPhoto</string>
 
     // Page Défi
-    <string name="challenge_creation">Creation de defis</string>
+    <string name="challenge_creation">Création de défis</string>
     <string-array name="challenge_difficulty">
         <item>Facile</item>
         <item>Normal</item>
@@ -88,7 +88,6 @@
 
     // Page Ma Partie
     <string name="home_player">Ma partie</string>
-    <string name="quest_title">Nom de partie : </string>
     <string name="hint_quest_name">Ajoutez ici le nom\nde votre partie</string>
     <string name="hint_quest_description">Décrivez ici votre partie\n(200 caractères max)</string>
     <string name="send_photo">Envoyer</string>
@@ -99,6 +98,8 @@
     N\'oublie pas que tu peux utiliser un indice !</string>
 
     // Page Créer ma partie
+    <string name="quest_title">Nom de partie : </string>
+    <string name="description_title">Décris ta partie : </string>
     <string name="life_duration_quest_title">Durée de vie</string>
     <string name="create_quest_button">Créer la partie</string>
     <string name="add_new_challenge">Ajouter des défis à votre partie</string>
@@ -107,6 +108,7 @@
     <string name="create_quest">Créer ma partie</string>
     <string name="toast_challenge2">Veuillez remplir tous les champs et ajouter des défis pour pouvoir créer votre partie</string>
     <string name="toast_createdquest">Partie créée avec succès ! Ajoute des défis maintenant !</string>
+    <string name="pas_de_d_fis_pour_l_instant">Pas de défis pour l\'instant</string>
 
     // Bottom Bar
     <string name="abandonner">Abandonner</string>
