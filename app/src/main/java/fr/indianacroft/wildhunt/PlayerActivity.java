@@ -274,24 +274,18 @@ public class PlayerActivity extends AppCompatActivity implements NavigationView.
                                                 .child(mUser_challenge).child("state").setValue("true");
                                         mRefUser.child("user_indice").setValue("false");
                                         startActivity(new Intent(getApplicationContext(), PlayerActivity.class));
-
-
                                     }
                                 })
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
                     }
                 });
-
-
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         };
-
         mRefUser.addListenerForSingleValueEvent(mListener);
     }
 
