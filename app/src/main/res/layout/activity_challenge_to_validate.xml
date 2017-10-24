@@ -115,7 +115,7 @@
                 android:layout_width="345dp"
                 android:layout_height="262dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/camera"
+                app:srcCompat="@drawable/photoapp"
                 tools:layout_editor_absoluteY="106dp"
                 tools:layout_editor_absoluteX="8dp"
                 android:layout_marginTop="10dp"
@@ -136,14 +136,14 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+    <!--<android.support.design.widget.NavigationView-->
+        <!--android:id="@+id/nav_view"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--app:headerLayout="@layout/nav_header_main"-->
+        <!--app:menu="@menu/activity_main_drawer" />-->
 
 </android.support.v4.widget.DrawerLayout>
 
