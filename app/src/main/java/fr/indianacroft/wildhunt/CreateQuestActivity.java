@@ -1,12 +1,10 @@
 package fr.indianacroft.wildhunt;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.ActionProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,13 +16,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +30,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class CreateQuestActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,10 +37,12 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
     TextView quest_title, empty, description_title;
     EditText name_quest, description_quest;
     ImageView imageViewAvatar, imageViewPirate;
-//    Spinner spinner_quest;
+    //    Spinner spinner_quest;
     ListView listView;
     DatabaseReference childRef;
     private String mUserId, mUserName;
+    // Share via other apps
+    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +92,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     nav_Menu.findItem(R.id.nav_manage).setVisible(false);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -114,6 +111,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     nav_Menu.findItem(R.id.nav_play).setVisible(true);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -168,54 +166,80 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     listView.setVisibility(View.GONE);
                     empty.setVisibility(View.GONE);
 
+
                     button_create_quest.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String nameContent = name_quest.getText().toString().trim();
-                            String descriptionContent = description_quest.getText().toString().trim();
-//                            String spinnerContent = spinner_quest.getSelectedItem().toString();
-                            // Impossible to create if nothing is written
-                            if ((nameContent.equals("")) || (descriptionContent.equals(""))) {
-                                Toast.makeText(getApplicationContext(), R.string.toast_challenge2, Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), R.string.toast_createdquest, Toast.LENGTH_LONG).show();
-                                //  DatabaseReference childRef = ref.getReference("form");
-                                // On recupere la quete crée par l'user actuel pour link challenge a la quête
-                                DatabaseReference refUser =
-                                        FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
-                                refUser.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        User user = dataSnapshot.getValue(User.class);
-                                        mUserName = user.getUser_name();
-                                        ref.child("Quest").child(questid).child("quest_creatorName").setValue(mUserName);
+                            final String nameContent = name_quest.getText().toString().trim();
+                            final String descriptionContent = description_quest.getText().toString().trim();
+
+                            final boolean[] noExist = {false};
+
+
+                            // Pour donner le nombre de challenges contenu dans une partie et l'afficher
+                            ref.child("Quest").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                                        Quest quest = dsp.getValue(Quest.class);
+
+                                        String name = quest.getQuest_name();
+
+                                        if (name.equals(nameContent)) {
+                                            noExist[0] = true;
+                                        }
                                     }
+                                    if (noExist[0] == false) {
+                                        // String spinnerContent = spinner_quest.getSelectedItem().toString();
+                                        // Impossible to create if nothing is written
+                                        if ((nameContent.equals("")) || (descriptionContent.equals(""))) {
+                                            Toast.makeText(getApplicationContext(), R.string.toast_challenge2, Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), R.string.toast_createdquest, Toast.LENGTH_LONG).show();
+                                            //  DatabaseReference childRef = ref.getReference("form");
+                                            // On recupere la quete crée par l'user actuel pour link challenge a la quête
+                                            DatabaseReference refUser =
+                                                    FirebaseDatabase.getInstance().getReference().child("User").child(mUserId);
+                                            refUser.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    User user = dataSnapshot.getValue(User.class);
+                                                    mUserName = user.getUser_name();
+                                                    ref.child("Quest").child(questid).child("quest_creatorName").setValue(mUserName);
+                                                }
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+                                                }
+                                            });
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
+                                            Quest quest = new Quest(nameContent, descriptionContent);
+
+                                            quest.setQuest_name(nameContent);
+                                            quest.setQuest_description(descriptionContent);
+                                            // quest.setLife_duration(spinnerContent);
+
+                                            ref.child("Quest").child(questid).setValue(quest);
+                                            ref.child("Quest").child(questid).child("quest_creatorId").setValue(mUserId);
+
+                                            name_quest.setText("");
+                                            description_quest.setText("");
+
+                                            //On lie la quête créee a un user à Firebase
+                                            ref.child("User").child(mUserId).child("user_createdquestID").setValue(questid);
+                                            ref.child("User").child(mUserId).child("user_createdquestName").setValue(nameContent);
+                                            // Et aux SharedPreferences
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putString("mCreatedQuest", questid);
+                                            editor.apply();
+                                        }
+                                    } else {
+                                        Toast.makeText(CreateQuestActivity.this, R.string.error_createname, Toast.LENGTH_SHORT).show();
                                     }
-                                });
-
-                                Quest quest = new Quest(nameContent, descriptionContent);
-
-                                quest.setQuest_name(nameContent);
-                                quest.setQuest_description(descriptionContent);
-//                                quest.setLife_duration(spinnerContent);
-
-                                ref.child("Quest").child(questid).setValue(quest);
-                                ref.child("Quest").child(questid).child("quest_creatorId").setValue(mUserId);
-
-                                name_quest.setText("");
-                                description_quest.setText("");
-
-                                //On lie la quête créee a un user à Firebase
-                                ref.child("User").child(mUserId).child("user_createdquestID").setValue(questid);
-                                ref.child("User").child(mUserId).child("user_createdquestName").setValue(nameContent);
-                                // Et aux SharedPreferences
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("mCreatedQuest", questid);
-                                editor.apply();
-                            }
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
                         }
                     });
                 } else {
@@ -223,7 +247,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     butAddNewChallenge.setVisibility(View.VISIBLE);
                     quest_title.setVisibility(View.GONE);
                     description_title.setVisibility(View.GONE);
-//                    imageViewPirate.setVisibility(View.VISIBLE);
+                    // imageViewPirate.setVisibility(View.VISIBLE);
                     name_quest.setVisibility(View.GONE);
                     description_quest.setVisibility(View.GONE);
                     listView.setEmptyView(findViewById(R.id.empty));
@@ -245,7 +269,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                             ref.child("Challenge").child(questCreatedOrNot)) {
                         @Override
                         protected void populateView(View v, Challenge challenge, int position) {
-                            ((TextView) v.findViewById(R.id.listViewLabel)).setText(getString(R.string.defi, (position+1)));
+                            ((TextView) v.findViewById(R.id.listViewLabel)).setText(getString(R.string.defi, (position + 1)));
                             ((TextView) v.findViewById(R.id.listViewChallengeName))
                                     .setText(challenge.getChallenge_name());
                             ((TextView) v.findViewById(R.id.listViewChallengeDifficulty))
@@ -255,12 +279,13 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
                     listView.setAdapter(adapterChall);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -277,6 +302,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
             super.onBackPressed();
         }
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -297,7 +323,7 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
-        }  else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
@@ -313,14 +339,13 @@ public class CreateQuestActivity extends AppCompatActivity implements Navigation
         return true;
     }
 
-    // Share via other apps
-    private ShareActionProvider mShareActionProvider;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.nav_share);
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         return true;
     }
+
     private void setShareIntent(Intent shareIntent) {
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(shareIntent);
