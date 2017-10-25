@@ -36,7 +36,7 @@
     <string name="conquerant">Conquérant</string>
     <string name="dominateur">Dominateur du monde</string>
     <string name="votre_pseudo">Ton pseudo :</string>
-    <string name="vous_avez_atteint_le_grade_de">Tu as atteint le grade de : </string>
+    <string name="vous_avez_atteint_le_grade_de">Tu as atteint\nle grade de : </string>
     <string name="d_fi_en_cours">Défi en cours : </string>
     <string name="partie_en_cours">Partie en cours : </string>
 
