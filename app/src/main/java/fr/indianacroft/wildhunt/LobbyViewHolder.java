@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LobbyViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView mNamePartyLobby, mDescriptionPartyLobby;
+    public TextView mNamePartyLobby, mDescriptionPartyLobby, mNbChallengeLobby;
     public Button mDiscoverPartyLobby, mJoinPartyLobby;
     private String mUserId;
 
@@ -40,16 +41,19 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
         mJoinPartyLobby = itemView.findViewById(R.id.buttonLobbyJoin);
         mJoinPartyLobby.setVisibility(View.GONE);
 
+        mNbChallengeLobby = itemView.findViewById(R.id.textViewNbreChallenge);
+        mNbChallengeLobby.setVisibility(View.GONE);
+
         // Discover quest details
         mDiscoverPartyLobby = itemView.findViewById(R.id.buttonLobbyDetails);
         mDiscoverPartyLobby.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 itemView.callOnClick();
                 final String quest_name = mNamePartyLobby.getText().toString();
 
 
-// On cherche si la quete qu'on cherche a joindre n'est pas dans les quetes faites
+                // On cherche si la quete qu'on cherche a joindre n'est pas dans les quetes faites
                 final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference();
                 refUser.child("User").child(mUserId).child("quest_done").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -62,10 +66,12 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         Quest quest = dataSnapshot.getValue(Quest.class);
                                         String questname = quest.getQuest_name();
+                                        // La quete a déja été faite
                                         if (questname.equals(mNamePartyLobby.getText().toString())){
                                             mJoinPartyLobby.setVisibility(View.GONE);
                                             mDescriptionPartyLobby.setText(R.string.impossible_lobby);
                                             mDescriptionPartyLobby.setVisibility(View.GONE);
+                                            mNbChallengeLobby.setVisibility(View.GONE);
                                             Toast.makeText(itemView.getContext(), R.string.toast_error_party2, Toast.LENGTH_LONG).show();
                                         }
                                     }
@@ -83,8 +89,7 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
-
-
+                // Avoid user to join his own quest
                 // Get name of created quest
                 DatabaseReference data1 = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference data2 = data1.child("User").child(mUserId).child("user_createdquestName");
@@ -93,9 +98,9 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String userCreatedQuestName = dataSnapshot.getValue(String.class);
-                        // Avoid user to join his own quest
                         if (quest_name.equals(userCreatedQuestName)) {
                             mJoinPartyLobby.setVisibility(View.GONE);
+                            mNbChallengeLobby.setVisibility(View.GONE);
                             mDescriptionPartyLobby.setText(R.string.impossible_lobby);
                             Toast.makeText(itemView.getContext(), R.string.toast_error_party, Toast.LENGTH_LONG).show();
                         }
@@ -104,6 +109,40 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
+
+                    // Pour donner le nombre de challenges contenu dans une partie et l'afficher
+                    refUser.child("Quest").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                                Quest quest = dsp.getValue(Quest.class);
+
+                                if (quest.getQuest_name().equals(quest_name)) {
+                                    String questKey = dsp.getKey();
+                                    refUser.child("Challenge").child(questKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshotChall) {
+
+                                            int nbreChallenge = (int) dataSnapshotChall.getChildrenCount();
+                                            mNbChallengeLobby.setText(itemView.getResources().getString(R.string.nbreChallenge, (nbreChallenge)));
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
             }
         });
 
@@ -111,7 +150,6 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
         mJoinPartyLobby.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-            //TODO directement recuperer l'ID de la quete selectionnée
             // je recupere le nom de la quete selectionné
             final String quest_name = mNamePartyLobby.getText().toString();
 
