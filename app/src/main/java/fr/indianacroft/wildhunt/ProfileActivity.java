@@ -200,10 +200,10 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 simpleProgressBar.setProgress(Math.round(currentPercent*100));
 
                 if ((mUser_quest.equals("Pas de qûete pour l'instant")) || (mUser_challenge.equals("Pas de défi pour l'instant"))) {
-                    TextView titreQueste = findViewById(R.id.name_quest);
-                    titreQueste.setText(mUser_quest);
-                    TextView titreChallenge = findViewById(R.id.challenge_name);
-                    titreChallenge.setText(mUser_challenge);
+                    TextView titleQuest = findViewById(R.id.name_quest);
+                    titleQuest.setText("Pas de partie pour l'instant");
+                    TextView titleChallenge = findViewById(R.id.challenge_name);
+                    titleChallenge.setText("Pas de défi pour l'instant");
                 } else {
                     FirebaseDatabase ref = FirebaseDatabase.getInstance();
                     DatabaseReference refQuest = ref.getReference().child("Quest").child(mUser_quest);
