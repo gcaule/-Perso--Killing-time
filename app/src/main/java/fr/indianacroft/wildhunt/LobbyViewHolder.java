@@ -134,7 +134,7 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    String questKey = child.getKey(); // ID de la quête
+                                    final String questKey = child.getKey(); // ID de la quête
 
                                     // Recup challenge id ds dossier challenge grace a a la questKey
                                     DatabaseReference refChallengeId = FirebaseDatabase.getInstance().getReference().child("Challenge").child(questKey);
@@ -148,22 +148,25 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                                                 DatabaseReference refChallengeUser =
                                                         FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_challenge");
                                                 refChallengeUser.setValue(challengeKey);
+                                                // On assigne l'ID de la qûete à l'utilisateur
+                                                DatabaseReference refUserQuest =
+                                                        FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_quest");
+                                                refUserQuest.setValue(questKey);
+                                                FirebaseDatabase.getInstance().getReference("User").child(mUserId).child("user_indice").setValue("false");
 
                                                 Intent intent = new Intent(view.getContext(), PlayerActivity.class);
                                                 view.getContext().startActivity(intent);
                                                 return;
                                             }
+                                            Toast.makeText(view.getContext(), R.string.error_nochallenge, Toast.LENGTH_SHORT).show();
+
                                         }
                                         @Override
                                         public void onCancelled (DatabaseError databaseError){
                                         }
                                     });
 
-                                    // On assigne l'ID de la qûete à l'utilisateur
-                                    DatabaseReference refUserQuest =
-                                            FirebaseDatabase.getInstance().getReference().child("User").child(mUserId).child("user_quest");
-                                    refUserQuest.setValue(questKey);
-                                    FirebaseDatabase.getInstance().getReference("User").child(mUserId).child("user_indice").setValue("false");
+
                                 }
                             }
                             @Override

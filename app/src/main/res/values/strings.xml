@@ -168,5 +168,6 @@
         Copyright : Jake and the Never Land Pirates\n\n
         Développé par Pierre , Valentin, Laurent et Guillaume
     </string>
+    <string name="error_nochallenge">Partie en cours de création</string>
 
 </resources>
