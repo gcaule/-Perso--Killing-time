@@ -165,26 +165,26 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     currentPercent = score/100f;
                     min.setText("0");
                     max.setText("100");
-                } else if (score < 400) {
+                } else if (score < 600) {
                     //voyageur
                     TextView voyageur = findViewById(R.id.titre);
                     voyageur.setText(R.string.voyageur);
                     imageView.setImageResource(R.drawable.jake2);
                     imageViewMedal.setImageResource(R.drawable.medal_silver);
                     nv = 1;
-                    currentPercent = (score-100f)/(400f-100f);
+                    currentPercent = (score-100f)/(600f-100f);
                     min.setText("100");
-                    max.setText("400");
-                } else if (score < 1000) {
+                    max.setText("600");
+                } else if (score < 2000) {
                     //conquerant
                     TextView conquerant = findViewById(R.id.titre);
                     conquerant.setText(R.string.conquerant);
                     imageView.setImageResource(R.drawable.jake3);
                     imageViewMedal.setImageResource(R.drawable.medal_gold);
                     nv = 2;
-                    currentPercent = (score-400f)/(1000f-400f);
-                    min.setText("400");
-                    max.setText("1000");
+                    currentPercent = (score-600f)/(2000f-600f);
+                    min.setText("600");
+                    max.setText("2000");
                 } else {
                     //dominateur du monde
                     TextView dominateur = findViewById(R.id.titre);
@@ -193,7 +193,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                     imageViewMedal.setImageResource(R.drawable.medal_gold2);
                     nv = 3;
                     currentPercent = 1f;
-                    min.setText("1000");
+                    min.setText("2000");
                     max.setText("Infini");
                 }
 
