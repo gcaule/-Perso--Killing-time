@@ -90,7 +90,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                     nav_Menu.findItem(R.id.nav_manage).setVisible(false);
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -109,12 +108,10 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                     nav_Menu.findItem(R.id.nav_play).setVisible(true);
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
         // Avatar
         imageViewAvatar = findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
@@ -123,16 +120,13 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
             }
         });
-
         // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
         searchUser();
 
         // Pour remplir la liste des quêtes avec les quêtes créees!!!
         final RecyclerView recyclerViewLobby = findViewById(R.id.recyclerViewHomeJoueurLobby);
         recyclerViewLobby.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Quest");
-
         final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Quest, LobbyViewHolder>(
                 Quest.class,
                 R.layout.lobby_recyclerview,
@@ -144,12 +138,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 holder.setQuest_description(bdd.getQuest_description());
             }
         };
-
-//        int position = 0;
-//        if (position == recyclerViewLobby.getChildCount() - 1) {
-//            recyclerViewLobby.smoothScrollToPosition(position);
-//        }
-
         // Set the adapter avec les données et la ligne de separation
         recyclerViewLobby.addItemDecoration(new LobbyActivity.SimpleDividerItemDecoration(this));
         recyclerViewLobby.setAdapter(mAdapter);
@@ -160,13 +148,10 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
-
             }
         });
-
         // On affiche la description de la party / quete au clic sur sa ligne.
         // Au clic sur une autre ligne ferme les descriptions ouvert avant.
-
         LobbyViewHolder.setOnClickListener(new LobbyViewHolder.ClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -195,22 +180,16 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                                             Toast.makeText(getApplicationContext(), R.string.toast_error_party2, Toast.LENGTH_LONG).show();
                                         }
                                     }
-
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
-
                                     }
                                 });
 
                             }
                         }
-
-
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
                 mNbChallengeLobby = view.findViewById(R.id.textViewNbreChallenge);
@@ -232,10 +211,8 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
 
                                         mNbChallengeLobby.setText(getResources().getString(R.string.nbreChallenge, (nbreChallenge)));
                                     }
-
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
-
                                     }
                                 });
                             }
@@ -362,7 +339,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 mUser_CreatedQuestName = user.getUser_createdquestName();
                 searchQuest();
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -380,7 +356,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                     Quest quest = dsp.getValue(Quest.class);
                     // On recupere la qûete liée a un user
                     if (mUser_quest.equals(dsp.getKey())) {
-
                         mQuest_name = quest.getQuest_name();
                         Log.d(mQuest_name, "quest");
                         mQuest_description = quest.getQuest_description();
@@ -390,7 +365,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
