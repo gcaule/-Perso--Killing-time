@@ -69,10 +69,9 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                                         // La quete a déja été faite
                                         if (questname.equals(mNamePartyLobby.getText().toString())){
                                             mJoinPartyLobby.setVisibility(View.GONE);
-                                            mDescriptionPartyLobby.setText(R.string.impossible_lobby);
                                             mDescriptionPartyLobby.setVisibility(View.GONE);
                                             mNbChallengeLobby.setVisibility(View.GONE);
-                                            Toast.makeText(itemView.getContext(), R.string.toast_error_party2, Toast.LENGTH_LONG).show();
+                                            //Toast.makeText(itemView.getContext(), R.string.toast_error_party2, Toast.LENGTH_LONG).show();
                                         }
                                     }
                                     @Override
@@ -102,7 +101,7 @@ public class LobbyViewHolder extends RecyclerView.ViewHolder {
                             mJoinPartyLobby.setVisibility(View.GONE);
                             mNbChallengeLobby.setVisibility(View.GONE);
                             mDescriptionPartyLobby.setText(R.string.impossible_lobby);
-                            Toast.makeText(itemView.getContext(), R.string.toast_error_party, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(itemView.getContext(), R.string.toast_error_party, Toast.LENGTH_LONG).show();
                         }
                     }
                     @Override
