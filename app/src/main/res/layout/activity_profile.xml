@@ -165,7 +165,7 @@
                 android:gravity="center"
                 android:fontFamily="sans-serif"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toTopOf="@+id/nbrMax"
+                app:layout_constraintBottom_toTopOf="@+id/progressBar2"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/titretitle"
@@ -179,10 +179,10 @@
                 android:text="@string/d_fi_en_cours"
                 android:textColor="#FFFFFF"
                 android:fontFamily="sans-serif"
-                app:layout_constraintBottom_toTopOf="@+id/imageViewAvatar2"
+                app:layout_constraintBottom_toTopOf="@+id/challenge_name"
                 app:layout_constraintLeft_toRightOf="@+id/imageViewAvatar2"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar2"
+                app:layout_constraintTop_toBottomOf="@+id/name_quest"
                 app:layout_constraintVertical_bias="0.4" />
 
             <TextView
