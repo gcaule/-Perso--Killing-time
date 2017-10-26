@@ -19,7 +19,7 @@
 
     // Page Profil
     <string name="profil">Profil</string>
-    <string name="upload_ta_photo">GALLERIE\nPHOTO</string>
+    <string name="upload_ta_photo">GALERIE\nPHOTO</string>
     <string name="prendre_nouvelle_photo">APPAREIL\nPHOTO</string>
     <string name="envoi_photo">ENVOI\nPHOTO</string>
     <string name="toast_error_profile">Tu es déjà sur la page Profil</string>
@@ -42,7 +42,7 @@
 
     // Page Profil PopUp
     <string name="valider">Valider et continuer</string>
-    <string name="choisir_depuis_nla_gallerie">GALLERIE\nPHOTO</string>
+    <string name="choisir_depuis_nla_gallerie">GALERIE\nPHOTO</string>
     <string name="nouvelle_photo">APPAREIL\nPHOTO</string>
 
     // Page Défi
