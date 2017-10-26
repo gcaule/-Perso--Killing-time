@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,7 +12,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
@@ -34,21 +34,16 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LobbyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-//    private String mUserId;
-    private String mUser_name;
-    private String mUser_quest;
-    private String mQuest_name;
-    private String mUser_indice;
-    private String mQuest_description;
-    private String mLife_duration;
-    private String mName_challenge;
-    private String mDiff_challenge;
-    private String mHint_challenge;
-    private String mKey_challenge;
-    private String mUser_CreatedQuest;
-    private String mUser_CreatedQuestName;
-    ImageView imageViewAvatar, imageViewTest;
-    private String mUserId, mCreatedQuestId;
+    private ImageView imageViewAvatar, imageViewTest;
+    private String mUser_name, mUser_quest, mQuest_name,
+            mUser_indice, mQuest_description, mLife_duration,
+            mName_challenge, mDiff_challenge, mHint_challenge,
+            mKey_challenge, mUser_CreatedQuest, mUser_CreatedQuestName,
+            mUserId, mCreatedQuestId;
+    private TextView mNbChallengeLobby;
+
+    // Share via other apps,
+    private ShareActionProvider mShareActionProvider;
 
 
     @Override
@@ -117,7 +112,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
         // Avatar
         imageViewAvatar = findViewById(R.id.imageViewAvatar);
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
@@ -126,16 +120,13 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
             }
         });
-
         // On appele les methodes declarées plus bas (pour chercher l'user, la quete, les challenges)
         searchUser();
 
         // Pour remplir la liste des quêtes avec les quêtes créees!!!
         final RecyclerView recyclerViewLobby = findViewById(R.id.recyclerViewHomeJoueurLobby);
         recyclerViewLobby.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Quest");
-
         final FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Quest, LobbyViewHolder>(
                 Quest.class,
                 R.layout.lobby_recyclerview,
@@ -147,12 +138,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 holder.setQuest_description(bdd.getQuest_description());
             }
         };
-
-//        int position = 0;
-//        if (position == recyclerViewLobby.getChildCount() - 1) {
-//            recyclerViewLobby.smoothScrollToPosition(position);
-//        }
-
         // Set the adapter avec les données et la ligne de separation
         recyclerViewLobby.addItemDecoration(new LobbyActivity.SimpleDividerItemDecoration(this));
         recyclerViewLobby.setAdapter(mAdapter);
@@ -162,14 +147,11 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         buttonCreateQuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
-
+                startActivity(new Intent(getApplicationContext(), CreateQuestActivity.class));
             }
         });
-
         // On affiche la description de la party / quete au clic sur sa ligne.
         // Au clic sur une autre ligne ferme les descriptions ouvert avant.
-
         LobbyViewHolder.setOnClickListener(new LobbyViewHolder.ClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -179,36 +161,62 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                 final String quest_name = namePartyLobby.getText().toString();
 
                 // On cherche si la quete qu'on cherche a joindre n'est pas dans les quetes faites
-               final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference();
+                final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference();
                 refUser.child("User").child(mUserId).child("quest_done").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                       for (final DataSnapshot dsp : dataSnapshot.getChildren()) {
-                           if (dsp.exists()){
-                               refUser.child("Quest").child(dsp.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                   @Override
-                                   public void onDataChange(DataSnapshot dataSnapshot) {
-                                       Quest quest = dataSnapshot.getValue(Quest.class);
-                                       String questname = quest.getQuest_name();
-                                       if (questname.equals(namePartyLobby.getText().toString())){
-                                           buttonLobbyJoin.setVisibility(View.GONE);
-                                           textViewLobbyDescription.setVisibility(View.GONE);
-                                           textViewLobbyDescription.setText(R.string.impossible_lobby);
-                                           Toast.makeText(getApplicationContext(), R.string.toast_error_party2, Toast.LENGTH_LONG).show();
-                                       }
-                                   }
+                        for (final DataSnapshot dsp : dataSnapshot.getChildren()) {
+                            if (dsp.exists()) {
+                                refUser.child("Quest").child(dsp.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        Quest quest = dataSnapshot.getValue(Quest.class);
+                                        String questname = quest.getQuest_name();
+                                        if (questname.equals(namePartyLobby.getText().toString())) {
+                                            buttonLobbyJoin.setVisibility(View.GONE);
+                                            textViewLobbyDescription.setVisibility(View.GONE);
+                                            mNbChallengeLobby.setVisibility(View.GONE);
+                                            textViewLobbyDescription.setText(R.string.impossible_lobby);
+                                            Toast.makeText(getApplicationContext(), R.string.toast_error_party2, Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
 
-                                   @Override
-                                   public void onCancelled(DatabaseError databaseError) {
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+                mNbChallengeLobby = view.findViewById(R.id.textViewNbreChallenge);
+                mNbChallengeLobby.setVisibility(View.GONE);
 
-                                   }
-                               });
+                // Pour donner le nombre de challenges contenu dans une partie et l'afficher
+                refUser.child("Quest").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                            Quest quest = dsp.getValue(Quest.class);
+                            if (quest.getQuest_name().equals(quest_name)) {
+                                String questKey = dsp.getKey();
+                                refUser.child("Challenge").child(questKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshotChall) {
 
-                           }
-                       }
+                                        int nbreChallenge = (int) dataSnapshotChall.getChildrenCount();
 
-
-
+                                        mNbChallengeLobby.setText(getResources().getString(R.string.nbreChallenge, (nbreChallenge)));
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
+                            }
+                        }
                     }
 
                     @Override
@@ -219,57 +227,34 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
 
                 if (quest_name.equals(mUser_CreatedQuestName)) {
                     buttonLobbyJoin.setVisibility(View.GONE);
+                    mNbChallengeLobby.setVisibility(View.GONE);
                     textViewLobbyDescription.setText(R.string.impossible_lobby);
                     Toast.makeText(getApplicationContext(), R.string.toast_error_party, Toast.LENGTH_LONG).show();
 
                 } else if (textViewLobbyDescription.getVisibility() == View.VISIBLE) {
                     textViewLobbyDescription.setVisibility(View.GONE);
+                    mNbChallengeLobby.setVisibility(View.GONE);
                     buttonLobbyJoin.setVisibility(View.GONE);
 
                 } else {
                     textViewLobbyDescription.setVisibility(View.VISIBLE);
                     buttonLobbyJoin.setVisibility(View.VISIBLE);
+                    mNbChallengeLobby.setVisibility(View.VISIBLE);
 
                     // Hide Other Description
                     for (int i = 0; i < mAdapter.getItemCount(); i++) {
                         if (i != position) {
-                            LobbyViewHolder other = (LobbyViewHolder) recyclerViewLobby.findViewHolderForAdapterPosition(i);
-                            if (other != null) {
-                                other.mDescriptionPartyLobby.setVisibility(View.GONE);
-                                other.mJoinPartyLobby.setVisibility(View.GONE);
+                            LobbyViewHolder holder = (LobbyViewHolder) recyclerViewLobby.findViewHolderForAdapterPosition(i);
+                            if (holder != null) {
+                                holder.mDescriptionPartyLobby.setVisibility(View.GONE);
+                                holder.mJoinPartyLobby.setVisibility(View.GONE);
+                                holder.mNbChallengeLobby.setVisibility(View.GONE);
                             }
                         }
                     }
                 }
             }
         });
-    }
-
-    // Methode utilisée pour afficher une ligne en dessous de chaque item du recycler view
-    public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
-        private Drawable mDivider;
-
-        public SimpleDividerItemDecoration(LobbyActivity context) {
-            mDivider = context.getResources().getDrawable(R.drawable.line_divider);
-        }
-        @Override
-        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            int left = parent.getPaddingLeft();
-            int right = parent.getWidth() - parent.getPaddingRight();
-
-            int childCount = parent.getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                View child = parent.getChildAt(i);
-
-                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-
-                int top = child.getBottom() + params.bottomMargin;
-                int bottom = top + mDivider.getIntrinsicHeight();
-
-                mDivider.setBounds(left, top, right, bottom);
-                mDivider.draw(c);
-            }
-        }
     }
 
     // Drawer Menu
@@ -282,11 +267,13 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
             super.onBackPressed();
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -307,7 +294,7 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ValidateQuestActivity.class);
             startActivity(intent);
-        }  else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
@@ -323,14 +310,13 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
         return true;
     }
 
-    // Share via other apps
-    private ShareActionProvider mShareActionProvider;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.nav_share);
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         return true;
     }
+
     private void setShareIntent(Intent shareIntent) {
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(shareIntent);
@@ -370,7 +356,6 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                     Quest quest = dsp.getValue(Quest.class);
                     // On recupere la qûete liée a un user
                     if (mUser_quest.equals(dsp.getKey())) {
-
                         mQuest_name = quest.getQuest_name();
                         Log.d(mQuest_name, "quest");
                         mQuest_description = quest.getQuest_description();
@@ -405,9 +390,38 @@ public class LobbyActivity extends AppCompatActivity implements NavigationView.O
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    // Methode utilisée pour afficher une ligne en dessous de chaque item du recycler view
+    public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
+        private Drawable mDivider;
+
+        public SimpleDividerItemDecoration(LobbyActivity context) {
+            mDivider = context.getResources().getDrawable(R.drawable.line_divider);
+        }
+
+        @Override
+        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+            int left = parent.getPaddingLeft();
+            int right = parent.getWidth() - parent.getPaddingRight();
+
+            int childCount = parent.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View child = parent.getChildAt(i);
+
+                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+
+                int top = child.getBottom() + params.bottomMargin;
+                int bottom = top + mDivider.getIntrinsicHeight();
+
+                mDivider.setBounds(left, top, right, bottom);
+                mDivider.draw(c);
+            }
+        }
     }
 }

@@ -69,6 +69,8 @@
     <string name="discover_party">Découvrir partie</string>
     <string name="toast_error_party">Tu ne peux pas rejoindre ta propre partie\nMerci d\'en selectionner une autre</string>
     <string name="impossible_lobby">Impossible de rejoindre ta propre partie</string>
+    <string name="error_nochallenge">Partie en cours de création</string>
+    <string name="nbreChallenge"> %1$d défi(s) dans cette partie</string>
 
     // Page Gestion de Partie
     <string name="home_ngame_master">Gestion de partie</string>
@@ -168,6 +170,7 @@
         Copyright : Jake and the Never Land Pirates\n\n
         Développé par Pierre , Valentin, Laurent et Guillaume
     </string>
-    <string name="error_nochallenge">Partie en cours de création</string>
+    <string name="error_createname">Ce nom de partie existe déjà ! Choisis-en un autre !</string>
+
 
 </resources>
