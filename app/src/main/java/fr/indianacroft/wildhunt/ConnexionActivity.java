@@ -1,9 +1,7 @@
 package fr.indianacroft.wildhunt;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -110,6 +108,7 @@ public class ConnexionActivity extends AppCompatActivity {
                 // Toast si les champs ne sont pas remplis
                 if (TextUtils.isEmpty(userNameContent) || TextUtils.isEmpty(userPasswordContent)) {
                     Toast.makeText(getApplicationContext(), R.string.error_fill, Toast.LENGTH_SHORT).show();
+                    simpleProgressBar.setVisibility(view.GONE);
                 } else {
                     // Sinon on recupere tous les users
                     final DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("User");
@@ -158,6 +157,7 @@ public class ConnexionActivity extends AppCompatActivity {
                                     } else {
                                         // Si le mot de passe ou le pseudo ne concordent pas
                                         Toast.makeText(getApplicationContext(), R.string.error_password, Toast.LENGTH_SHORT).show();
+                                        simpleProgressBar.setVisibility(View.GONE);
                                     }
                                     return;
                                 }
